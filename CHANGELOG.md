@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-* ensure `ImageMapLayer` leverages a proxy. (🙏dangowans🙏 [#1121](https://github.com/Esri/esri-leaflet/pull/1121))
+* ensure `ImageMapLayer` leverages a proxy. (🙏dangowans🙏 [#1121](https://github.com/Esri/leaflet-trains/pull/1121))
 
 ## [2.2.2] - 2018-08-02
 
@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* `dynamicMapLayer()` and `imageMapLayer()` now both expose a new `zIndex` constructor option and modify `zIndex` values appropriately internally when `bringToFront()` and `bringToBack()` are called.  (🙏appleshowc🙏 [#1084](https://github.com/Esri/esri-leaflet/pull/1084))
+* `dynamicMapLayer()` and `imageMapLayer()` now both expose a new `zIndex` constructor option and modify `zIndex` values appropriately internally when `bringToFront()` and `bringToBack()` are called.  (🙏appleshowc🙏 [#1084](https://github.com/Esri/leaflet-trains/pull/1084))
 
 ## [2.2.1] - 2018-07-11
 
@@ -31,24 +31,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* it is now possible to add/update features in feature services in bulk (🙏Biboba🙏 [#1083](https://github.com/Esri/esri-leaflet/pull/1083))
-* two new basemaps! `ImageryFirefly` and `Physical` (🙏pmacMaps🙏 [#1100](https://github.com/Esri/esri-leaflet/pull/1100))
+* it is now possible to add/update features in feature services in bulk (🙏Biboba🙏 [#1083](https://github.com/Esri/leaflet-trains/pull/1083))
+* two new basemaps! `ImageryFirefly` and `Physical` (🙏pmacMaps🙏 [#1100](https://github.com/Esri/leaflet-trains/pull/1100))
 
 ### Changed
 
-* use external sourcemap files consistently, even for debug build [#1088](https://github.com/Esri/esri-leaflet/pull/1088)
+* use external sourcemap files consistently, even for debug build [#1088](https://github.com/Esri/leaflet-trains/pull/1088)
 
 ### Fixed
 
-* better error trapping for non CORS requests (🙏strajuser🙏 [#1070](https://github.com/Esri/esri-leaflet/pull/1070))
-* trap for GeoJSON with null geometry [#1060](https://github.com/Esri/esri-leaflet/issues/1060)
-* check for null attribution (🙏octavm🙏 [#1078](https://github.com/Esri/esri-leaflet/pull/1078))
-* ensure `token` is only included in tile requests once (🙏octavm🙏 [#1092](https://github.com/Esri/esri-leaflet/pull/1092))
-* addressed https://nodesecurity.io/advisories/566 [#1094](https://github.com/Esri/esri-leaflet/pull/1094)
+* better error trapping for non CORS requests (🙏strajuser🙏 [#1070](https://github.com/Esri/leaflet-trains/pull/1070))
+* trap for GeoJSON with null geometry [#1060](https://github.com/Esri/leaflet-trains/issues/1060)
+* check for null attribution (🙏octavm🙏 [#1078](https://github.com/Esri/leaflet-trains/pull/1078))
+* ensure `token` is only included in tile requests once (🙏octavm🙏 [#1092](https://github.com/Esri/leaflet-trains/pull/1092))
+* addressed https://nodesecurity.io/advisories/566 [#1094](https://github.com/Esri/leaflet-trains/pull/1094)
 
 ### Removed
 
-* cruft from npm tarball [#1067](https://github.com/Esri/esri-leaflet/pull/1067)
+* cruft from npm tarball [#1067](https://github.com/Esri/leaflet-trains/pull/1067)
 
 ## [2.1.4] - 2018-03-09
 
@@ -59,38 +59,38 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-* ensure tiledMapLayers utilize a configured proxy (🙏spoilsportmotors🙏 [#1053](https://github.com/Esri/esri-leaflet/pull/1053))
+* ensure tiledMapLayers utilize a configured proxy (🙏spoilsportmotors🙏 [#1053](https://github.com/Esri/leaflet-trains/pull/1053))
 
-* fix logic error and simplify check for supported non-web mercator CRSs [#1051](https://github.com/Esri/esri-leaflet/pull/1051)
+* fix logic error and simplify check for supported non-web mercator CRSs [#1051](https://github.com/Esri/leaflet-trains/pull/1051)
 
 ## [2.1.3] - 2018-02-14
 
 ### Added
 
-* new `ImageryClarity` basemapLayer (🙏Biboba🙏 [#1047](https://github.com/Esri/esri-leaflet/pull/1047))
+* new `ImageryClarity` basemapLayer (🙏Biboba🙏 [#1047](https://github.com/Esri/leaflet-trains/pull/1047))
 * dynamic attribution for `WorldImagery` basemap layer to attribute local Community Maps content providers
 
 ### Fixed
 
-* smarter check for custom coordinate systems [#1045](https://github.com/Esri/esri-leaflet/pull/1045))
+* smarter check for custom coordinate systems [#1045](https://github.com/Esri/leaflet-trains/pull/1045))
 * removed rogue `Proj4` console errors in webpack/browserify apps
-* caught the last few non ES6 imports from Leaflet (🙏finneganh🙏 [#1050](https://github.com/Esri/esri-leaflet/pull/1050))
+* caught the last few non ES6 imports from Leaflet (🙏finneganh🙏 [#1050](https://github.com/Esri/leaflet-trains/pull/1050))
 
 ## [2.1.2] - 2018-01-04
 
 ### Fixed
 
-* improved support for custom `wkid:3857` tiled basemaps with custom properties [#1039](https://github.com/Esri/esri-leaflet/pull/1039))
-* `image` is now the default format for ImageMapLayer (🙏nickpeihl🙏 [#998](https://github.com/Esri/esri-leaflet/pull/998))
-* improved response parsing when no objectIdFieldName or esriFieldTypeOID are returned (🙏Saulzi🙏 [#1009](https://github.com/Esri/esri-leaflet/pull/1009))
-* improved cleanup when map instances are destroyed (🙏jfolds🙏 [#1029](https://github.com/Esri/esri-leaflet/pull/1029))
+* improved support for custom `wkid:3857` tiled basemaps with custom properties [#1039](https://github.com/Esri/leaflet-trains/pull/1039))
+* `image` is now the default format for ImageMapLayer (🙏nickpeihl🙏 [#998](https://github.com/Esri/leaflet-trains/pull/998))
+* improved response parsing when no objectIdFieldName or esriFieldTypeOID are returned (🙏Saulzi🙏 [#1009](https://github.com/Esri/leaflet-trains/pull/1009))
+* improved cleanup when map instances are destroyed (🙏jfolds🙏 [#1029](https://github.com/Esri/leaflet-trains/pull/1029))
 
 ### Added
 
-* It is now possible for layers to pass through arbitrary custom request parameters (🙏Biboba🙏 [#1036](https://github.com/Esri/esri-leaflet/pull/1036))
-* `QueryTask.returnM(bool)` (🙏jmfolds🙏 [#1002](https://github.com/Esri/esri-leaflet/pull/1002))
-* `QueryTask.distinct()` (🙏joelondon🙏 [#1027](https://github.com/Esri/esri-leaflet/pull/1027))
-* `DynamicMapLayer` has a new `popup` constructor option so that custom IdentifyFeatures parameters can be passed through (🙏Biboba🙏 [#1031](https://github.com/Esri/esri-leaflet/pull/1031))
+* It is now possible for layers to pass through arbitrary custom request parameters (🙏Biboba🙏 [#1036](https://github.com/Esri/leaflet-trains/pull/1036))
+* `QueryTask.returnM(bool)` (🙏jmfolds🙏 [#1002](https://github.com/Esri/leaflet-trains/pull/1002))
+* `QueryTask.distinct()` (🙏joelondon🙏 [#1027](https://github.com/Esri/leaflet-trains/pull/1027))
+* `DynamicMapLayer` has a new `popup` constructor option so that custom IdentifyFeatures parameters can be passed through (🙏Biboba🙏 [#1031](https://github.com/Esri/leaflet-trains/pull/1031))
 * more tests for existing features! (🙏Biboba🙏 #1037, #1035)
 
 ### Removed
@@ -112,82 +112,82 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* error handling has been added to classes that extend L.ImageOverlay [#941](https://github.com/Esri/esri-leaflet/pull/941) thank you[@Saulzi](https://github.com/Saulzi)!
-* dynamicMapLayer now supports an option to bust server side caches [#942](https://github.com/Esri/esri-leaflet/issues/942)
-* identifyFeatures and find now support requesting unformatted responses from ArcGIS Server 10.5+ map services [#961](https://github.com/Esri/esri-leaflet/issues/961)
-* identifyFeatures now supports passing through input geometries other than points [#962](https://github.com/Esri/esri-leaflet/pull/962) thank you[@bbehling](https://github.com/bbehling)!
-* dynamicMapLayer and imageMapLayer now support polar projections [#975](https://github.com/Esri/esri-leaflet/pull/975) thank you[@scaddenp](https://github.com/scaddenp)!
-* query now supports datum transformations [#976](https://github.com/Esri/esri-leaflet/pull/976)
+* error handling has been added to classes that extend L.ImageOverlay [#941](https://github.com/Esri/leaflet-trains/pull/941) thank you[@Saulzi](https://github.com/Saulzi)!
+* dynamicMapLayer now supports an option to bust server side caches [#942](https://github.com/Esri/leaflet-trains/issues/942)
+* identifyFeatures and find now support requesting unformatted responses from ArcGIS Server 10.5+ map services [#961](https://github.com/Esri/leaflet-trains/issues/961)
+* identifyFeatures now supports passing through input geometries other than points [#962](https://github.com/Esri/leaflet-trains/pull/962) thank you[@bbehling](https://github.com/bbehling)!
+* dynamicMapLayer and imageMapLayer now support polar projections [#975](https://github.com/Esri/leaflet-trains/pull/975) thank you[@scaddenp](https://github.com/scaddenp)!
+* query now supports datum transformations [#976](https://github.com/Esri/leaflet-trains/pull/976)
 
 ### Fixed
 
-* in imageMapLayer, noData values of `0` are now handled correctly [#946](https://github.com/Esri/esri-leaflet/issues/946)
-* ensure that eachActiveFeature correctly handles all geometry types [#948](https://github.com/Esri/esri-leaflet/issues/948)
-* layer definitions are now passed through when binding a popup to dynamicMapLayer [#957](https://github.com/Esri/esri-leaflet/issues/957)
-* ensure definition queries are applied to invisible layers [#964](https://github.com/Esri/esri-leaflet/pull/964) thank you[@jordanparfitt](https://github.com/jordanparfitt)!
+* in imageMapLayer, noData values of `0` are now handled correctly [#946](https://github.com/Esri/leaflet-trains/issues/946)
+* ensure that eachActiveFeature correctly handles all geometry types [#948](https://github.com/Esri/leaflet-trains/issues/948)
+* layer definitions are now passed through when binding a popup to dynamicMapLayer [#957](https://github.com/Esri/leaflet-trains/issues/957)
+* ensure definition queries are applied to invisible layers [#964](https://github.com/Esri/leaflet-trains/pull/964) thank you[@jordanparfitt](https://github.com/jordanparfitt)!
 
 ## [2.0.8] - 2017-02-28
 
 ### Changed
 
-* dynamicMapLayer popups now retrieve generalized geometries from map services to improve performance. [#921](https://github.com/Esri/esri-leaflet/pull/921)
-* queries for features are no longer fired outside the layer's artificially constrained zoom level [#928](https://github.com/Esri/esri-leaflet/pull/928) (thank you[@keithpower](https://github.com/keithpower)!)
-* ES6 syntax is now used to import selected Leaflet dependencies. [#920](https://github.com/Esri/esri-leaflet/pull/920)
+* dynamicMapLayer popups now retrieve generalized geometries from map services to improve performance. [#921](https://github.com/Esri/leaflet-trains/pull/921)
+* queries for features are no longer fired outside the layer's artificially constrained zoom level [#928](https://github.com/Esri/leaflet-trains/pull/928) (thank you[@keithpower](https://github.com/keithpower)!)
+* ES6 syntax is now used to import selected Leaflet dependencies. [#920](https://github.com/Esri/leaflet-trains/pull/920)
 
 ### Fixed
 
-* errors are no longer encountered when panning the map outside the artificially constrained zoom level of a previously drawn dynamicMapLayer [#917](https://github.com/Esri/esri-leaflet/pull/917) (thank you[@jordanparfitt](https://github.com/jordanparfitt)!)
-* the value range returned by `IdentifyFeatures.simplify()` has been reversed for consistency with `Query.simplify()` [#921](https://github.com/Esri/esri-leaflet/pull/921)
-* features are no longer accidentally drawn when the map is panned to a new location outside the artificially constrained zoom level of the layer. [#924](https://github.com/Esri/esri-leaflet/pull/924) (thank you[@keithpower](https://github.com/keithpower)!)
+* errors are no longer encountered when panning the map outside the artificially constrained zoom level of a previously drawn dynamicMapLayer [#917](https://github.com/Esri/leaflet-trains/pull/917) (thank you[@jordanparfitt](https://github.com/jordanparfitt)!)
+* the value range returned by `IdentifyFeatures.simplify()` has been reversed for consistency with `Query.simplify()` [#921](https://github.com/Esri/leaflet-trains/pull/921)
+* features are no longer accidentally drawn when the map is panned to a new location outside the artificially constrained zoom level of the layer. [#924](https://github.com/Esri/leaflet-trains/pull/924) (thank you[@keithpower](https://github.com/keithpower)!)
 
 ### Added
 
-* In situations where a feature layer supports the geojson format, but it is deemed preferable to ask for Esri Geoservices JSON instead, developers can now set `isModern: false` as a constructor option. [#935](https://github.com/Esri/esri-leaflet/pull/935) (thank you[@spoilsportmotors](https://github.com/spoilsportmotors)!)
-* an `eachActiveFeature()` method has been added to `Layers.FeatureLayer` in order to isolate features in the cache that are currently being displayed. [#936](https://github.com/Esri/esri-leaflet/pull/936)
-* `Tasks.Query` now has two new spatial operators. `bboxIntersects` and `indexIntersects`. [#937](https://github.com/Esri/esri-leaflet/pull/937)
+* In situations where a feature layer supports the geojson format, but it is deemed preferable to ask for Esri Geoservices JSON instead, developers can now set `isModern: false` as a constructor option. [#935](https://github.com/Esri/leaflet-trains/pull/935) (thank you[@spoilsportmotors](https://github.com/spoilsportmotors)!)
+* an `eachActiveFeature()` method has been added to `Layers.FeatureLayer` in order to isolate features in the cache that are currently being displayed. [#936](https://github.com/Esri/leaflet-trains/pull/936)
+* `Tasks.Query` now has two new spatial operators. `bboxIntersects` and `indexIntersects`. [#937](https://github.com/Esri/leaflet-trains/pull/937)
 
 ## [2.0.7] - 2017-01-10
 
 ### Fixed
 
-* its now possible to call setOpacity() immediately after instantiating a `RasterLayer` [#909](https://github.com/Esri/esri-leaflet/pull/909) (thank you[@Saulzi](https://github.com/Saulzi)!)
-* `L.TileLayer` maxNativeZoom is now honored by `tiledMapLayer` [#904](https://github.com/Esri/esri-leaflet/pull/904)
-* an error is no longer thrown when a `RasterLayer` is added to the map at a zoom level outside its own custom restraint [#903](https://github.com/Esri/esri-leaflet/pull/903)
-* `addfeature` is no longer emitted twice when `FeatureLayer.setWhere()` is called [#893](https://github.com/Esri/esri-leaflet/pull/893)
+* its now possible to call setOpacity() immediately after instantiating a `RasterLayer` [#909](https://github.com/Esri/leaflet-trains/pull/909) (thank you[@Saulzi](https://github.com/Saulzi)!)
+* `L.TileLayer` maxNativeZoom is now honored by `tiledMapLayer` [#904](https://github.com/Esri/leaflet-trains/pull/904)
+* an error is no longer thrown when a `RasterLayer` is added to the map at a zoom level outside its own custom restraint [#903](https://github.com/Esri/leaflet-trains/pull/903)
+* `addfeature` is no longer emitted twice when `FeatureLayer.setWhere()` is called [#893](https://github.com/Esri/leaflet-trains/pull/893)
 
 ### Changed
 
-* `RasterLayer` now exposes a public `redraw()` method [#905](https://github.com/Esri/esri-leaflet/pull/905)
-* an inline base64 encoded transparent image is now substituted for missing tiles [#902](https://github.com/Esri/esri-leaflet/pull/902)
-* the `addfeature` event is no longer triggered when features are fetched and drawn for the very first time [#893](https://github.com/Esri/esri-leaflet/pull/893)
+* `RasterLayer` now exposes a public `redraw()` method [#905](https://github.com/Esri/leaflet-trains/pull/905)
+* an inline base64 encoded transparent image is now substituted for missing tiles [#902](https://github.com/Esri/leaflet-trains/pull/902)
+* the `addfeature` event is no longer triggered when features are fetched and drawn for the very first time [#893](https://github.com/Esri/leaflet-trains/pull/893)
 
 ## [2.0.6] - 2016-11-16
 
 ### Fixed
 
-* `withCredentials` is no longer set for CORS requests [#890](https://github.com/Esri/esri-leaflet/pull/890)
+* `withCredentials` is no longer set for CORS requests [#890](https://github.com/Esri/leaflet-trains/pull/890)
 
 ## [2.0.5] - deprecated
 
 ### Fixed
-* DynamicMapLayer image overlays now utilize a proxy when appropriate [#862](https://github.com/Esri/esri-leaflet/issues/862)
-* `DynamicMapLayer.layerDefs` provided as a string are now serialized correctly [#866](https://github.com/Esri/esri-leaflet/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
-* We no longer ask for raw geojson from ArcGIS Online proxied services that can't provide it. [#876](https://github.com/Esri/esri-leaflet/issues/876)
-* Copyright text for `TiledMapLayer` is now displayed automatically when the map has a custom projection. [#877](https://github.com/Esri/esri-leaflet/issues/877)
-* When a null extent is encountered by L.esri.Query, no matter its form, an `Invalid Bounds` error is passed in the callback. [#879](https://github.com/Esri/esri-leaflet/issues/879)
-* `L.esri.request` now sets the generic `withCredentials` header when appropriate [#881](https://github.com/Esri/esri-leaflet/issues/881)
+* DynamicMapLayer image overlays now utilize a proxy when appropriate [#862](https://github.com/Esri/leaflet-trains/issues/862)
+* `DynamicMapLayer.layerDefs` provided as a string are now serialized correctly [#866](https://github.com/Esri/leaflet-trains/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
+* We no longer ask for raw geojson from ArcGIS Online proxied services that can't provide it. [#876](https://github.com/Esri/leaflet-trains/issues/876)
+* Copyright text for `TiledMapLayer` is now displayed automatically when the map has a custom projection. [#877](https://github.com/Esri/leaflet-trains/issues/877)
+* When a null extent is encountered by L.esri.Query, no matter its form, an `Invalid Bounds` error is passed in the callback. [#879](https://github.com/Esri/leaflet-trains/issues/879)
+* `L.esri.request` now sets the generic `withCredentials` header when appropriate [#881](https://github.com/Esri/leaflet-trains/issues/881)
 
 ## [2.0.4] - 2016-10-18
 
 ### Changed
-* The default maximum width of Leaflet's attribution control is now `55px` less than the map itself [#842](https://github.com/Esri/esri-leaflet/pull/842)
+* The default maximum width of Leaflet's attribution control is now `55px` less than the map itself [#842](https://github.com/Esri/leaflet-trains/pull/842)
 
 ### Added
-* A custom width crop can be configured via `L.esri.options.attributionWidthOffset` [#849](https://github.com/Esri/esri-leaflet/pull/849)
-* `L.esri.query` now supports GeoJSON MultiPolygons [#866](https://github.com/Esri/esri-leaflet/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
+* A custom width crop can be configured via `L.esri.options.attributionWidthOffset` [#849](https://github.com/Esri/leaflet-trains/pull/849)
+* `L.esri.query` now supports GeoJSON MultiPolygons [#866](https://github.com/Esri/leaflet-trains/pull/866) (thank you[@whyvez](https://github.com/whyvez)!)
 
 ### Fixed
-* Last references to global namespaces have been removed from `L.esri.Util` [#852](https://github.com/Esri/esri-leaflet/pull/852) (thank you[@hamhands](https://github.com/hamhands)!)
+* Last references to global namespaces have been removed from `L.esri.Util` [#852](https://github.com/Esri/leaflet-trains/pull/852) (thank you[@hamhands](https://github.com/hamhands)!)
 * started linting our test suite
 * `responseToFeatureCollection` now uses a case insensitive regex to look for common indexing field names
 * `GeoJSON` / `geoJSON` casing is now used consistently
@@ -195,20 +195,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.0.3] - 2016-09-16
 
 ### Added
-* attribution from service metadata is now automatically displayed in Leaflet's attribution control for all layer types [#832](https://github.com/Esri/esri-leaflet/pull/832), [#842](https://github.com/Esri/esri-leaflet/pull/842) (thank you[@tyleralves](https://github.com/tyleralves)!)
+* attribution from service metadata is now automatically displayed in Leaflet's attribution control for all layer types [#832](https://github.com/Esri/leaflet-trains/pull/832), [#842](https://github.com/Esri/leaflet-trains/pull/842) (thank you[@tyleralves](https://github.com/tyleralves)!)
 * `Powered by Esri` is now displayed in Leaflet's attribution control when *any* layer type is added to the map, not just L.esri.basemapLayer.
 * the attribution control is restricted to a single line, but expands to show all data contributors on mouse hover.
-* support for `DynamicMapLayer` services that require a token to be passed in a request for raw images [#830](https://github.com/Esri/esri-leaflet/pull/830) (thank you[@jaredbrookswhite](https://github.com/jaredbrookswhite)!)
+* support for `DynamicMapLayer` services that require a token to be passed in a request for raw images [#830](https://github.com/Esri/leaflet-trains/pull/830) (thank you[@jaredbrookswhite](https://github.com/jaredbrookswhite)!)
 
 ## [2.0.2] - 2016-08-03
 
 ### Added
-* support for `ImageMapLayer` services that require a token to be passed in a request for raw images [#812](https://github.com/Esri/esri-leaflet/pull/812)
-* more graceful handling of stubborn `TiledMapLayer` services [#810](https://github.com/Esri/esri-leaflet/pull/810)
+* support for `ImageMapLayer` services that require a token to be passed in a request for raw images [#812](https://github.com/Esri/leaflet-trains/pull/812)
+* more graceful handling of stubborn `TiledMapLayer` services [#810](https://github.com/Esri/leaflet-trains/pull/810)
 
 ### Fixed
-* bug which resulted in global `map` scope creep [#814](https://github.com/Esri/esri-leaflet/issues/818)
-* bug which caused distortion in featureLayer display [#814](https://github.com/Esri/esri-leaflet/issues/818)
+* bug which resulted in global `map` scope creep [#814](https://github.com/Esri/leaflet-trains/issues/818)
+* bug which caused distortion in featureLayer display [#814](https://github.com/Esri/leaflet-trains/issues/818)
 
 ### Changed
 * Attribution text which is displayed for hosted Esri basemaps is now 'Powered by [Esri](https://www.esri.com)'
@@ -216,16 +216,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [2.0.1] - 2016-07-16
 
 ### Added
-* users can now pass tokens to `basemapLayer` [#800](https://github.com/Esri/esri-leaflet/pull/800)
+* users can now pass tokens to `basemapLayer` [#800](https://github.com/Esri/leaflet-trains/pull/800)
 
 ### Fixed
-* to avoid broken tile thumbnails, a generic blank tile is referenced automatically by `tiledMapLayer`. [#784](https://github.com/Esri/esri-leaflet/pull/784)
-* ensure addfeature and removefeature events are emitted when `featureLayer`s are added to and removed from the map. [#788](https://github.com/Esri/esri-leaflet/pull/788)
-* base64 `dynamicMapLayer` responses are now parsed appropriately [#796](https://github.com/Esri/esri-leaflet/pull/796)
+* to avoid broken tile thumbnails, a generic blank tile is referenced automatically by `tiledMapLayer`. [#784](https://github.com/Esri/leaflet-trains/pull/784)
+* ensure addfeature and removefeature events are emitted when `featureLayer`s are added to and removed from the map. [#788](https://github.com/Esri/leaflet-trains/pull/788)
+* base64 `dynamicMapLayer` responses are now parsed appropriately [#796](https://github.com/Esri/leaflet-trains/pull/796)
 
 ### Changed
-* the esri logo is no longer displayed when hosted basemaps are used. It has been replaced by '&copy; Esri' in the map attribution. [#783](https://github.com/Esri/esri-leaflet/pull/783)
-* Internal methods used to display dynamic attribution for tiled services with supporting static services were moved into L.esri.Util. [#799](https://github.com/Esri/esri-leaflet/pull/799)
+* the esri logo is no longer displayed when hosted basemaps are used. It has been replaced by '&copy; Esri' in the map attribution. [#783](https://github.com/Esri/leaflet-trains/pull/783)
+* Internal methods used to display dynamic attribution for tiled services with supporting static services were moved into L.esri.Util. [#799](https://github.com/Esri/leaflet-trains/pull/799)
 
 ## [1.0.4] - 2016-07-03
 
@@ -243,10 +243,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-* Worked around IE10,11 bug that caused `L.esri.featureLayer`s not to draw https://github.com/Esri/esri-leaflet/pull/770
-* Ensured `L.esri.imageMapLayer` are overlaid appropriately at world scale https://github.com/Esri/esri-leaflet/pull/774
+* Worked around IE10,11 bug that caused `L.esri.featureLayer`s not to draw https://github.com/Esri/leaflet-trains/pull/770
+* Ensured `L.esri.imageMapLayer` are overlaid appropriately at world scale https://github.com/Esri/leaflet-trains/pull/774
 * Ensured copyright text makes it into the minified, concatenated build of the library
-* create script tag after JSONP callback function is defined https://github.com/Esri/esri-leaflet/issues/762
+* create script tag after JSONP callback function is defined https://github.com/Esri/leaflet-trains/issues/762
 
 ## [2.0.0-beta.8]
 
@@ -259,7 +259,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* `timeout` parameter for `FeatureLayer` https://github.com/Esri/esri-leaflet/pull/730 Thanks @nathanhilbert
+* `timeout` parameter for `FeatureLayer` https://github.com/Esri/leaflet-trains/pull/730 Thanks @nathanhilbert
 
 ## [1.0.3]
 
@@ -280,7 +280,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* broke out several esri-leaflet components into external micro libraries ([tiny-binary-search](https://www.npmjs.com/package/tiny-binary-search), [leaflet-virtual-grid](https://www.npmjs.com/package/leaflet-virtual-grid), and [arcgis-to-geojson-utils](https://www.npmjs.com/package/arcgis-to-geojson-utils) for converting between and esri json and geojson)
+* broke out several leaflet-trains components into external micro libraries ([tiny-binary-search](https://www.npmjs.com/package/tiny-binary-search), [leaflet-virtual-grid](https://www.npmjs.com/package/leaflet-virtual-grid), and [arcgis-to-geojson-utils](https://www.npmjs.com/package/arcgis-to-geojson-utils) for converting between and esri json and geojson)
 * refactored source code for better custom projection support
 
 ### Fixed
@@ -297,13 +297,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/leaflet-trains/issues/667
 
 ## [1.0.1]
 
 ### Fixed
 
-* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/esri-leaflet/issues/667
+* Ensure that we never try to remove the Esri logo from a map twice https://github.com/Esri/leaflet-trains/issues/667
 
 ## [2.0.0-beta.6]
 
@@ -337,8 +337,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Various release process optimizations.
-* Support for JSPM in package.json. Now you can `import featureLayer from 'esri-leaflet/src/Layers/FeatureLayer';` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
-* Support for browserify in the package.json. Now you can `var featureLayer = require('esri-leaflet/src/Layers/FeatureLayer');` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
+* Support for JSPM in package.json. Now you can `import featureLayer from 'leaflet-trains/src/Layers/FeatureLayer';` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
+* Support for browserify in the package.json. Now you can `var featureLayer = require('leaflet-trains/src/Layers/FeatureLayer');` for more compact builds but be aware of [caveats](http://blog.izs.me/post/44149270867/why-no-directories-lib-in-node-the-less-snarky)
 
 ## [2.0.0-beta.3]
 
@@ -397,7 +397,7 @@ This represents the stable release of Esri Leaflet compatible with Leaflet 0.7.3
 
 As this is a major release there are a number of breaking changes.
 
-Also see the [Esri Leaflet 1.0 announcement](https://github.com/Esri/esri-leaflet/wiki/Esri-Leaflet-1.0.0-Announcement).
+Also see the [Esri Leaflet 1.0 announcement](https://github.com/Esri/leaflet-trains/wiki/leaflet-trains-1.0.0-Announcement).
 
 ### Breaking Changes
 
@@ -428,11 +428,11 @@ L.esri.Services.service({
 
 ### Changes
 
-* Added support for the `dynamicLayers` option to `L.esri.DynamicMapLayer` https://github.com/Esri/esri-leaflet/issues/566
-* Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/479
-* `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/esri-leaflet/issues/545
-* `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/esri-leaflet/issues/574
-* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/esri-leaflet/issues/574. If your Image Service does not support CORS you should set ``{f:'image'}`` in your options.
+* Added support for the `dynamicLayers` option to `L.esri.DynamicMapLayer` https://github.com/Esri/leaflet-trains/issues/566
+* Restored `bringToBack` and `bringToFront` to `L.esri.FeatureLayer` https://github.com/Esri/leaflet-trains/issues/479
+* `load` event on `L.esri.FeatureLayer` now fires at the proper time https://github.com/Esri/leaflet-trains/issues/545
+* `L.esri.DynamicMapLayer` and `L.esri.ImageMapLayer` will now automatically use POST for large requests. https://github.com/Esri/leaflet-trains/issues/574
+* `L.esri.ImageMapLayer` now defaults to requesting `json` as opposed to an image to better handle authentication and large requests https://github.com/Esri/leaflet-trains/issues/574. If your Image Service does not support CORS you should set ``{f:'image'}`` in your options.
 
 ## [Release Candidate 8]
 
@@ -442,11 +442,11 @@ L.esri.Services.service({
 
 ### Changes
 
-* Non standard scale levels from tile services published in web mercator are now remapped to the standard scale levels https://github.com/Esri/esri-leaflet/pull/548 https://github.com/Esri/esri-leaflet/issues/530
-* Fixed a bug introduced in RC 7 where features would sometimes not draw https://github.com/Esri/esri-leaflet/issues/546 https://github.com/Esri/esri-leaflet/issues/536
-* `load` event is now fired after all features are created, rather than when they are all received from the server https://github.com/Esri/esri-leaflet/issues/545
-* Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/esri-leaflet/issues/534
-* New `redraw` method on `L.esri.Layers.FeatureLayer` for programmatically redrawing features with their latest symbology. https://github.com/Esri/esri-leaflet/pull/550
+* Non standard scale levels from tile services published in web mercator are now remapped to the standard scale levels https://github.com/Esri/leaflet-trains/pull/548 https://github.com/Esri/leaflet-trains/issues/530
+* Fixed a bug introduced in RC 7 where features would sometimes not draw https://github.com/Esri/leaflet-trains/issues/546 https://github.com/Esri/leaflet-trains/issues/536
+* `load` event is now fired after all features are created, rather than when they are all received from the server https://github.com/Esri/leaflet-trains/issues/545
+* Properly handle using `L.CircleMarker` with `L.esri.Layers.FeatureLayer` https://github.com/Esri/leaflet-trains/issues/534
+* New `redraw` method on `L.esri.Layers.FeatureLayer` for programmatically redrawing features with their latest symbology. https://github.com/Esri/leaflet-trains/pull/550
 
 ## [Release Candidate 7]
 
@@ -455,17 +455,17 @@ L.esri.Services.service({
 * DynamicMapLayer will now request `json` by default to better expose the authentication process. If you are using ArcGIS Server 10.0 or have disabled CORS on your server you will need to add `useCors: false` to your options.
 
 ### Changes
-* refactor of `FeatureLayer.resetStyle()` behavior. https://github.com/Esri/esri-leaflet/issues/488
-* improvement of `DynamicMapLayer` image loading logic. https://github.com/Esri/esri-leaflet/issues/498
-* Fixed bug in display of dynamic map services at world scale. https://github.com/Esri/esri-leaflet/issues/450
-* Switched to protocol relative urls for google fonts https://github.com/Esri/esri-leaflet/pull/501 (thanks @whymarrh!)
-* Added an `alt` tag to the Esri logo https://github.com/Esri/esri-leaflet/issues/490
-* Improved a few regexes https://github.com/Esri/esri-leaflet/pull/494 & https://github.com/Esri/esri-leaflet/pull/487
-* Trap error when `identifyFeatures.run()` doesn't return any results. https://github.com/Esri/esri-leaflet/issues/512
-* Dynamically switch to a smaller Esri logo in smaller maps. https://github.com/Esri/esri-leaflet/issues/505
-* Added a `deleteFeatures()` method to both `L.esri.Layers.FeatureLayer` and `L.esri.Services.FeatureLayer` for dropping records in bulk. https://github.com/Esri/esri-leaflet/pull/510
-* Improve logic of rendering simplified features with `L.esri.FeatureLayer`. https://github.com/Esri/esri-leaflet/issues/320 and https://github.com/Esri/esri-leaflet/pull/518
-* Various doc improvements.  https://github.com/Esri/esri-leaflet/pull/511 & https://github.com/Esri/esri-leaflet/pull/507 & https://github.com/Esri/esri-leaflet/pull/506 & https://github.com/Esri/esri-leaflet/issues/495
+* refactor of `FeatureLayer.resetStyle()` behavior. https://github.com/Esri/leaflet-trains/issues/488
+* improvement of `DynamicMapLayer` image loading logic. https://github.com/Esri/leaflet-trains/issues/498
+* Fixed bug in display of dynamic map services at world scale. https://github.com/Esri/leaflet-trains/issues/450
+* Switched to protocol relative urls for google fonts https://github.com/Esri/leaflet-trains/pull/501 (thanks @whymarrh!)
+* Added an `alt` tag to the Esri logo https://github.com/Esri/leaflet-trains/issues/490
+* Improved a few regexes https://github.com/Esri/leaflet-trains/pull/494 & https://github.com/Esri/leaflet-trains/pull/487
+* Trap error when `identifyFeatures.run()` doesn't return any results. https://github.com/Esri/leaflet-trains/issues/512
+* Dynamically switch to a smaller Esri logo in smaller maps. https://github.com/Esri/leaflet-trains/issues/505
+* Added a `deleteFeatures()` method to both `L.esri.Layers.FeatureLayer` and `L.esri.Services.FeatureLayer` for dropping records in bulk. https://github.com/Esri/leaflet-trains/pull/510
+* Improve logic of rendering simplified features with `L.esri.FeatureLayer`. https://github.com/Esri/leaflet-trains/issues/320 and https://github.com/Esri/leaflet-trains/pull/518
+* Various doc improvements.  https://github.com/Esri/leaflet-trains/pull/511 & https://github.com/Esri/leaflet-trains/pull/507 & https://github.com/Esri/leaflet-trains/pull/506 & https://github.com/Esri/leaflet-trains/issues/495
 * DynamicMapLayer will now request `json` by default to better expose authentication helpers
 * Attribution for basemaps is now always requested with JSONP
 
@@ -477,45 +477,45 @@ None
 
 ### Changes
 
-* `f:'json'` will now be used automatically when a proxy is set for `L.esri.DynamicMapLayer`. https://github.com/Esri/esri-leaflet/issues/464
-* Callback functions will now only be run once when there is a CORS error. https://github.com/Esri/esri-leaflet/issues/465
-* Layer ids will now be included with the GeoJSON response from `identify()` and `L.esri.Tasks.Identify`. https://github.com/Esri/esri-leaflet/issues/443
-* Bugfix for adding/removing certain basemap layers. https://github.com/Esri/esri-leaflet/issues/455
+* `f:'json'` will now be used automatically when a proxy is set for `L.esri.DynamicMapLayer`. https://github.com/Esri/leaflet-trains/issues/464
+* Callback functions will now only be run once when there is a CORS error. https://github.com/Esri/leaflet-trains/issues/465
+* Layer ids will now be included with the GeoJSON response from `identify()` and `L.esri.Tasks.Identify`. https://github.com/Esri/leaflet-trains/issues/443
+* Bugfix for adding/removing certain basemap layers. https://github.com/Esri/leaflet-trains/issues/455
 
 ## [Release Candidate 5]
 
 ### Breaking Changes
 
-* All `Task` and `Service` constructors now accept `url` as a value within options, rather than as a separate parameter. [#420](https://github.com/Esri/esri-leaflet/issues/420)
+* All `Task` and `Service` constructors now accept `url` as a value within options, rather than as a separate parameter. [#420](https://github.com/Esri/leaflet-trains/issues/420)
 * 'Layer' objects continue to expect a `url` string to be supplied as the first parameter, but afterwards, the property is now accessible via Layer.options.url instead of Layer.url
 
 ### Changes
 
-* Fixed duplicate Esri logo bug [#427](https://github.com/Esri/esri-leaflet/issues/427)
-* GeoJSON is now requested directly from ArcGIS Online Hosted Feature Services [#418](https://github.com/Esri/esri-leaflet/issues/418)
-* other FeatureLayer performance improvements [#416](https://github.com/Esri/esri-leaflet/issues/416)
-* `minZoom`, `maxZoom`, [#413](https://github.com/Esri/esri-leaflet/issues/413) and `cacheLayers` were added as new FeatureLayer constructor options
-* default fill is now specified for multipolygons [#406](https://github.com/Esri/esri-leaflet/issues/406)
-* dark gray basemap now utilizes our new production service [#399](https://github.com/Esri/esri-leaflet/issues/399)
+* Fixed duplicate Esri logo bug [#427](https://github.com/Esri/leaflet-trains/issues/427)
+* GeoJSON is now requested directly from ArcGIS Online Hosted Feature Services [#418](https://github.com/Esri/leaflet-trains/issues/418)
+* other FeatureLayer performance improvements [#416](https://github.com/Esri/leaflet-trains/issues/416)
+* `minZoom`, `maxZoom`, [#413](https://github.com/Esri/leaflet-trains/issues/413) and `cacheLayers` were added as new FeatureLayer constructor options
+* default fill is now specified for multipolygons [#406](https://github.com/Esri/leaflet-trains/issues/406)
+* dark gray basemap now utilizes our new production service [#399](https://github.com/Esri/leaflet-trains/issues/399)
 
 ## [Release Candidate 4]
 
 ### Changes
 
-* Fixed a bug where resetStyle would not work with MultiPolygon and MultiPolyline features [#390](https://github.com/Esri/esri-leaflet/issues/390)
-* Fixed a display bug when rapidly toggling L.esri.DynamicMapLayer on/off before the image completely loads [#386](https://github.com/Esri/esri-leaflet/issues/386)
-* Bower installation fixed [#378](https://github.com/Esri/esri-leaflet/issues/378)
+* Fixed a bug where resetStyle would not work with MultiPolygon and MultiPolyline features [#390](https://github.com/Esri/leaflet-trains/issues/390)
+* Fixed a display bug when rapidly toggling L.esri.DynamicMapLayer on/off before the image completely loads [#386](https://github.com/Esri/leaflet-trains/issues/386)
+* Bower installation fixed [#378](https://github.com/Esri/leaflet-trains/issues/378)
 
 ## [Release Candidate 3]
 
 ### Changes
 
-* Removed hardcoded http call in `L.esri.Controls.Logo` [#383](https://github.com/Esri/esri-leaflet/issues/383)
-* `L.esri.TiledMapLayer` now accepts a token option for secured tiles. [#384](https://github.com/Esri/esri-leaflet/issues/384)
-* Fixed a bug with `DynamicMapLayer` still rendering after being removed from the map. [#386](https://github.com/Esri/esri-leaflet/issues/386)
+* Removed hardcoded http call in `L.esri.Controls.Logo` [#383](https://github.com/Esri/leaflet-trains/issues/383)
+* `L.esri.TiledMapLayer` now accepts a token option for secured tiles. [#384](https://github.com/Esri/leaflet-trains/issues/384)
+* Fixed a bug with `DynamicMapLayer` still rendering after being removed from the map. [#386](https://github.com/Esri/leaflet-trains/issues/386)
 * Fixed 404s on example site.
-* Fixed setting sr param on `L.esri.Tasks.Find` [#379](https://github.com/Esri/esri-leaflet/issues/379)
-* `bower install esri-leaflet` now works properly.
+* Fixed setting sr param on `L.esri.Tasks.Find` [#379](https://github.com/Esri/leaflet-trains/issues/379)
+* `bower install leaflet-trains` now works properly.
 
 ## [Release Candidate 2]
 
@@ -532,18 +532,18 @@ None
 ## [Release Candidate 1]
 
 ### Changes
-* `L.esri.Task` now accepts `proxy` and `useCors` like `L.esri.Service`. https://github.com/Esri/esri-leaflet/pull/359
+* `L.esri.Task` now accepts `proxy` and `useCors` like `L.esri.Service`. https://github.com/Esri/leaflet-trains/pull/359
 * Esri Leaflet can now be used in Common JS (browserify) and AMD (Dojo, RequireJS) module loaders. Examples will be coming soon.
 * Source maps are now built and distributed along with the distribution files to aid in debugging. To learn how to use the source maps [Treehouse](http://blog.teamtreehouse.com/introduction-source-maps) and [HTML5Rocks](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/) have excellent resources.
-* `L.esri.ClusteredFeatureLayer` has been moved to its own repository. https://github.com/Esri/esri-leaflet-clustered-feature-layer
-* `L.esri.HeatmapFeatureLayer` has been moved to its own repository. https://github.com/Esri/esri-leaflet-heatmap-feature-layer
-* An edge case when converting ArcGIS > GeoJSON has been resolved https://github.com/Esri/esri-leaflet/pull/340
-* `popupOptions` are now properly persevered https://github.com/Esri/esri-leaflet/pull/348
-* `setStyle` now permanently overrides the style in `options.style`. https://github.com/Esri/esri-leaflet/pull/349
-* `setWhere` and `setTimeRange` now take callbacks. https://github.com/Esri/esri-leaflet/pull/354
-* You can now abort JSONP requests with request.abort() just like with `XMLHttpRequest`. https://github.com/Esri/esri-leaflet/pull/354
-* `returnGeometry` can now be set on `L.esri.Tasks.Query`. https://github.com/Esri/esri-leaflet/pull/358
-* a sample.html file was added to help jumpstart debugging local source files.  https://github.com/Esri/esri-leaflet/pull/364
+* `L.esri.ClusteredFeatureLayer` has been moved to its own repository. https://github.com/Esri/leaflet-trains-clustered-feature-layer
+* `L.esri.HeatmapFeatureLayer` has been moved to its own repository. https://github.com/Esri/leaflet-trains-heatmap-feature-layer
+* An edge case when converting ArcGIS > GeoJSON has been resolved https://github.com/Esri/leaflet-trains/pull/340
+* `popupOptions` are now properly persevered https://github.com/Esri/leaflet-trains/pull/348
+* `setStyle` now permanently overrides the style in `options.style`. https://github.com/Esri/leaflet-trains/pull/349
+* `setWhere` and `setTimeRange` now take callbacks. https://github.com/Esri/leaflet-trains/pull/354
+* You can now abort JSONP requests with request.abort() just like with `XMLHttpRequest`. https://github.com/Esri/leaflet-trains/pull/354
+* `returnGeometry` can now be set on `L.esri.Tasks.Query`. https://github.com/Esri/leaflet-trains/pull/358
+* a sample.html file was added to help jumpstart debugging local source files.  https://github.com/Esri/leaflet-trains/pull/364
 
 ### Breaking Changes
 
@@ -560,23 +560,23 @@ None
 * `L.esri.Tasks.Identify` has been renamed to `L.esri.Tasks.IdentifyFeatures`. This is to reduce confusion with `L.esri.Tasks.IdentifyImage` and to clearly delineate what these 2 classes do.
 
 ### Changes
-* Logo position can now be controlled by using the `logoPosition` option on `L.esri.BasemapLayer` https://github.com/Esri/esri-leaflet/issues/210
+* Logo position can now be controlled by using the `logoPosition` option on `L.esri.BasemapLayer` https://github.com/Esri/leaflet-trains/issues/210
 * Logo can now be hidden entirely and re-added to the map with the `L.esri.Controls.Logo` class. **If you use Esri map tiles you must display the Esri Logo!**
-* Fix a regression from Beta 4 where features could not be loaded from ArcGIS Server if they were in non-mercator references. https://github.com/Esri/esri-leaflet/issues/283 https://github.com/Esri/esri-leaflet/pull/322
-* The `addFeature`, `removeFeature`, `updateFeature` methods will no longer throw errors when callbacks are omitted. https://github.com/Esri/esri-leaflet/issues/285
-* `deleteFeature` now properly removes the feature from the map so it will now appear after zooming or panning. https://github.com/Esri/esri-leaflet/issues/284
-* New `createfeature`, `addfeature` and `removefeature` events on `L.esri.FeatureLayer`. https://github.com/Esri/esri-leaflet/issues/282
+* Fix a regression from Beta 4 where features could not be loaded from ArcGIS Server if they were in non-mercator references. https://github.com/Esri/leaflet-trains/issues/283 https://github.com/Esri/leaflet-trains/pull/322
+* The `addFeature`, `removeFeature`, `updateFeature` methods will no longer throw errors when callbacks are omitted. https://github.com/Esri/leaflet-trains/issues/285
+* `deleteFeature` now properly removes the feature from the map so it will now appear after zooming or panning. https://github.com/Esri/leaflet-trains/issues/284
+* New `createfeature`, `addfeature` and `removefeature` events on `L.esri.FeatureLayer`. https://github.com/Esri/leaflet-trains/issues/282
 * `L.esri.Tasks.Query` now supports Map Services and Image Services with the new `query.layer(id)` and `query.pixelSize(point)` params respectively
-* New `L.esri.Tasks.Find` task for searching feature text in Map Services https://github.com/Esri/esri-leaflet/pull/287. Thanks @rdjurasaj-usgs!
+* New `L.esri.Tasks.Find` task for searching feature text in Map Services https://github.com/Esri/leaflet-trains/pull/287. Thanks @rdjurasaj-usgs!
 * Support for image services via `L.esri.Layers.ImageMapLayer`. Thanks @rdjurasaj-usgs and @tomwayson
 * `L.esri.Tasks.IdentifyImage` for identifying images. Thanks @tomwayson.
 
 ### Misc
-* [New example](esri.github.io/esri-leaflet/examples/parse-feature-collection.html) for parsing [Feature Collections](http://resources.arcgis.com/en/help/arcgis-rest-api/#/featureCollection/02r30000003m000000/) from ArcGIS Online.
+* [New example](esri.github.io/leaflet-trains/examples/parse-feature-collection.html) for parsing [Feature Collections](http://resources.arcgis.com/en/help/arcgis-rest-api/#/featureCollection/02r30000003m000000/) from ArcGIS Online.
 * [New example]() for labeling points with [Leaflet.label](https://github.com/Leaflet/Leaflet.label).
-* Travis CI is now running tests https://github.com/Esri/esri-leaflet/pull/271
-* Build are no longer saved in the `/dist` folder. https://github.com/Esri/esri-leaflet/pull/307
-* [Development Roadmap](https://github.com/Esri/esri-leaflet/wiki/Roadmap) has been updated.
+* Travis CI is now running tests https://github.com/Esri/leaflet-trains/pull/271
+* Build are no longer saved in the `/dist` folder. https://github.com/Esri/leaflet-trains/pull/307
+* [Development Roadmap](https://github.com/Esri/leaflet-trains/wiki/Roadmap) has been updated.
 
 ## [Beta 5]
 
@@ -625,15 +625,15 @@ None
 ## [Beta 4]
 
 ### New Demos
-* Heat map layer - http://esri.github.io/esri-leaflet/heatmaplayer.html
-* Geocoder - http://esri.github.io/esri-leaflet/findplaces.html
+* Heat map layer - http://esri.github.io/leaflet-trains/heatmaplayer.html
+* Geocoder - http://esri.github.io/leaflet-trains/findplaces.html
 
 ### Changes
 
-* Authentication for ClusteredFeatureLayer https://github.com/Esri/esri-leaflet/commit/d23ddd99ee86bb7255e4d89b6cf3f339a441c88b
+* Authentication for ClusteredFeatureLayer https://github.com/Esri/leaflet-trains/commit/d23ddd99ee86bb7255e4d89b6cf3f339a441c88b
 * Removed Terraformer as a dependency to cut down on build size and complexity. The neccessary Terraformer methods have been ported into L.esri.Util. This cuts a whomping 15kb from the build!
-* Fix for DynamicMapLayer that is outside of min/max zoom levels https://github.com/Esri/esri-leaflet/commit/0d2c2c36ed6ccbad96e0ab24c24cc48f43079ade
-* Fix for layerDefs in DynamicMapLayer https://github.com/Esri/esri-leaflet/commit/1375bbf2768ba0fb6806f51c09a3d6fa192521d9
+* Fix for DynamicMapLayer that is outside of min/max zoom levels https://github.com/Esri/leaflet-trains/commit/0d2c2c36ed6ccbad96e0ab24c24cc48f43079ade
+* Fix for layerDefs in DynamicMapLayer https://github.com/Esri/leaflet-trains/commit/1375bbf2768ba0fb6806f51c09a3d6fa192521d9
 * Add HeatmapFeatureLayer based on Leaflet.heat
 * Add where and fields options to FeatureLayer and ClusteredFeatureLayer, and HeatmapFeatureLayer
 * Add bounds property to the metadata event when possible #216
@@ -646,48 +646,48 @@ None
 * Add DarkGray and DarkGrayLabels to BasemapLayer. #190
 * An attributionControl on maps is now required when using BasemapLayer. #159
 
-[unreleased]: https://github.com/esri/esri-leaflet/compare/v2.2.3...HEAD
-[2.2.3]: https://github.com/esri/esri-leaflet/compare/v2.2.2...v2.2.3
-[2.2.2]: https://github.com/esri/esri-leaflet/compare/v2.2.1...v2.2.2
-[2.2.1]: https://github.com/esri/esri-leaflet/compare/v2.2.0...v2.2.1
-[2.2.0]: https://github.com/esri/esri-leaflet/compare/v2.1.4...v2.2.0
-[2.1.4]: https://github.com/esri/esri-leaflet/compare/v2.1.3...v2.1.4
-[2.1.3]: https://github.com/esri/esri-leaflet/compare/v2.1.2...v2.1.3
-[2.1.2]: https://github.com/esri/esri-leaflet/compare/v2.1.1...v2.1.2
-[2.1.1]: https://github.com/esri/esri-leaflet/compare/v2.1.0...v2.1.1
-[2.1.0]: https://github.com/esri/esri-leaflet/compare/v2.0.8...v2.1.0
-[2.0.8]: https://github.com/esri/esri-leaflet/compare/v2.0.7...v2.0.8
-[2.0.7]: https://github.com/esri/esri-leaflet/compare/v2.0.6...v2.0.7
-[2.0.6]: https://github.com/esri/esri-leaflet/compare/v2.0.5...v2.0.6
-[2.0.5]: https://github.com/esri/esri-leaflet/compare/v2.0.4...v2.0.5
-[2.0.4]: https://github.com/esri/esri-leaflet/compare/v2.0.3...v2.0.4
-[2.0.3]: https://github.com/esri/esri-leaflet/compare/v2.0.2...v2.0.3
-[2.0.2]: https://github.com/esri/esri-leaflet/compare/v2.0.1...v2.0.2
-[2.0.1]: https://github.com/esri/esri-leaflet/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.8...v2.0.0
-[2.0.0-beta.8]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.7...v2.0.0-beta.8
-[2.0.0-beta.7]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.6...v2.0.0-beta.7
-[1.0.4]: https://github.com/esri/esri-leaflet/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/esri/esri-leaflet/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/esri/esri-leaflet/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v1.0.1
-[2.0.0-beta.6]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.5...v2.0.0-beta.6
-[2.0.0-beta.5]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.4...v2.0.0-beta.5
-[2.0.0-beta.4]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.3...v2.0.0-beta.4
-[2.0.0-beta.3]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.2...v2.0.0-beta.3
-[2.0.0-beta.2]: https://github.com/esri/esri-leaflet/compare/v2.0.0-beta.1...v2.0.0-beta.2
-[2.0.0-beta.1]: https://github.com/esri/esri-leaflet/compare/v1.0.0...v2.0.0-beta.1
-[1.0.0]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.8...v1.0.0
-[Release Candidate 8]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.7...v1.0.0-rc.8
-[Release Candidate 7]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.6...v1.0.0-rc.7
-[Release Candidate 6]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.5...v1.0.0-rc.6
-[Release Candidate 5]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.4...v1.0.0-rc.5
-[Release Candidate 4]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.3...v1.0.0-rc.4
-[Release Candidate 3]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.2...v1.0.0-rc.3
-[Release Candidate 2]: https://github.com/esri/esri-leaflet/compare/v1.0.0-rc.1...v1.0.0-rc.2
-[Release Candidate 1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.6...v1.0.0-rc.1
-[Beta 6]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.5...v0.0.1-beta.6
-[Beta 5]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4-patch-1...v0.0.1-beta.5
-[Beta 4 Patch 1]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.4...v0.0.1-beta.4-patch-1
-[Beta 4]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.3...v0.0.1-beta.4
-[Beta 3]: https://github.com/esri/esri-leaflet/compare/v0.0.1-beta.2...v0.0.1-beta.3
+[unreleased]: https://github.com/esri/leaflet-trains/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/esri/leaflet-trains/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/esri/leaflet-trains/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/esri/leaflet-trains/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/esri/leaflet-trains/compare/v2.1.4...v2.2.0
+[2.1.4]: https://github.com/esri/leaflet-trains/compare/v2.1.3...v2.1.4
+[2.1.3]: https://github.com/esri/leaflet-trains/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/esri/leaflet-trains/compare/v2.1.1...v2.1.2
+[2.1.1]: https://github.com/esri/leaflet-trains/compare/v2.1.0...v2.1.1
+[2.1.0]: https://github.com/esri/leaflet-trains/compare/v2.0.8...v2.1.0
+[2.0.8]: https://github.com/esri/leaflet-trains/compare/v2.0.7...v2.0.8
+[2.0.7]: https://github.com/esri/leaflet-trains/compare/v2.0.6...v2.0.7
+[2.0.6]: https://github.com/esri/leaflet-trains/compare/v2.0.5...v2.0.6
+[2.0.5]: https://github.com/esri/leaflet-trains/compare/v2.0.4...v2.0.5
+[2.0.4]: https://github.com/esri/leaflet-trains/compare/v2.0.3...v2.0.4
+[2.0.3]: https://github.com/esri/leaflet-trains/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/esri/leaflet-trains/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/esri/leaflet-trains/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.8...v2.0.0
+[2.0.0-beta.8]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.7...v2.0.0-beta.8
+[2.0.0-beta.7]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.6...v2.0.0-beta.7
+[1.0.4]: https://github.com/esri/leaflet-trains/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/esri/leaflet-trains/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/esri/leaflet-trains/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/esri/leaflet-trains/compare/v1.0.0...v1.0.1
+[2.0.0-beta.6]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.5...v2.0.0-beta.6
+[2.0.0-beta.5]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.4...v2.0.0-beta.5
+[2.0.0-beta.4]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.3...v2.0.0-beta.4
+[2.0.0-beta.3]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.2...v2.0.0-beta.3
+[2.0.0-beta.2]: https://github.com/esri/leaflet-trains/compare/v2.0.0-beta.1...v2.0.0-beta.2
+[2.0.0-beta.1]: https://github.com/esri/leaflet-trains/compare/v1.0.0...v2.0.0-beta.1
+[1.0.0]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.8...v1.0.0
+[Release Candidate 8]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.7...v1.0.0-rc.8
+[Release Candidate 7]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.6...v1.0.0-rc.7
+[Release Candidate 6]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.5...v1.0.0-rc.6
+[Release Candidate 5]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.4...v1.0.0-rc.5
+[Release Candidate 4]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.3...v1.0.0-rc.4
+[Release Candidate 3]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.2...v1.0.0-rc.3
+[Release Candidate 2]: https://github.com/esri/leaflet-trains/compare/v1.0.0-rc.1...v1.0.0-rc.2
+[Release Candidate 1]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.6...v1.0.0-rc.1
+[Beta 6]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.5...v0.0.1-beta.6
+[Beta 5]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.4-patch-1...v0.0.1-beta.5
+[Beta 4 Patch 1]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.4...v0.0.1-beta.4-patch-1
+[Beta 4]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.3...v0.0.1-beta.4
+[Beta 3]: https://github.com/esri/leaflet-trains/compare/v0.0.1-beta.2...v0.0.1-beta.3

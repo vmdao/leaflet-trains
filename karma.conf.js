@@ -16,7 +16,7 @@ module.exports = function (config) {
     files: [
       'node_modules/leaflet/dist/leaflet.css',
       'node_modules/leaflet/dist/leaflet-src.js',
-      'dist/esri-leaflet-debug.js',
+      'dist/leaflet-trains-debug.js',
       // these two are the tempermental ones
       'spec/Layers/ImageMapLayerSpec.js',
       'spec/Layers/DynamicMapLayerSpec.js',

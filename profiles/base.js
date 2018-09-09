@@ -7,9 +7,9 @@ var copyright = '/* ' + pkg.name + ' - v' + pkg.version + ' - ' + new Date().toS
   ' * ' + pkg.license + ' */';
 
 export default {
-  input: 'src/EsriLeaflet.js',
+  input: 'src/LeafletTrains.js',
 
-  external: ['leaflet', 'esri-leaflet'],
+  external: ['leaflet', 'leaflet-trains'],
   plugins: [
     nodeResolve({
       jsnext: true,
@@ -26,7 +26,7 @@ export default {
     name: 'L.enouvo',
     globals: {
       'leaflet': 'L',
-      'esri-leaflet': 'L.enouvo'
+      'leaflet-trains': 'L.enouvo'
     },
     sourcemap: true
   }

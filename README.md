@@ -2,23 +2,23 @@
 
 [![npm version][npm-img]][npm-url]
 [![build status][travis-img]][travis-url]
-[![apache licensed](https://img.shields.io/badge/license-Apache%202.0-orange.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/esri-leaflet/master/LICENSE)
-[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/esri-leaflet/badge)](https://www.jsdelivr.com/package/npm/esri-leaflet)
+[![apache licensed](https://img.shields.io/badge/license-Apache%202.0-orange.svg?style=flat-square)](https://raw.githubusercontent.com/Esri/leaflet-trains/master/LICENSE)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/leaflet-trains/badge)](https://www.jsdelivr.com/package/npm/leaflet-trains)
 
-[npm-img]: https://img.shields.io/npm/v/esri-leaflet.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/esri-leaflet
-[travis-img]: https://img.shields.io/travis/Esri/esri-leaflet/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/Esri/esri-leaflet
+[npm-img]: https://img.shields.io/npm/v/leaflet-trains.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/leaflet-trains
+[travis-img]: https://img.shields.io/travis/Esri/leaflet-trains/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/Esri/leaflet-trains
 
-[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/esri-leaflet/examples/switching-basemaps.html) and [feature services](http://esri.github.io/esri-leaflet/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/esri-leaflet/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/esri-leaflet/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/esri-leaflet/examples/simple-image-map-layer.html)  services.
+[Leaflet](http://leafletjs.com/) plugins for working with a handful of the most popular [ArcGIS Service](http://developers.arcgis.com) types. This includes Esri [basemaps](http://esri.github.io/leaflet-trains/examples/switching-basemaps.html) and [feature services](http://esri.github.io/leaflet-trains/examples/simple-feature-layer.html), as well as [tiled](http://esri.github.io/leaflet-trains/examples/tile-layer-2.html) map, [dynamic](http://esri.github.io/leaflet-trains/examples/simple-dynamic-map-layer.html) map and [image](http://esri.github.io/leaflet-trains/examples/simple-image-map-layer.html)  services.
 
 > This project is maintained with :heart: by folks spanning multiple teams within Esri, but we provide no guarantee of individual features, nor a traditional product lifecycle to support planning.
 
 The goal of this project is **not** to replace the [ArcGIS API for JavaScript](https://developers.arcgis.com/en/javascript/) but rather to provide small components for *only some* aspects of the ArcGIS platform for developers who prefer to build mapping applications with [Leaflet](http://leafletjs.com/).
 
-We are proud to facilitate a project which requires participation from our diverse user community in order to thrive and we welcome contributions from those [just getting their feet wet](https://github.com/Esri/esri-leaflet/issues/647) in open-source.
+We are proud to facilitate a project which requires participation from our diverse user community in order to thrive and we welcome contributions from those [just getting their feet wet](https://github.com/Esri/leaflet-trains/issues/647) in open-source.
 
-Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services and [Geoprocessing](https://github.com/jgravois/esri-leaflet-gp) services, as well as service defined [rendering](https://github.com/esri/esri-leaflet-renderers) are available as well (via additional plugins).
+Support for [Geocoding](https://github.com/Esri/leaflet-trains-geocoder) services and [Geoprocessing](https://github.com/jgravois/leaflet-trains-gp) services, as well as service defined [rendering](https://github.com/esri/leaflet-trains-renderers) are available as well (via additional plugins).
 
 > If you'd like to display Esri services in *any* Leaflet application, we ask that you adhere to our [Terms of Use](#terms) and attribution requirements.
 
@@ -43,12 +43,12 @@ Support for [Geocoding](https://github.com/Esri/esri-leaflet-geocoder) services 
 ## Demos
 We've shared lots of sample code showing off many of the features of Esri Leaflet.
 
-http://esri.github.io/esri-leaflet/examples/
+http://esri.github.io/leaflet-trains/examples/
 
 ## Example
-The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/esri-leaflet). Here is an example you can copy/paste into your own `.html` file.
+The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.com/leaflet-trains). Here is an example you can copy/paste into your own `.html` file.
 
-![App](https://raw.github.com/Esri/esri-leaflet/master/example.png)
+![App](https://raw.github.com/Esri/leaflet-trains/master/example.png)
 
 ```html
 <!DOCTYPE html>
@@ -59,7 +59,7 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-trains/dist/leaflet-trains.js"></script>
 
     <style>
       html, body, #map {
@@ -90,9 +90,9 @@ The easiest way to get started is to load Esri Leaflet via [CDN](https://unpkg.c
 </html>
 ```
 
-## [API Reference](http://esri.github.io/esri-leaflet/api-reference/)
+## [API Reference](http://esri.github.io/leaflet-trains/api-reference/)
 
-The source code for our documentation site can be found [here](https://github.com/Esri/esri-leaflet-doc). If you notice a typo or other problem, _please_ [let us know](https://github.com/Esri/esri-leaflet-doc/issues)!
+The source code for our documentation site can be found [here](https://github.com/Esri/leaflet-trains-doc). If you notice a typo or other problem, _please_ [let us know](https://github.com/Esri/leaflet-trains-doc/issues)!
 
 ## Additional Plugins
 
@@ -102,37 +102,37 @@ http://leafletjs.com/plugins.html
 
 You can also pick and choose additional Esri Leaflet plugins.
 
-http://esri.github.io/esri-leaflet/plugins/
+http://esri.github.io/leaflet-trains/plugins/
 
 ## Frequently Asked Questions
 
 * [What are the terms of use for ArcGIS Online services?](#terms)
-* [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/esri-leaflet/wiki/FAQ#what-is-esri-leaflet)
-* [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/esri-leaflet/wiki/FAQ#will-esri-leaflet-replace-the-arcgis-api-for-javascript)
-* [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/esri-leaflet/wiki/FAQ#why-use-esri-leaflet)
-* [What are the goals of Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-the-goals-of-esri-leaflet)
-* [Can I use Esri Leaflet with Leaflet Version 1.0.x?](https://github.com/Esri/esri-leaflet/wiki/FAQ#can-i-use-esri-leaflet-with-leaflet-version-10x)
-* [How do you decide what features get included in Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#how-do-you-decide-what-features-get-included-in-esri-leaflet)
-* [I have an idea! What should I do?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-have-an-idea-what-should-i-do)
-* [When will you support "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#when-will-you-support-x)
-* [Can you implement feature "x"?](https://github.com//Esri/esri-leaflet/wiki/FAQ#can-you-implement-feature-x)
-* [I want to contribute. How can I help?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-want-to-contribute-how-can-i-help)
-* [I built something with Esri Leaflet can I show you?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-something-with-esri-leaflet-can-i-show-you)
-* [I built a reusable component (layer type, api wrapper, ui control etc...) can I contribute it to Esri Leaflet?](https://github.com//Esri/esri-leaflet/wiki/FAQ#i-built-a-reusable-component-layer-type-api-wrapper-ui-control-etc-can-i-contribute-it-to-esri-leaflet)
-* [Which services require authentication?](https://github.com//Esri/esri-leaflet/wiki/FAQ#which-services-require-authentication)
-* [What are some good Leaflet Plugins?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-are-some-good-leaflet-plugins)
-* [What browsers does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-browsers-does-esri-leaflet-support)
-* [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com//Esri/esri-leaflet/wiki/FAQ#what-versions-of-arcgis-server-does-esri-leaflet-support)
-* [Upgrading the version of Esri Leaflet used in my app broke everything!](https://github.com//Esri/esri-leaflet/wiki/FAQ#upgrading-the-version-of-esri-leaflet-used-in-my-app-broke-everything)
-* [Does Esri Leaflet support IE 'compatibility mode'?](https://github.com//Esri/esri-leaflet/wiki/FAQ#compatibility-mode)
-* [I'm into TypeScript, but Esri Leaflet seems to be a vanilla JS thing. Can I find typings somewhere?](https://github.com//Esri/esri-leaflet/wiki/FAQ#typescript-typings)
-* [When _exactly_ do I need to use a paid Esri developer account to deploy to production?](https://github.com//Esri/esri-leaflet/wiki/FAQ#deployment-plan)
+* [What exactly is Esri Leaflet?  Is it a replacement for Leaflet?](https://github.com/Esri/leaflet-trains/wiki/FAQ#what-is-leaflet-trains)
+* [Will Esri Leaflet replace the ArcGIS API for JavaScript?](https://github.com//Esri/leaflet-trains/wiki/FAQ#will-leaflet-trains-replace-the-arcgis-api-for-javascript)
+* [What is the benefit of using Esri Leaflet over using Leaflet all by itself?](https://github.com//Esri/leaflet-trains/wiki/FAQ#why-use-leaflet-trains)
+* [What are the goals of Esri Leaflet?](https://github.com//Esri/leaflet-trains/wiki/FAQ#what-are-the-goals-of-leaflet-trains)
+* [Can I use Esri Leaflet with Leaflet Version 1.0.x?](https://github.com/Esri/leaflet-trains/wiki/FAQ#can-i-use-leaflet-trains-with-leaflet-version-10x)
+* [How do you decide what features get included in Esri Leaflet?](https://github.com//Esri/leaflet-trains/wiki/FAQ#how-do-you-decide-what-features-get-included-in-leaflet-trains)
+* [I have an idea! What should I do?](https://github.com//Esri/leaflet-trains/wiki/FAQ#i-have-an-idea-what-should-i-do)
+* [When will you support "x"?](https://github.com//Esri/leaflet-trains/wiki/FAQ#when-will-you-support-x)
+* [Can you implement feature "x"?](https://github.com//Esri/leaflet-trains/wiki/FAQ#can-you-implement-feature-x)
+* [I want to contribute. How can I help?](https://github.com//Esri/leaflet-trains/wiki/FAQ#i-want-to-contribute-how-can-i-help)
+* [I built something with Esri Leaflet can I show you?](https://github.com//Esri/leaflet-trains/wiki/FAQ#i-built-something-with-leaflet-trains-can-i-show-you)
+* [I built a reusable component (layer type, api wrapper, ui control etc...) can I contribute it to Esri Leaflet?](https://github.com//Esri/leaflet-trains/wiki/FAQ#i-built-a-reusable-component-layer-type-api-wrapper-ui-control-etc-can-i-contribute-it-to-leaflet-trains)
+* [Which services require authentication?](https://github.com//Esri/leaflet-trains/wiki/FAQ#which-services-require-authentication)
+* [What are some good Leaflet Plugins?](https://github.com//Esri/leaflet-trains/wiki/FAQ#what-are-some-good-leaflet-plugins)
+* [What browsers does Esri Leaflet support?](https://github.com//Esri/leaflet-trains/wiki/FAQ#what-browsers-does-leaflet-trains-support)
+* [What versions of ArcGIS Server does Esri Leaflet support?](https://github.com//Esri/leaflet-trains/wiki/FAQ#what-versions-of-arcgis-server-does-leaflet-trains-support)
+* [Upgrading the version of Esri Leaflet used in my app broke everything!](https://github.com//Esri/leaflet-trains/wiki/FAQ#upgrading-the-version-of-leaflet-trains-used-in-my-app-broke-everything)
+* [Does Esri Leaflet support IE 'compatibility mode'?](https://github.com//Esri/leaflet-trains/wiki/FAQ#compatibility-mode)
+* [I'm into TypeScript, but Esri Leaflet seems to be a vanilla JS thing. Can I find typings somewhere?](https://github.com//Esri/leaflet-trains/wiki/FAQ#typescript-typings)
+* [When _exactly_ do I need to use a paid Esri developer account to deploy to production?](https://github.com//Esri/leaflet-trains/wiki/FAQ#deployment-plan)
 
 ## Issues
 
-If something isn't working the way you expected, please take a look at [previously logged issues](https://github.com/Esri/esri-leaflet/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems first.  Have you found a new bug?  Want to request a new feature?  We'd love to hear from you.  Please let us know by submitting an [issue](https://github.com/Esri/esri-leaflet/issues).
+If something isn't working the way you expected, please take a look at [previously logged issues](https://github.com/Esri/leaflet-trains/issues?labels=FAQ&milestone=&page=1&state=closed) that resolve common problems first.  Have you found a new bug?  Want to request a new feature?  We'd love to hear from you.  Please let us know by submitting an [issue](https://github.com/Esri/leaflet-trains/issues).
 
-If you're looking for help you can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=esri-leaflet,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=esri-leaflet,leaflet) on GeoNet.
+If you're looking for help you can also post issues on [GIS Stackexchange](http://gis.stackexchange.com/questions/ask?tags=leaflet-trains,leaflet) and/or the [Esri Leaflet place](https://geonet.esri.com/discussion/create.jspa?sr=pmenu&containerID=1841&containerType=700&tags=leaflet-trains,leaflet) on GeoNet.
 
 ## Going Deeper
 
@@ -141,18 +141,18 @@ If you're looking for help you can also post issues on [GIS Stackexchange](http:
 If you'd like to inspect and modify the source of Esri Leaflet, follow the instructions below to set up a local development environment.
 
 1. [Fork and clone Esri Leaflet](https://help.github.com/articles/fork-a-repo)
-2. `cd` into the `esri-leaflet` folder
-3. Install the [`package.json`](https://github.com/Esri/esri-leaflet/blob/master/package.json#L14-L49) dependencies by running `npm install`
+2. `cd` into the `leaflet-trains` folder
+3. Install the [`package.json`](https://github.com/Esri/leaflet-trains/blob/master/package.json#L14-L49) dependencies by running `npm install`
 4. Run `npm start` from the command line. This will compile minified source in a brand new `dist` directory, launch a tiny webserver and begin watching the raw source for changes.
 5. Run `npm test` to make sure you haven't introduced a new 'feature' accidentally.
 6. Make your changes and create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Dependencies
 
-* Esri Leaflet [1.x](https://github.com/Esri/esri-leaflet/releases/tag/v1.0.4) (available on [CDN](https://unpkg.com/esri-leaflet@1.0.4)) can be used in apps alongside:
+* Esri Leaflet [1.x](https://github.com/Esri/leaflet-trains/releases/tag/v1.0.4) (available on [CDN](https://unpkg.com/leaflet-trains@1.0.4)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 0.7.x.
 
-* Esri Leaflet [2.x](https://github.com/Esri/esri-leaflet/releases/tag/v2.0.8) (available on [CDN](https://unpkg.com/esri-leaflet@2.0.8)) can be used in apps alongside:
+* Esri Leaflet [2.x](https://github.com/Esri/leaflet-trains/releases/tag/v2.0.8) (available on [CDN](https://unpkg.com/leaflet-trains@2.0.8)) can be used in apps alongside:
   *  [Leaflet](http://leafletjs.com) version 1.x.
 
 The `master` branch of this repository is *only* compatible with Leaflet 1.x.
@@ -165,7 +165,7 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 ### Contributing
 
-Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/esri-leaflet/blob/master/CONTRIBUTING.md).
+Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/leaflet-trains/blob/master/CONTRIBUTING.md).
 
 ### Terms
 
@@ -182,7 +182,7 @@ If you display an ArcGIS Online service in **any** Leaflet application, we requi
 L.esri.basemapLayer('Topographic').addTo(map);
 ```
 
-![attribution](https://raw.github.com/Esri/esri-leaflet/master/attribution.png)
+![attribution](https://raw.github.com/Esri/leaflet-trains/master/attribution.png)
 
 If you need more than 1 million [map transactions](http://doc.arcgis.com/en/arcgis-online/reference/transaction-limits.htm) per month, please let us know.
 
