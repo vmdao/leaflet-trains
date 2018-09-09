@@ -8,7 +8,7 @@ export var BaseAsset = Marker.extend({
         this.type = type;
         this.selected = false;
         this.canMove = false;
-        const htmlStationIcon = type === 'station' ? '<div><img style="width:100%; height:100%" src="subway-sign.svg"></div>' : '<div><img style="width:100%; height:100%" src="subway-train.svg"></div>'
+        const htmlStationIcon = type === 'station' ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>' : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>'
         const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
         const icon = new DivIcon({
             iconSize: sizeIcon,
