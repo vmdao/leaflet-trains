@@ -45,7 +45,8 @@
     "src/**/*.js",
     "dist/leaflet-trains.js",
     "dist/leaflet-trains.js.map",
-    "dist/leaflet-trains-debug.js.map"
+    "dist/leaflet-trains-debug.js.map",
+    "dist/leaflet-trains.css"
   ],
   "homepage": "http://esri.github.io/leaflet-trains",
   "module": "src/EsriLeaflet.js",
