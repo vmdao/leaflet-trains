@@ -1,0 +1,10 @@
+.leaflet-div-icon {
+    padding: 8px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-div-icon {
+    border-radius: 50%;
+}
