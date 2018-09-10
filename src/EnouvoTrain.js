@@ -171,10 +171,9 @@ export class EnouvoTrain {
   unSelectedAsset(Id) {
     this.networkMaps.eachLayer(layer => {
       if (layer.feature.properties.Id === Id) {
-        console.log(layer.feature, 'Id', Id);
         layer.feature.selected = false;
         layer.selected = false;
-        layer.properties.selected = false;
+        layer.feature.properties.selected = false;
       }
     });
   }
