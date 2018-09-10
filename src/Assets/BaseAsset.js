@@ -3,26 +3,18 @@ import { EventEmitter } from '../EventEmitter';
 
 export var BaseAsset = Marker.extend({
   initialize: function(type, latlng, options) {
+    const _options = { icon: options.icon };
+    Marker.prototype.initialize.call(this, latlng, _options);
+
     this.feature = options;
     this.poolListener = [];
     this.type = type;
     this.selected = false;
     this.canMove = false;
-    const htmlStationIcon =
-      type === 'station'
-        ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>'
-        : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>';
-    const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
-    const icon = new DivIcon({
-      iconSize: sizeIcon,
-      html: htmlStationIcon
-    });
 
-    const _options = { icon: icon };
-
-    Marker.prototype.initialize.call(this, latlng, _options);
-    this._createPopup();
     this._createObserver();
+
+    // this._createPopup();
     // this._addEventListener(this);
   },
 

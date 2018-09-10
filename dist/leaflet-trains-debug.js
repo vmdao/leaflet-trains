@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 15:10:49 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 17:07:36 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4700,26 +4700,18 @@ proto._getEvents = function _getEvents() {
 
 var BaseAsset = leaflet.Marker.extend({
   initialize: function(type, latlng, options) {
+    const _options = { icon: options.icon };
+    leaflet.Marker.prototype.initialize.call(this, latlng, _options);
+
     this.feature = options;
     this.poolListener = [];
     this.type = type;
     this.selected = false;
     this.canMove = false;
-    const htmlStationIcon =
-      type === 'station'
-        ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>'
-        : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>';
-    const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
-    const icon = new leaflet.DivIcon({
-      iconSize: sizeIcon,
-      html: htmlStationIcon
-    });
 
-    const _options = { icon: icon };
-
-    leaflet.Marker.prototype.initialize.call(this, latlng, _options);
-    this._createPopup();
     this._createObserver();
+
+    // this._createPopup();
     // this._addEventListener(this);
   },
 
@@ -4801,9 +4793,32 @@ function baseAsset(type, latlng, options) {
   return new BaseAsset(type, latlng, options);
 }
 
+var StationIcon = leaflet.DivIcon.extend({
+  initialize: function(options) {
+    const iconUrl = 'assets/images/ic-marker-station.svg';
+    const html =
+      '<div class="leaflet-trains-station-asset"><div class="leaflet-trains-station-asset-name">Kooyong</div><img class="leaflet-trains-station-asset-img" src="' +
+      iconUrl +
+      '"></div>';
+    const sizeIcon = [24, 24];
+
+    const _options = {
+      html: html,
+      iconSize: sizeIcon
+    };
+    leaflet.DivIcon.prototype.initialize.call(this, _options);
+  }
+});
+
+var stationIcon = function(options) {
+  return new StationIcon(options);
+};
+
 var StationAsset = BaseAsset.extend({
   initialize: function(type, latlng, options) {
-    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+    const icon = stationIcon(latlng, options);
+    const _options = Object.assign({ icon: icon }, options);
+    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
   }
 });
 
@@ -4811,9 +4826,34 @@ function stationAsset(latlng, options) {
   return new StationAsset('station', latlng, options);
 }
 
+var TrainIcon = leaflet.DivIcon.extend({
+  initialize: function(options) {
+    const iconUrl = 'assets/images/ic-marker-train.svg';
+    const html =
+      '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"></div></div><div class="leaflet-trains-train-asset-name">TH798</div><img class="leaflet-trains-train-asset-img" src="' +
+      iconUrl +
+      '"></div>';
+    const sizeIcon = [38, 38];
+
+    const _options = {
+      html: html,
+      iconSize: sizeIcon
+    };
+
+    leaflet.DivIcon.prototype.initialize.call(this, _options);
+  }
+});
+
+var trainIcon = function(options) {
+  return new TrainIcon(options);
+};
+
 var TrainAsset = BaseAsset.extend({
   initialize: function(type, latlng, options) {
-    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+    const icon = trainIcon(latlng);
+    const _options = Object.assign({ icon: icon }, options);
+    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
+
     this.canMove = true;
     this._createPopup(options.feature);
   },

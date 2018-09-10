@@ -1,10 +1,14 @@
 import { Util } from 'leaflet';
 import { convertToTimeHuman } from '../Util';
 import { BaseAsset } from './BaseAsset';
+import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
   initialize: function(type, latlng, options) {
-    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+    const icon = trainIcon(latlng);
+    const _options = Object.assign({ icon: icon }, options);
+    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
+
     this.canMove = true;
     this._createPopup(options.feature);
   },

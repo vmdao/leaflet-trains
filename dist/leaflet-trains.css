@@ -1,12 +1,107 @@
 .leaflet-div-icon {
-    padding: 8px;
     border: none;
     border-radius: 50%;
+}
+
+.leaflet-trains-station-asset {
+    box-sizing: border-box;
+    background-color: #f87e23;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+    position: relative;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-.leaflet-div-icon {
+.leaflet-trains-station-asset-name {
+    position: absolute;
+    background-color: #f87e23;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -24px;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 0.65rem;
+    padding: 0 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-trains-station-asset-img {
+    max-width: 85%;
+    max-height: 85%;
+    width: 85%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.leaflet-trains-train-asset {
+    box-sizing: border-box;
+    position: relative;
+    background-color: #3949ab;
     border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    border: 2px solid #ffffff;
+}
+
+.leaflet-trains-train-asset-arrow {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -26px;
+}
+
+.train-arrow {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 20px solid #ffffff;
+    border-bottom: 10px solid transparent;
+}
+
+.train-arrow::after {
+    position: absolute;
+    color: transparent;
+    top: -7px;
+    left: -18px;
+    content: ',';
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-left: 14px solid #3949ab;
+    border-bottom: 7px solid transparent;
+}
+
+.leaflet-trains-train-asset-name {
+    position: absolute;
+    background-color: #3949ab;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -24px;
+    border: 2px solid #ffffff;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 0.65rem;
+    padding: 0 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.leaflet-trains-train-asset-img {
+    max-width: 70%;
+    max-height: 70%;
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .leaflet-popup-content-wrapper {
