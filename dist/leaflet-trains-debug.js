@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 19:42:25 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 20:06:42 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4864,7 +4864,6 @@ var TrainAsset = BaseAsset.extend({
     this._createPopup(options.properties);
   },
   _createPopup(data) {
-    console.log('data', data);
     data = {
       trainName: data.name,
       trainId: data.Id,
@@ -5102,7 +5101,10 @@ class EnouvoTrain {
   unSelectedAsset(Id) {
     this.networkMaps.eachLayer(layer => {
       if (layer.feature.properties.Id === Id) {
+        console.log(layer.feature, 'Id', Id);
         layer.feature.selected = false;
+        layer.selected = false;
+        layer.properties.selected = false;
       }
     });
   }

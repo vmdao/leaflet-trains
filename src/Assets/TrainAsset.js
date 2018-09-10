@@ -13,7 +13,6 @@ export var TrainAsset = BaseAsset.extend({
     this._createPopup(options.properties);
   },
   _createPopup(data) {
-    console.log('data', data);
     data = {
       trainName: data.name,
       trainId: data.Id,
