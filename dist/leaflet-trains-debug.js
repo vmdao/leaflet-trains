@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Sun Sep 09 2018 15:53:30 GMT+0700 (Indochina Time)
+/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 09:57:25 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4509,7 +4509,7 @@ var BaseAsset = leaflet.Marker.extend({
         this.type = type;
         this.selected = false;
         this.canMove = false;
-        const htmlStationIcon = type === 'station' ? '<div><img style="width:100%; height:100%" src="subway-sign.svg"></div>' : '<div><img style="width:100%; height:100%" src="subway-train.svg"></div>';
+        const htmlStationIcon = type === 'station' ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>' : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>';
         const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
         const icon = new leaflet.DivIcon({
             iconSize: sizeIcon,

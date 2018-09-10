@@ -1,6 +1,6 @@
 {
   "name": "leaflet-trains",
-  "description": "Leaflet plugins for consuming ArcGIS Online and ArcGIS Server services.",
+  "description": "Leaflet trains",
   "license": "Apache-2.0",
   "main": "dist/leaflet-trains.js",
   "dependencies": {
