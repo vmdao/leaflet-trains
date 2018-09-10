@@ -3,7 +3,6 @@ import { FeatureManager } from './FeatureManager';
 import { warn } from '../../Util';
 
 export var FeatureLayer = FeatureManager.extend({
-
   options: {
     cacheLayers: true
   },
@@ -11,7 +10,7 @@ export var FeatureLayer = FeatureManager.extend({
   /**
    * Constructor
    */
-  initialize: function (options) {
+  initialize: function(options) {
     FeatureManager.prototype.initialize.call(this, options);
     this._originalStyle = this.options.style;
     this._layers = {};
@@ -21,20 +20,24 @@ export var FeatureLayer = FeatureManager.extend({
    * Layer Interface
    */
 
-  onRemove: function (map) {
+  onRemove: function(map) {
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
       // trigger the event when the entire featureLayer is removed from the map
-      this.fire('removefeature', {
-        feature: this._layers[i].feature,
-        permanent: false
-      }, true);
+      this.fire(
+        'removefeature',
+        {
+          feature: this._layers[i].feature,
+          permanent: false
+        },
+        true
+      );
     }
 
     return FeatureManager.prototype.onRemove.call(this, map);
   },
 
-  createNewLayer: function (geojson) {
+  createNewLayer: function(geojson) {
     var layer = GeoJSON.geometryToLayer(geojson, this.options);
     // trap for GeoJSON without geometry
     if (layer) {
@@ -43,7 +46,7 @@ export var FeatureLayer = FeatureManager.extend({
     return layer;
   },
 
-  _updateLayer: function (layer, geojson) {
+  _updateLayer: function(layer, geojson) {
     // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
     // pass it to setLatLngs to update layer geometries
     var latlngs = [];
@@ -60,19 +63,35 @@ export var FeatureLayer = FeatureManager.extend({
         layer.setLatLng(latlngs);
         break;
       case 'LineString':
-        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          0,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'MultiLineString':
-        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          1,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'Polygon':
-        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          1,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'MultiPolygon':
-        latlngs = GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        latlngs = GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          2,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
     }
@@ -82,7 +101,7 @@ export var FeatureLayer = FeatureManager.extend({
    * Feature Management Methods
    */
 
-  createLayers: function (features) {
+  createLayers: function(features) {
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
 
@@ -90,13 +109,21 @@ export var FeatureLayer = FeatureManager.extend({
       var newLayer;
       if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
         this._map.addLayer(layer);
-        this.fire('addfeature', {
-          feature: layer.feature
-        }, true);
+        this.fire(
+          'addfeature',
+          {
+            feature: layer.feature
+          },
+          true
+        );
       }
 
       // update geometry if necessary
-      if (layer && this.options.simplifyFactor > 0 && (layer.setLatLngs || layer.setLatLng)) {
+      if (
+        layer &&
+        this.options.simplifyFactor > 0 &&
+        (layer.setLatLngs || layer.setLatLng)
+      ) {
         this._updateLayer(layer, geojson);
       }
 
@@ -121,12 +148,20 @@ export var FeatureLayer = FeatureManager.extend({
           // style the layer
           this.setFeatureStyle(newLayer.feature.id, this.options.style);
 
-          this.fire('createfeature', {
-            feature: newLayer.feature
-          }, true);
+          this.fire(
+            'createfeature',
+            {
+              feature: newLayer.feature
+            },
+            true
+          );
 
           // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
-          if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
+          if (
+            this._visibleZoom() &&
+            (!this.options.timeField ||
+              (this.options.timeField && this._featureWithinTimeRange(geojson)))
+          ) {
             this._map.addLayer(newLayer);
           }
         }
@@ -134,7 +169,7 @@ export var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  addLayers: function (ids) {
+  addLayers: function(ids) {
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if (layer) {
@@ -143,15 +178,19 @@ export var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  removeLayers: function (ids, permanent) {
+  removeLayers: function(ids, permanent) {
     for (var i = ids.length - 1; i >= 0; i--) {
       var id = ids[i];
       var layer = this._layers[id];
       if (layer) {
-        this.fire('removefeature', {
-          feature: layer.feature,
-          permanent: permanent
-        }, true);
+        this.fire(
+          'removefeature',
+          {
+            feature: layer.feature,
+            permanent: permanent
+          },
+          true
+        );
         this._map.removeLayer(layer);
       }
       if (layer && permanent) {
@@ -160,49 +199,57 @@ export var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  cellEnter: function (bounds, coords) {
+  cellEnter: function(bounds, coords) {
     if (this._visibleZoom() && !this._zooming && this._map) {
-      Util.requestAnimFrame(Util.bind(function () {
-        var cacheKey = this._cacheKey(coords);
-        var cellKey = this._cellCoordsToKey(coords);
-        var layers = this._cache[cacheKey];
-        if (this._activeCells[cellKey] && layers) {
-          this.addLayers(layers);
-        }
-      }, this));
-    }
-  },
-
-  cellLeave: function (bounds, coords) {
-    if (!this._zooming) {
-      Util.requestAnimFrame(Util.bind(function () {
-        if (this._map) {
+      Util.requestAnimFrame(
+        Util.bind(function() {
           var cacheKey = this._cacheKey(coords);
           var cellKey = this._cellCoordsToKey(coords);
           var layers = this._cache[cacheKey];
-          var mapBounds = this._map.getBounds();
-          if (!this._activeCells[cellKey] && layers) {
-            var removable = true;
+          if (this._activeCells[cellKey] && layers) {
+            this.addLayers(layers);
+          }
+        }, this)
+      );
+    }
+  },
 
-            for (var i = 0; i < layers.length; i++) {
-              var layer = this._layers[layers[i]];
-              if (layer && layer.getBounds && mapBounds.intersects(layer.getBounds())) {
-                removable = false;
+  cellLeave: function(bounds, coords) {
+    if (!this._zooming) {
+      Util.requestAnimFrame(
+        Util.bind(function() {
+          if (this._map) {
+            var cacheKey = this._cacheKey(coords);
+            var cellKey = this._cellCoordsToKey(coords);
+            var layers = this._cache[cacheKey];
+            var mapBounds = this._map.getBounds();
+            if (!this._activeCells[cellKey] && layers) {
+              var removable = true;
+
+              for (var i = 0; i < layers.length; i++) {
+                var layer = this._layers[layers[i]];
+                if (
+                  layer &&
+                  layer.getBounds &&
+                  mapBounds.intersects(layer.getBounds())
+                ) {
+                  removable = false;
+                }
+              }
+
+              if (removable) {
+                this.removeLayers(layers, !this.options.cacheLayers);
+              }
+
+              if (!this.options.cacheLayers && removable) {
+                delete this._cache[cacheKey];
+                delete this._cells[cellKey];
+                delete this._activeCells[cellKey];
               }
             }
-
-            if (removable) {
-              this.removeLayers(layers, !this.options.cacheLayers);
-            }
-
-            if (!this.options.cacheLayers && removable) {
-              delete this._cache[cacheKey];
-              delete this._cells[cellKey];
-              delete this._activeCells[cellKey];
-            }
           }
-        }
-      }, this));
+        }, this)
+      );
     }
   },
 
@@ -210,23 +257,23 @@ export var FeatureLayer = FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function () {
+  resetStyle: function() {
     this.options.style = this._originalStyle;
-    this.eachFeature(function (layer) {
+    this.eachFeature(function(layer) {
       this.resetFeatureStyle(layer.feature.id);
     }, this);
     return this;
   },
 
-  setStyle: function (style) {
+  setStyle: function(style) {
     this.options.style = style;
-    this.eachFeature(function (layer) {
+    this.eachFeature(function(layer) {
       this.setFeatureStyle(layer.feature.id, style);
     }, this);
     return this;
   },
 
-  resetFeatureStyle: function (id) {
+  resetFeatureStyle: function(id) {
     var layer = this._layers[id];
     var style = this._originalStyle || Path.prototype.options;
     if (layer) {
@@ -236,7 +283,7 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  setFeatureStyle: function (id, style) {
+  setFeatureStyle: function(id, style) {
     var layer = this._layers[id];
     if (typeof style === 'function') {
       style = style(layer.feature);
@@ -251,16 +298,22 @@ export var FeatureLayer = FeatureManager.extend({
    * Utility Methods
    */
 
-  eachActiveFeature: function (fn, context) {
+  eachActiveFeature: function(fn, context) {
     // figure out (roughly) which layers are in view
     if (this._map) {
       var activeBounds = this._map.getBounds();
       for (var i in this._layers) {
         if (this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
           // a simple point in poly test for point geometries
-          if (typeof this._layers[i].getLatLng === 'function' && activeBounds.contains(this._layers[i].getLatLng())) {
+          if (
+            typeof this._layers[i].getLatLng === 'function' &&
+            activeBounds.contains(this._layers[i].getLatLng())
+          ) {
             fn.call(context, this._layers[i]);
-          } else if (typeof this._layers[i].getBounds === 'function' && activeBounds.intersects(this._layers[i].getBounds())) {
+          } else if (
+            typeof this._layers[i].getBounds === 'function' &&
+            activeBounds.intersects(this._layers[i].getBounds())
+          ) {
             // intersecting bounds check for polyline and polygon geometries
             fn.call(context, this._layers[i]);
           }
@@ -270,41 +323,41 @@ export var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  eachFeature: function (fn, context) {
+  eachFeature: function(fn, context) {
     for (var i in this._layers) {
       fn.call(context, this._layers[i]);
     }
     return this;
   },
 
-  getFeature: function (id) {
+  getFeature: function(id) {
     return this._layers[id];
   },
 
-  bringToBack: function () {
-    this.eachFeature(function (layer) {
+  bringToBack: function() {
+    this.eachFeature(function(layer) {
       if (layer.bringToBack) {
         layer.bringToBack();
       }
     });
   },
 
-  bringToFront: function () {
-    this.eachFeature(function (layer) {
+  bringToFront: function() {
+    this.eachFeature(function(layer) {
       if (layer.bringToFront) {
         layer.bringToFront();
       }
     });
   },
 
-  redraw: function (id) {
+  redraw: function(id) {
     if (id) {
       this._redraw(id);
     }
     return this;
   },
 
-  _redraw: function (id) {
+  _redraw: function(id) {
     var layer = this._layers[id];
     var geojson = layer.feature;
 
@@ -312,7 +365,13 @@ export var FeatureLayer = FeatureManager.extend({
     if (layer && layer.setIcon && this.options.pointToLayer) {
       // update custom symbology, if necessary
       if (this.options.pointToLayer) {
-        var getIcon = this.options.pointToLayer(geojson, latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var getIcon = this.options.pointToLayer(
+          geojson,
+          latLng(
+            geojson.geometry.coordinates[1],
+            geojson.geometry.coordinates[0]
+          )
+        );
         var updatedIcon = getIcon.options.icon;
         layer.setIcon(updatedIcon);
       }
@@ -320,7 +379,10 @@ export var FeatureLayer = FeatureManager.extend({
 
     // looks like a vector marker (circleMarker)
     if (layer && layer.setStyle && this.options.pointToLayer) {
-      var getStyle = this.options.pointToLayer(geojson, latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+      var getStyle = this.options.pointToLayer(
+        geojson,
+        latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0])
+      );
       var updatedStyle = getStyle.options;
       this.setFeatureStyle(geojson.id, updatedStyle);
     }

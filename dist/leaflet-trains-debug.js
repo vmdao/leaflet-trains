@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 09:57:25 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Mon Sep 10 2018 15:10:49 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -660,7 +660,12 @@ function arcgisToGeoJSON$1(arcgis, idAttr) {
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
 function extentToBounds(extent) {
   // "NaN" coordinates from ArcGIS Server indicate a null geometry
-  if (extent.xmin !== 'NaN' && extent.ymin !== 'NaN' && extent.xmax !== 'NaN' && extent.ymax !== 'NaN') {
+  if (
+    extent.xmin !== 'NaN' &&
+    extent.ymin !== 'NaN' &&
+    extent.xmax !== 'NaN' &&
+    extent.ymax !== 'NaN'
+  ) {
     var sw = leaflet.latLng(extent.ymin, extent.xmin);
     var ne = leaflet.latLng(extent.ymax, extent.xmax);
     return leaflet.latLngBounds(sw, ne);
@@ -673,12 +678,12 @@ function extentToBounds(extent) {
 function boundsToExtent(bounds) {
   bounds = leaflet.latLngBounds(bounds);
   return {
-    'xmin': bounds.getSouthWest().lng,
-    'ymin': bounds.getSouthWest().lat,
-    'xmax': bounds.getNorthEast().lng,
-    'ymax': bounds.getNorthEast().lat,
-    'spatialReference': {
-      'wkid': 4326
+    xmin: bounds.getSouthWest().lng,
+    ymin: bounds.getSouthWest().lat,
+    xmax: bounds.getNorthEast().lng,
+    ymax: bounds.getNorthEast().lat,
+    spatialReference: {
+      wkid: 4326
     }
   };
 }
@@ -740,7 +745,10 @@ function responseToFeatureCollection(response, idAttribute) {
 
   if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
-      var feature = arcgisToGeoJSON$1(features[i], objectIdField || _findIdAttributeFromFeature(features[i]));
+      var feature = arcgisToGeoJSON$1(
+        features[i],
+        objectIdField || _findIdAttributeFromFeature(features[i])
+      );
       featureCollection.features.push(feature);
     }
   }
@@ -768,7 +776,14 @@ function getUrlParams(options$$1) {
     options$$1.requestParams = options$$1.requestParams || {};
     var queryString = options$$1.url.substring(options$$1.url.indexOf('?') + 1);
     options$$1.url = options$$1.url.split('?')[0];
-    options$$1.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    options$$1.requestParams = JSON.parse(
+      '{"' +
+        decodeURI(queryString)
+          .replace(/"/g, '\\"')
+          .replace(/&/g, '","')
+          .replace(/=/g, '":"') +
+        '"}'
+    );
   }
   options$$1.url = cleanUrl(options$$1.url.split('?')[0]);
   return options$$1;
@@ -777,7 +792,7 @@ function getUrlParams(options$$1) {
 function isArcgisOnline(url) {
   /* hosted feature services support geojson as an output format
   utility.arcgis.com services are proxied from a variety of ArcGIS Server vintages, and may not */
-  return (/^(?!.*utility\.arcgis\.com).*\.arcgis\.com.*FeatureServer/i).test(url);
+  return /^(?!.*utility\.arcgis\.com).*\.arcgis\.com.*FeatureServer/i.test(url);
 }
 
 function geojsonTypeToArcGIS(geoJsonType) {
@@ -814,26 +829,31 @@ function warn() {
 
 function calcAttributionWidth(map) {
   // either crop at 55px or user defined buffer
-  return (map.getSize().x - options.attributionWidthOffset) + 'px';
+  return map.getSize().x - options.attributionWidthOffset + 'px';
 }
 
 function setEsriAttribution(map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
-    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
+    map.attributionControl.setPrefix(
+      '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>'
+    );
 
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
-    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;' +
-      '}';
+    hoverAttributionStyle.innerHTML =
+      '.esri-truncated-attribution:hover {' + 'white-space: normal;' + '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    leaflet.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    leaflet.DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution:hover'
+    );
 
     // define a new css class in JS to trim attribution into a single line
     var attributionStyle = document.createElement('style');
     attributionStyle.type = 'text/css';
-    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
+    attributionStyle.innerHTML =
+      '.esri-truncated-attribution {' +
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
@@ -841,19 +861,26 @@ function setEsriAttribution(map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map) + ';' +
+      'max-width: ' +
+      calcAttributionWidth(map) +
+      ';' +
       '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    leaflet.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+    leaflet.DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution'
+    );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
+    map.on('resize', function(e) {
+      map.attributionControl._container.style.maxWidth = calcAttributionWidth(
+        e.target
+      );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -868,21 +895,26 @@ function setEsriAttribution(map) {
 
 function setEnouvoAttribution(map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
-    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://enouvo.com">Enouvo</a>');
+    map.attributionControl.setPrefix(
+      '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://enouvo.com">Enouvo</a>'
+    );
 
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
-    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;' +
-      '}';
+    hoverAttributionStyle.innerHTML =
+      '.esri-truncated-attribution:hover {' + 'white-space: normal;' + '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    leaflet.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    leaflet.DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution:hover'
+    );
 
     // define a new css class in JS to trim attribution into a single line
     var attributionStyle = document.createElement('style');
     attributionStyle.type = 'text/css';
-    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
+    attributionStyle.innerHTML =
+      '.esri-truncated-attribution {' +
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
@@ -890,19 +922,26 @@ function setEnouvoAttribution(map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map) + ';' +
+      'max-width: ' +
+      calcAttributionWidth(map) +
+      ';' +
       '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    leaflet.DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+    leaflet.DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution'
+    );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
+    map.on('resize', function(e) {
+      map.attributionControl._container.style.maxWidth = calcAttributionWidth(
+        e.target
+      );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -962,47 +1001,60 @@ function _setGeometry(geometry) {
   }
 
   // confirm that our GeoJSON is a point, line or polygon
-  if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+  if (
+    geometry.type === 'Point' ||
+    geometry.type === 'LineString' ||
+    geometry.type === 'Polygon' ||
+    geometry.type === 'MultiPolygon'
+  ) {
     params.geometry = geojsonToArcGIS$1(geometry);
     params.geometryType = geojsonTypeToArcGIS(geometry.type);
     return params;
   }
 
   // warn the user if we havn't found an appropriate object
-  warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+  warn(
+    'invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object'
+  );
 
   return;
 }
 
 function _getAttributionData(url, map) {
-  jsonp(url, {}, leaflet.Util.bind(function (error, attributions) {
-    if (error) { return; }
-    map._esriAttributions = [];
-    for (var c = 0; c < attributions.contributors.length; c++) {
-      var contributor = attributions.contributors[c];
-
-      for (var i = 0; i < contributor.coverageAreas.length; i++) {
-        var coverageArea = contributor.coverageAreas[i];
-        var southWest = leaflet.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-        var northEast = leaflet.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-        map._esriAttributions.push({
-          attribution: contributor.attribution,
-          score: coverageArea.score,
-          bounds: leaflet.latLngBounds(southWest, northEast),
-          minZoom: coverageArea.zoomMin,
-          maxZoom: coverageArea.zoomMax
-        });
+  jsonp(
+    url,
+    {},
+    leaflet.Util.bind(function(error, attributions) {
+      if (error) {
+        return;
       }
-    }
+      map._esriAttributions = [];
+      for (var c = 0; c < attributions.contributors.length; c++) {
+        var contributor = attributions.contributors[c];
 
-    map._esriAttributions.sort(function (a, b) {
-      return b.score - a.score;
-    });
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = leaflet.latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = leaflet.latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          map._esriAttributions.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: leaflet.latLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
 
-    // pass the same argument as the map's 'moveend' event
-    var obj = { target: map };
-    _updateMapAttribution(obj);
-  }, this));
+      map._esriAttributions.sort(function(a, b) {
+        return b.score - a.score;
+      });
+
+      // pass the same argument as the map's 'moveend' event
+      var obj = { target: map };
+      _updateMapAttribution(obj);
+    }, this)
+  );
 }
 
 function _updateMapAttribution(evt) {
@@ -1011,7 +1063,9 @@ function _updateMapAttribution(evt) {
 
   if (!map || !map.attributionControl) return;
 
-  var attributionElement = map.attributionControl._container.querySelector('.esri-dynamic-attribution');
+  var attributionElement = map.attributionControl._container.querySelector(
+    '.esri-dynamic-attribution'
+  );
 
   if (attributionElement && oldAttributions) {
     var newAttributions = '';
@@ -1026,8 +1080,13 @@ function _updateMapAttribution(evt) {
       var attribution = oldAttributions[i];
       var text = attribution.attribution;
 
-      if (!newAttributions.match(text) && attribution.bounds.intersects(wrappedBounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
-        newAttributions += (', ' + text);
+      if (
+        !newAttributions.match(text) &&
+        attribution.bounds.intersects(wrappedBounds) &&
+        zoom >= attribution.minZoom &&
+        zoom <= attribution.maxZoom
+      ) {
+        newAttributions += ', ' + text;
       }
     }
 
@@ -1039,6 +1098,11 @@ function _updateMapAttribution(evt) {
       attribution: newAttributions
     });
   }
+}
+
+function convertToTimeHuman(timeString) {
+  var event = new Date(timeString);
+  return event.toLocaleString('en-GB', { timeZone: 'UTC' });
 }
 
 var EsriUtil = {
@@ -3192,7 +3256,7 @@ var FeatureManager = VirtualGrid.extend({
    * Constructor
    */
 
-  initialize: function (options) {
+  initialize: function(options) {
     VirtualGrid.prototype.initialize.call(this, options);
     if (options && typeof options.url === 'string') {
       options = getUrlParams(options);
@@ -3212,7 +3276,9 @@ var FeatureManager = VirtualGrid.extend({
         }
       }
       if (oidCheck === false) {
-        warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
+        warn(
+          'no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.'
+        );
       }
     }
 
@@ -3225,11 +3291,11 @@ var FeatureManager = VirtualGrid.extend({
    * Layer Interface
    */
 
-  onAdd: function (map) {
+  onAdd: function(map) {
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
     if (this.service) {
-      this.service.metadata(function (err, metadata) {
+      this.service.metadata(function(err, metadata) {
         if (!err) {
           var supportedFormats = metadata.supportedQueryFormats;
 
@@ -3240,7 +3306,11 @@ var FeatureManager = VirtualGrid.extend({
           }
 
           // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
-          if (!forceJsonFormat && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+          if (
+            !forceJsonFormat &&
+            supportedFormats &&
+            supportedFormats.indexOf('geoJSON') !== -1
+          ) {
             this.service.options.isModern = true;
           }
 
@@ -3249,7 +3319,11 @@ var FeatureManager = VirtualGrid.extend({
           }
 
           // add copyright text listed in service metadata
-          if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
+          if (
+            !this.options.attribution &&
+            map.attributionControl &&
+            metadata.copyrightText
+          ) {
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
@@ -3262,13 +3336,13 @@ var FeatureManager = VirtualGrid.extend({
     return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
-  onRemove: function (map) {
+  onRemove: function(map) {
     map.off('zoomend', this._handleZoomChange, this);
 
     return VirtualGrid.prototype.onRemove.call(this, map);
   },
 
-  getAttribution: function () {
+  getAttribution: function() {
     return this.options.attribution;
   },
 
@@ -3276,24 +3350,32 @@ var FeatureManager = VirtualGrid.extend({
    * Feature Management
    */
 
-  createCell: function (bounds, coords) {
+  createCell: function(bounds, coords) {
     // dont fetch features outside the scale range defined for the layer
     if (this._visibleZoom() && typeof this.options.url === 'string') {
       this._requestFeatures(bounds, coords);
     }
   },
 
-  _requestFeatures: function (bounds, coords, callback) {
+  _requestFeatures: function(bounds, coords, callback) {
     this._activeRequests++;
 
     // our first active request fires loading
     if (this._activeRequests === 1) {
-      this.fire('loading', {
-        bounds: bounds
-      }, true);
+      this.fire(
+        'loading',
+        {
+          bounds: bounds
+        },
+        true
+      );
     }
 
-    return this._buildQuery(bounds).run(function (error, featureCollection, response) {
+    return this._buildQuery(bounds).run(function(
+      error,
+      featureCollection,
+      response
+    ) {
       if (response && response.exceededTransferLimit) {
         this.fire('drawlimitexceeded');
       }
@@ -3301,10 +3383,12 @@ var FeatureManager = VirtualGrid.extend({
       // no error, features
       if (!error && featureCollection && featureCollection.features.length) {
         // schedule adding features until the next animation frame
-        leaflet.Util.requestAnimFrame(leaflet.Util.bind(function () {
-          this._addFeatures(featureCollection.features, coords);
-          this._postProcessFeatures(bounds);
-        }, this));
+        leaflet.Util.requestAnimFrame(
+          leaflet.Util.bind(function() {
+            this._addFeatures(featureCollection.features, coords);
+            this._postProcessFeatures(bounds);
+          }, this)
+        );
       }
 
       // no error, no features
@@ -3319,10 +3403,11 @@ var FeatureManager = VirtualGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
-    }, this);
+    },
+    this);
   },
 
-  _postProcessFeatures: function (bounds) {
+  _postProcessFeatures: function(bounds) {
     // deincrement the request counter now that we have processed features
     this._activeRequests--;
 
@@ -3334,11 +3419,11 @@ var FeatureManager = VirtualGrid.extend({
     }
   },
 
-  _cacheKey: function (coords) {
+  _cacheKey: function(coords) {
     return coords.z + ':' + coords.x + ':' + coords.y;
   },
 
-  _addFeatures: function (features, coords) {
+  _addFeatures: function(features, coords) {
     var key = this._cacheKey(coords);
     this._cache[key] = this._cache[key] || [];
 
@@ -3360,8 +3445,9 @@ var FeatureManager = VirtualGrid.extend({
     this.createLayers(features);
   },
 
-  _buildQuery: function (bounds) {
-    var query = this.service.query()
+  _buildQuery: function(bounds) {
+    var query = this.service
+      .query()
       .intersects(bounds)
       .where(this.options.where)
       .fields(this.options.fields)
@@ -3375,7 +3461,11 @@ var FeatureManager = VirtualGrid.extend({
       query.simplify(this._map, this.options.simplifyFactor);
     }
 
-    if (this.options.timeFilterMode === 'server' && this.options.from && this.options.to) {
+    if (
+      this.options.timeFilterMode === 'server' &&
+      this.options.from &&
+      this.options.to
+    ) {
       query.between(this.options.from, this.options.to);
     }
 
@@ -3386,14 +3476,14 @@ var FeatureManager = VirtualGrid.extend({
    * Where Methods
    */
 
-  setWhere: function (where, callback, context) {
-    this.options.where = (where && where.length) ? where : '1=1';
+  setWhere: function(where, callback, context) {
+    this.options.where = where && where.length ? where : '1=1';
 
     var oldSnapshot = [];
     var newSnapshot = [];
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = leaflet.Util.bind(function (error, featureCollection) {
+    var requestCallback = leaflet.Util.bind(function(error, featureCollection) {
       if (error) {
         requestError = error;
       }
@@ -3409,13 +3499,15 @@ var FeatureManager = VirtualGrid.extend({
       if (pendingRequests <= 0 && this._visibleZoom()) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
-        leaflet.Util.requestAnimFrame(leaflet.Util.bind(function () {
-          this.removeLayers(oldSnapshot);
-          this.addLayers(newSnapshot);
-          if (callback) {
-            callback.call(context, requestError);
-          }
-        }, this));
+        leaflet.Util.requestAnimFrame(
+          leaflet.Util.bind(function() {
+            this.removeLayers(oldSnapshot);
+            this.addLayers(newSnapshot);
+            if (callback) {
+              callback.call(context, requestError);
+            }
+          }, this)
+        );
       }
     }, this);
 
@@ -3433,7 +3525,7 @@ var FeatureManager = VirtualGrid.extend({
     return this;
   },
 
-  getWhere: function () {
+  getWhere: function() {
     return this.options.where;
   },
 
@@ -3441,16 +3533,16 @@ var FeatureManager = VirtualGrid.extend({
    * Time Range Methods
    */
 
-  getTimeRange: function () {
+  getTimeRange: function() {
     return [this.options.from, this.options.to];
   },
 
-  setTimeRange: function (from, to, callback, context) {
+  setTimeRange: function(from, to, callback, context) {
     var oldFrom = this.options.from;
     var oldTo = this.options.to;
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = leaflet.Util.bind(function (error) {
+    var requestCallback = leaflet.Util.bind(function(error) {
       if (error) {
         requestError = error;
       }
@@ -3480,7 +3572,7 @@ var FeatureManager = VirtualGrid.extend({
     return this;
   },
 
-  refresh: function () {
+  refresh: function() {
     for (var key in this._activeCells) {
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
@@ -3488,16 +3580,23 @@ var FeatureManager = VirtualGrid.extend({
     }
 
     if (this.redraw) {
-      this.once('load', function () {
-        this.eachFeature(function (layer) {
-          this._redraw(layer.feature.id);
-        }, this);
-      }, this);
+      this.once(
+        'load',
+        function() {
+          this.eachFeature(function(layer) {
+            this._redraw(layer.feature.id);
+          }, this);
+        },
+        this
+      );
     }
   },
 
-  _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
-    var layersToRemove = (oldFrom && oldTo) ? this._getFeaturesInTimeRange(oldFrom, oldTo) : this._currentSnapshot;
+  _filterExistingFeatures: function(oldFrom, oldTo, newFrom, newTo) {
+    var layersToRemove =
+      oldFrom && oldTo
+        ? this._getFeaturesInTimeRange(oldFrom, oldTo)
+        : this._currentSnapshot;
     var layersToAdd = this._getFeaturesInTimeRange(newFrom, newTo);
 
     if (layersToAdd.indexOf) {
@@ -3510,13 +3609,15 @@ var FeatureManager = VirtualGrid.extend({
     }
 
     // schedule adding features until the next animation frame
-    leaflet.Util.requestAnimFrame(leaflet.Util.bind(function () {
-      this.removeLayers(layersToRemove);
-      this.addLayers(layersToAdd);
-    }, this));
+    leaflet.Util.requestAnimFrame(
+      leaflet.Util.bind(function() {
+        this.removeLayers(layersToRemove);
+        this.addLayers(layersToAdd);
+      }, this)
+    );
   },
 
-  _getFeaturesInTimeRange: function (start, end) {
+  _getFeaturesInTimeRange: function(start, end) {
     var ids = [];
     var search;
 
@@ -3535,7 +3636,7 @@ var FeatureManager = VirtualGrid.extend({
     return ids;
   },
 
-  _buildTimeIndexes: function (geojson) {
+  _buildTimeIndexes: function(geojson) {
     var i;
     var feature;
     if (this.options.timeField.start && this.options.timeField.end) {
@@ -3568,7 +3669,7 @@ var FeatureManager = VirtualGrid.extend({
     }
   },
 
-  _featureWithinTimeRange: function (feature) {
+  _featureWithinTimeRange: function(feature) {
     if (!this.options.from || !this.options.to) {
       return true;
     }
@@ -3578,17 +3679,20 @@ var FeatureManager = VirtualGrid.extend({
 
     if (typeof this.options.timeField === 'string') {
       var date = +feature.properties[this.options.timeField];
-      return (date >= from) && (date <= to);
+      return date >= from && date <= to;
     }
 
     if (this.options.timeField.start && this.options.timeField.end) {
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
-      return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
+      return (
+        (startDate >= from && startDate <= to) ||
+        (endDate >= from && endDate <= to)
+      );
     }
   },
 
-  _visibleZoom: function () {
+  _visibleZoom: function() {
     // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
     if (!this._map) {
       return false;
@@ -3596,10 +3700,12 @@ var FeatureManager = VirtualGrid.extend({
     var zoom = this._map.getZoom();
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return false;
-    } else { return true; }
+    } else {
+      return true;
+    }
   },
 
-  _handleZoomChange: function () {
+  _handleZoomChange: function() {
     if (!this._visibleZoom()) {
       this.removeLayers(this._currentSnapshot);
       this._currentSnapshot = [];
@@ -3624,52 +3730,91 @@ var FeatureManager = VirtualGrid.extend({
    * Service Methods
    */
 
-  authenticate: function (token) {
+  authenticate: function(token) {
     this.service.authenticate(token);
     return this;
   },
 
-  metadata: function (callback, context) {
+  metadata: function(callback, context) {
     this.service.metadata(callback, context);
     return this;
   },
 
-  query: function () {
+  query: function() {
     return this.service.query();
   },
 
-  _getMetadata: function (callback) {
+  _getMetadata: function(callback) {
     if (this._metadata) {
       var error;
       callback(error, this._metadata);
     } else {
-      this.metadata(leaflet.Util.bind(function (error, response) {
-        this._metadata = response;
-        callback(error, this._metadata);
-      }, this));
+      this.metadata(
+        leaflet.Util.bind(function(error, response) {
+          this._metadata = response;
+          callback(error, this._metadata);
+        }, this)
+      );
     }
   },
 
-  addFeature: function (feature, callback, context) {
+  addFeature: function(feature, callback, context) {
     this.addFeatures(feature, callback, context);
   },
 
-  addFeatures: function (features, callback, context) {
-    this._getMetadata(leaflet.Util.bind(function (error, metadata) {
-      if (error) {
-        if (callback) { callback.call(this, error, null); }
-        return;
-      }
-      // GeoJSON featureCollection or simple feature
-      var featuresArray = features.features ? features.features : [features];
+  addFeatures: function(features, callback, context) {
+    this._getMetadata(
+      leaflet.Util.bind(function(error, metadata) {
+        if (error) {
+          if (callback) {
+            callback.call(this, error, null);
+          }
+          return;
+        }
+        // GeoJSON featureCollection or simple feature
+        var featuresArray = features.features ? features.features : [features];
 
-      this.service.addFeatures(features, leaflet.Util.bind(function (error, response) {
+        this.service.addFeatures(
+          features,
+          leaflet.Util.bind(function(error, response) {
+            if (!error) {
+              for (var i = featuresArray.length - 1; i >= 0; i--) {
+                // assign ID from result to appropriate objectid field from service metadata
+                featuresArray[i].properties[metadata.objectIdField] =
+                  featuresArray.length > 1
+                    ? response[i].objectId
+                    : response.objectId;
+                // we also need to update the geojson id for createLayers() to function
+                featuresArray[i].id =
+                  featuresArray.length > 1
+                    ? response[i].objectId
+                    : response.objectId;
+              }
+              this.createLayers(featuresArray);
+            }
+
+            if (callback) {
+              callback.call(context, error, response);
+            }
+          }, this)
+        );
+      }, this)
+    );
+  },
+
+  updateFeature: function(feature, callback, context) {
+    this.updateFeatures(feature, callback, context);
+  },
+
+  updateFeatures: function(features, callback, context) {
+    // GeoJSON featureCollection or simple feature
+    var featuresArray = features.features ? features.features : [features];
+    this.service.updateFeatures(
+      features,
+      function(error, response) {
         if (!error) {
           for (var i = featuresArray.length - 1; i >= 0; i--) {
-            // assign ID from result to appropriate objectid field from service metadata
-            featuresArray[i].properties[metadata.objectIdField] = featuresArray.length > 1 ? response[i].objectId : response.objectId;
-            // we also need to update the geojson id for createLayers() to function
-            featuresArray[i].id = featuresArray.length > 1 ? response[i].objectId : response.objectId;
+            this.removeLayers([featuresArray[i].id], true);
           }
           this.createLayers(featuresArray);
         }
@@ -3677,52 +3822,35 @@ var FeatureManager = VirtualGrid.extend({
         if (callback) {
           callback.call(context, error, response);
         }
-      }, this));
-    }, this));
+      },
+      this
+    );
   },
 
-  updateFeature: function (feature, callback, context) {
-    this.updateFeatures(feature, callback, context);
-  },
-
-  updateFeatures: function (features, callback, context) {
-    // GeoJSON featureCollection or simple feature
-    var featuresArray = features.features ? features.features : [features];
-    this.service.updateFeatures(features, function (error, response) {
-      if (!error) {
-        for (var i = featuresArray.length - 1; i >= 0; i--) {
-          this.removeLayers([featuresArray[i].id], true);
-        }
-        this.createLayers(featuresArray);
-      }
-
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
-  },
-
-  deleteFeature: function (id, callback, context) {
+  deleteFeature: function(id, callback, context) {
     this.deleteFeatures(id, callback, context);
   },
 
-  deleteFeatures: function (ids, callback, context) {
-    return this.service.deleteFeatures(ids, function (error, response) {
-      var responseArray = response.length ? response : [response];
-      if (!error && responseArray.length > 0) {
-        for (var i = responseArray.length - 1; i >= 0; i--) {
-          this.removeLayers([responseArray[i].objectId], true);
+  deleteFeatures: function(ids, callback, context) {
+    return this.service.deleteFeatures(
+      ids,
+      function(error, response) {
+        var responseArray = response.length ? response : [response];
+        if (!error && responseArray.length > 0) {
+          for (var i = responseArray.length - 1; i >= 0; i--) {
+            this.removeLayers([responseArray[i].objectId], true);
+          }
         }
-      }
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
+        if (callback) {
+          callback.call(context, error, response);
+        }
+      },
+      this
+    );
   }
 });
 
 var FeatureLayer = FeatureManager.extend({
-
   options: {
     cacheLayers: true
   },
@@ -3730,7 +3858,7 @@ var FeatureLayer = FeatureManager.extend({
   /**
    * Constructor
    */
-  initialize: function (options) {
+  initialize: function(options) {
     FeatureManager.prototype.initialize.call(this, options);
     this._originalStyle = this.options.style;
     this._layers = {};
@@ -3740,20 +3868,24 @@ var FeatureLayer = FeatureManager.extend({
    * Layer Interface
    */
 
-  onRemove: function (map) {
+  onRemove: function(map) {
     for (var i in this._layers) {
       map.removeLayer(this._layers[i]);
       // trigger the event when the entire featureLayer is removed from the map
-      this.fire('removefeature', {
-        feature: this._layers[i].feature,
-        permanent: false
-      }, true);
+      this.fire(
+        'removefeature',
+        {
+          feature: this._layers[i].feature,
+          permanent: false
+        },
+        true
+      );
     }
 
     return FeatureManager.prototype.onRemove.call(this, map);
   },
 
-  createNewLayer: function (geojson) {
+  createNewLayer: function(geojson) {
     var layer = leaflet.GeoJSON.geometryToLayer(geojson, this.options);
     // trap for GeoJSON without geometry
     if (layer) {
@@ -3762,7 +3894,7 @@ var FeatureLayer = FeatureManager.extend({
     return layer;
   },
 
-  _updateLayer: function (layer, geojson) {
+  _updateLayer: function(layer, geojson) {
     // convert the geojson coordinates into a Leaflet LatLng array/nested arrays
     // pass it to setLatLngs to update layer geometries
     var latlngs = [];
@@ -3779,19 +3911,35 @@ var FeatureLayer = FeatureManager.extend({
         layer.setLatLng(latlngs);
         break;
       case 'LineString':
-        latlngs = leaflet.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 0, coordsToLatLng);
+        latlngs = leaflet.GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          0,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'MultiLineString':
-        latlngs = leaflet.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = leaflet.GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          1,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'Polygon':
-        latlngs = leaflet.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 1, coordsToLatLng);
+        latlngs = leaflet.GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          1,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
       case 'MultiPolygon':
-        latlngs = leaflet.GeoJSON.coordsToLatLngs(geojson.geometry.coordinates, 2, coordsToLatLng);
+        latlngs = leaflet.GeoJSON.coordsToLatLngs(
+          geojson.geometry.coordinates,
+          2,
+          coordsToLatLng
+        );
         layer.setLatLngs(latlngs);
         break;
     }
@@ -3801,7 +3949,7 @@ var FeatureLayer = FeatureManager.extend({
    * Feature Management Methods
    */
 
-  createLayers: function (features) {
+  createLayers: function(features) {
     for (var i = features.length - 1; i >= 0; i--) {
       var geojson = features[i];
 
@@ -3809,13 +3957,21 @@ var FeatureLayer = FeatureManager.extend({
       var newLayer;
       if (this._visibleZoom() && layer && !this._map.hasLayer(layer)) {
         this._map.addLayer(layer);
-        this.fire('addfeature', {
-          feature: layer.feature
-        }, true);
+        this.fire(
+          'addfeature',
+          {
+            feature: layer.feature
+          },
+          true
+        );
       }
 
       // update geometry if necessary
-      if (layer && this.options.simplifyFactor > 0 && (layer.setLatLngs || layer.setLatLng)) {
+      if (
+        layer &&
+        this.options.simplifyFactor > 0 &&
+        (layer.setLatLngs || layer.setLatLng)
+      ) {
         this._updateLayer(layer, geojson);
       }
 
@@ -3840,12 +3996,20 @@ var FeatureLayer = FeatureManager.extend({
           // style the layer
           this.setFeatureStyle(newLayer.feature.id, this.options.style);
 
-          this.fire('createfeature', {
-            feature: newLayer.feature
-          }, true);
+          this.fire(
+            'createfeature',
+            {
+              feature: newLayer.feature
+            },
+            true
+          );
 
           // add the layer if the current zoom level is inside the range defined for the layer, it is within the current time bounds or our layer is not time enabled
-          if (this._visibleZoom() && (!this.options.timeField || (this.options.timeField && this._featureWithinTimeRange(geojson)))) {
+          if (
+            this._visibleZoom() &&
+            (!this.options.timeField ||
+              (this.options.timeField && this._featureWithinTimeRange(geojson)))
+          ) {
             this._map.addLayer(newLayer);
           }
         }
@@ -3853,7 +4017,7 @@ var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  addLayers: function (ids) {
+  addLayers: function(ids) {
     for (var i = ids.length - 1; i >= 0; i--) {
       var layer = this._layers[ids[i]];
       if (layer) {
@@ -3862,15 +4026,19 @@ var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  removeLayers: function (ids, permanent) {
+  removeLayers: function(ids, permanent) {
     for (var i = ids.length - 1; i >= 0; i--) {
       var id = ids[i];
       var layer = this._layers[id];
       if (layer) {
-        this.fire('removefeature', {
-          feature: layer.feature,
-          permanent: permanent
-        }, true);
+        this.fire(
+          'removefeature',
+          {
+            feature: layer.feature,
+            permanent: permanent
+          },
+          true
+        );
         this._map.removeLayer(layer);
       }
       if (layer && permanent) {
@@ -3879,49 +4047,57 @@ var FeatureLayer = FeatureManager.extend({
     }
   },
 
-  cellEnter: function (bounds, coords) {
+  cellEnter: function(bounds, coords) {
     if (this._visibleZoom() && !this._zooming && this._map) {
-      leaflet.Util.requestAnimFrame(leaflet.Util.bind(function () {
-        var cacheKey = this._cacheKey(coords);
-        var cellKey = this._cellCoordsToKey(coords);
-        var layers = this._cache[cacheKey];
-        if (this._activeCells[cellKey] && layers) {
-          this.addLayers(layers);
-        }
-      }, this));
-    }
-  },
-
-  cellLeave: function (bounds, coords) {
-    if (!this._zooming) {
-      leaflet.Util.requestAnimFrame(leaflet.Util.bind(function () {
-        if (this._map) {
+      leaflet.Util.requestAnimFrame(
+        leaflet.Util.bind(function() {
           var cacheKey = this._cacheKey(coords);
           var cellKey = this._cellCoordsToKey(coords);
           var layers = this._cache[cacheKey];
-          var mapBounds = this._map.getBounds();
-          if (!this._activeCells[cellKey] && layers) {
-            var removable = true;
+          if (this._activeCells[cellKey] && layers) {
+            this.addLayers(layers);
+          }
+        }, this)
+      );
+    }
+  },
 
-            for (var i = 0; i < layers.length; i++) {
-              var layer = this._layers[layers[i]];
-              if (layer && layer.getBounds && mapBounds.intersects(layer.getBounds())) {
-                removable = false;
+  cellLeave: function(bounds, coords) {
+    if (!this._zooming) {
+      leaflet.Util.requestAnimFrame(
+        leaflet.Util.bind(function() {
+          if (this._map) {
+            var cacheKey = this._cacheKey(coords);
+            var cellKey = this._cellCoordsToKey(coords);
+            var layers = this._cache[cacheKey];
+            var mapBounds = this._map.getBounds();
+            if (!this._activeCells[cellKey] && layers) {
+              var removable = true;
+
+              for (var i = 0; i < layers.length; i++) {
+                var layer = this._layers[layers[i]];
+                if (
+                  layer &&
+                  layer.getBounds &&
+                  mapBounds.intersects(layer.getBounds())
+                ) {
+                  removable = false;
+                }
+              }
+
+              if (removable) {
+                this.removeLayers(layers, !this.options.cacheLayers);
+              }
+
+              if (!this.options.cacheLayers && removable) {
+                delete this._cache[cacheKey];
+                delete this._cells[cellKey];
+                delete this._activeCells[cellKey];
               }
             }
-
-            if (removable) {
-              this.removeLayers(layers, !this.options.cacheLayers);
-            }
-
-            if (!this.options.cacheLayers && removable) {
-              delete this._cache[cacheKey];
-              delete this._cells[cellKey];
-              delete this._activeCells[cellKey];
-            }
           }
-        }
-      }, this));
+        }, this)
+      );
     }
   },
 
@@ -3929,23 +4105,23 @@ var FeatureLayer = FeatureManager.extend({
    * Styling Methods
    */
 
-  resetStyle: function () {
+  resetStyle: function() {
     this.options.style = this._originalStyle;
-    this.eachFeature(function (layer) {
+    this.eachFeature(function(layer) {
       this.resetFeatureStyle(layer.feature.id);
     }, this);
     return this;
   },
 
-  setStyle: function (style) {
+  setStyle: function(style) {
     this.options.style = style;
-    this.eachFeature(function (layer) {
+    this.eachFeature(function(layer) {
       this.setFeatureStyle(layer.feature.id, style);
     }, this);
     return this;
   },
 
-  resetFeatureStyle: function (id) {
+  resetFeatureStyle: function(id) {
     var layer = this._layers[id];
     var style = this._originalStyle || leaflet.Path.prototype.options;
     if (layer) {
@@ -3955,7 +4131,7 @@ var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  setFeatureStyle: function (id, style) {
+  setFeatureStyle: function(id, style) {
     var layer = this._layers[id];
     if (typeof style === 'function') {
       style = style(layer.feature);
@@ -3970,16 +4146,22 @@ var FeatureLayer = FeatureManager.extend({
    * Utility Methods
    */
 
-  eachActiveFeature: function (fn, context) {
+  eachActiveFeature: function(fn, context) {
     // figure out (roughly) which layers are in view
     if (this._map) {
       var activeBounds = this._map.getBounds();
       for (var i in this._layers) {
         if (this._currentSnapshot.indexOf(this._layers[i].feature.id) !== -1) {
           // a simple point in poly test for point geometries
-          if (typeof this._layers[i].getLatLng === 'function' && activeBounds.contains(this._layers[i].getLatLng())) {
+          if (
+            typeof this._layers[i].getLatLng === 'function' &&
+            activeBounds.contains(this._layers[i].getLatLng())
+          ) {
             fn.call(context, this._layers[i]);
-          } else if (typeof this._layers[i].getBounds === 'function' && activeBounds.intersects(this._layers[i].getBounds())) {
+          } else if (
+            typeof this._layers[i].getBounds === 'function' &&
+            activeBounds.intersects(this._layers[i].getBounds())
+          ) {
             // intersecting bounds check for polyline and polygon geometries
             fn.call(context, this._layers[i]);
           }
@@ -3989,41 +4171,41 @@ var FeatureLayer = FeatureManager.extend({
     return this;
   },
 
-  eachFeature: function (fn, context) {
+  eachFeature: function(fn, context) {
     for (var i in this._layers) {
       fn.call(context, this._layers[i]);
     }
     return this;
   },
 
-  getFeature: function (id) {
+  getFeature: function(id) {
     return this._layers[id];
   },
 
-  bringToBack: function () {
-    this.eachFeature(function (layer) {
+  bringToBack: function() {
+    this.eachFeature(function(layer) {
       if (layer.bringToBack) {
         layer.bringToBack();
       }
     });
   },
 
-  bringToFront: function () {
-    this.eachFeature(function (layer) {
+  bringToFront: function() {
+    this.eachFeature(function(layer) {
       if (layer.bringToFront) {
         layer.bringToFront();
       }
     });
   },
 
-  redraw: function (id) {
+  redraw: function(id) {
     if (id) {
       this._redraw(id);
     }
     return this;
   },
 
-  _redraw: function (id) {
+  _redraw: function(id) {
     var layer = this._layers[id];
     var geojson = layer.feature;
 
@@ -4031,7 +4213,13 @@ var FeatureLayer = FeatureManager.extend({
     if (layer && layer.setIcon && this.options.pointToLayer) {
       // update custom symbology, if necessary
       if (this.options.pointToLayer) {
-        var getIcon = this.options.pointToLayer(geojson, leaflet.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+        var getIcon = this.options.pointToLayer(
+          geojson,
+          leaflet.latLng(
+            geojson.geometry.coordinates[1],
+            geojson.geometry.coordinates[0]
+          )
+        );
         var updatedIcon = getIcon.options.icon;
         layer.setIcon(updatedIcon);
       }
@@ -4039,7 +4227,10 @@ var FeatureLayer = FeatureManager.extend({
 
     // looks like a vector marker (circleMarker)
     if (layer && layer.setStyle && this.options.pointToLayer) {
-      var getStyle = this.options.pointToLayer(geojson, leaflet.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0]));
+      var getStyle = this.options.pointToLayer(
+        geojson,
+        leaflet.latLng(geojson.geometry.coordinates[1], geojson.geometry.coordinates[0])
+      );
       var updatedStyle = getStyle.options;
       this.setFeatureStyle(geojson.id, updatedStyle);
     }
@@ -4055,7 +4246,7 @@ function featureLayer(options) {
   return new FeatureLayer(options);
 }
 
-function EventEmitter() { }
+function EventEmitter() {}
 
 // Shortcuts to improve speed and size
 var proto = EventEmitter.prototype;
@@ -4070,14 +4261,14 @@ var originalGlobalValue = exports.EventEmitter;
  * @api private
  */
 function indexOfListener(listeners, listener) {
-    var i = listeners.length;
-    while (i--) {
-        if (listeners[i].listener === listener) {
-            return i;
-        }
+  var i = listeners.length;
+  while (i--) {
+    if (listeners[i].listener === listener) {
+      return i;
     }
+  }
 
-    return -1;
+  return -1;
 }
 
 /**
@@ -4088,9 +4279,9 @@ function indexOfListener(listeners, listener) {
  * @api private
  */
 function alias(name) {
-    return function aliasClosure() {
-        return this[name].apply(this, arguments);
-    };
+  return function aliasClosure() {
+    return this[name].apply(this, arguments);
+  };
 }
 
 /**
@@ -4103,25 +4294,24 @@ function alias(name) {
  * @return {Function[]|Object} All listener functions for the event.
  */
 proto.getListeners = function getListeners(evt) {
-    var events = this._getEvents();
-    var response;
-    var key;
+  var events = this._getEvents();
+  var response;
+  var key;
 
-    // Return a concatenated array of all matching events if
-    // the selector is a regular expression.
-    if (evt instanceof RegExp) {
-        response = {};
-        for (key in events) {
-            if (events.hasOwnProperty(key) && evt.test(key)) {
-                response[key] = events[key];
-            }
-        }
+  // Return a concatenated array of all matching events if
+  // the selector is a regular expression.
+  if (evt instanceof RegExp) {
+    response = {};
+    for (key in events) {
+      if (events.hasOwnProperty(key) && evt.test(key)) {
+        response[key] = events[key];
+      }
     }
-    else {
-        response = events[evt] || (events[evt] = []);
-    }
+  } else {
+    response = events[evt] || (events[evt] = []);
+  }
 
-    return response;
+  return response;
 };
 
 /**
@@ -4131,14 +4321,14 @@ proto.getListeners = function getListeners(evt) {
  * @return {Function[]} Just the listener functions.
  */
 proto.flattenListeners = function flattenListeners(listeners) {
-    var flatListeners = [];
-    var i;
+  var flatListeners = [];
+  var i;
 
-    for (i = 0; i < listeners.length; i += 1) {
-        flatListeners.push(listeners[i].listener);
-    }
+  for (i = 0; i < listeners.length; i += 1) {
+    flatListeners.push(listeners[i].listener);
+  }
 
-    return flatListeners;
+  return flatListeners;
 };
 
 /**
@@ -4148,25 +4338,25 @@ proto.flattenListeners = function flattenListeners(listeners) {
  * @return {Object} All listener functions for an event in an object.
  */
 proto.getListenersAsObject = function getListenersAsObject(evt) {
-    var listeners = this.getListeners(evt);
-    var response;
+  var listeners = this.getListeners(evt);
+  var response;
 
-    if (listeners instanceof Array) {
-        response = {};
-        response[evt] = listeners;
-    }
+  if (listeners instanceof Array) {
+    response = {};
+    response[evt] = listeners;
+  }
 
-    return response || listeners;
+  return response || listeners;
 };
 
 function isValidListener(listener) {
-    if (typeof listener === 'function' || listener instanceof RegExp) {
-        return true
-    } else if (listener && typeof listener === 'object') {
-        return isValidListener(listener.listener)
-    } else {
-        return false
-    }
+  if (typeof listener === 'function' || listener instanceof RegExp) {
+    return true;
+  } else if (listener && typeof listener === 'object') {
+    return isValidListener(listener.listener);
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -4180,24 +4370,31 @@ function isValidListener(listener) {
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.addListener = function addListener(evt, listener) {
-    if (!isValidListener(listener)) {
-        throw new TypeError('listener must be a function');
+  if (!isValidListener(listener)) {
+    throw new TypeError('listener must be a function');
+  }
+
+  var listeners = this.getListenersAsObject(evt);
+  var listenerIsWrapped = typeof listener === 'object';
+  var key;
+
+  for (key in listeners) {
+    if (
+      listeners.hasOwnProperty(key) &&
+      indexOfListener(listeners[key], listener) === -1
+    ) {
+      listeners[key].push(
+        listenerIsWrapped
+          ? listener
+          : {
+              listener: listener,
+              once: false
+            }
+      );
     }
+  }
 
-    var listeners = this.getListenersAsObject(evt);
-    var listenerIsWrapped = typeof listener === 'object';
-    var key;
-
-    for (key in listeners) {
-        if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
-            listeners[key].push(listenerIsWrapped ? listener : {
-                listener: listener,
-                once: false
-            });
-        }
-    }
-
-    return this;
+  return this;
 };
 
 /**
@@ -4214,10 +4411,10 @@ proto.on = alias('addListener');
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.addOnceListener = function addOnceListener(evt, listener) {
-    return this.addListener(evt, {
-        listener: listener,
-        once: true
-    });
+  return this.addListener(evt, {
+    listener: listener,
+    once: true
+  });
 };
 
 /**
@@ -4233,8 +4430,8 @@ proto.once = alias('addOnceListener');
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.defineEvent = function defineEvent(evt) {
-    this.getListeners(evt);
-    return this;
+  this.getListeners(evt);
+  return this;
 };
 
 /**
@@ -4244,10 +4441,10 @@ proto.defineEvent = function defineEvent(evt) {
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.defineEvents = function defineEvents(evts) {
-    for (var i = 0; i < evts.length; i += 1) {
-        this.defineEvent(evts[i]);
-    }
-    return this;
+  for (var i = 0; i < evts.length; i += 1) {
+    this.defineEvent(evts[i]);
+  }
+  return this;
 };
 
 /**
@@ -4259,21 +4456,21 @@ proto.defineEvents = function defineEvents(evts) {
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.removeListener = function removeListener(evt, listener) {
-    var listeners = this.getListenersAsObject(evt);
-    var index;
-    var key;
+  var listeners = this.getListenersAsObject(evt);
+  var index;
+  var key;
 
-    for (key in listeners) {
-        if (listeners.hasOwnProperty(key)) {
-            index = indexOfListener(listeners[key], listener);
+  for (key in listeners) {
+    if (listeners.hasOwnProperty(key)) {
+      index = indexOfListener(listeners[key], listener);
 
-            if (index !== -1) {
-                listeners[key].splice(index, 1);
-            }
-        }
+      if (index !== -1) {
+        listeners[key].splice(index, 1);
+      }
     }
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -4292,8 +4489,8 @@ proto.off = alias('removeListener');
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.addListeners = function addListeners(evt, listeners) {
-    // Pass through to manipulateListeners
-    return this.manipulateListeners(false, evt, listeners);
+  // Pass through to manipulateListeners
+  return this.manipulateListeners(false, evt, listeners);
 };
 
 /**
@@ -4307,8 +4504,8 @@ proto.addListeners = function addListeners(evt, listeners) {
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.removeListeners = function removeListeners(evt, listeners) {
-    // Pass through to manipulateListeners
-    return this.manipulateListeners(true, evt, listeners);
+  // Pass through to manipulateListeners
+  return this.manipulateListeners(true, evt, listeners);
 };
 
 /**
@@ -4323,38 +4520,40 @@ proto.removeListeners = function removeListeners(evt, listeners) {
  * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
  * @return {Object} Current instance of EventEmitter for chaining.
  */
-proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
-    var i;
-    var value;
-    var single = remove ? this.removeListener : this.addListener;
-    var multiple = remove ? this.removeListeners : this.addListeners;
+proto.manipulateListeners = function manipulateListeners(
+  remove,
+  evt,
+  listeners
+) {
+  var i;
+  var value;
+  var single = remove ? this.removeListener : this.addListener;
+  var multiple = remove ? this.removeListeners : this.addListeners;
 
-    // If evt is an object then pass each of its properties to this method
-    if (typeof evt === 'object' && !(evt instanceof RegExp)) {
-        for (i in evt) {
-            if (evt.hasOwnProperty(i) && (value = evt[i])) {
-                // Pass the single listener straight through to the singular method
-                if (typeof value === 'function') {
-                    single.call(this, i, value);
-                }
-                else {
-                    // Otherwise pass back to the multiple function
-                    multiple.call(this, i, value);
-                }
-            }
+  // If evt is an object then pass each of its properties to this method
+  if (typeof evt === 'object' && !(evt instanceof RegExp)) {
+    for (i in evt) {
+      if (evt.hasOwnProperty(i) && (value = evt[i])) {
+        // Pass the single listener straight through to the singular method
+        if (typeof value === 'function') {
+          single.call(this, i, value);
+        } else {
+          // Otherwise pass back to the multiple function
+          multiple.call(this, i, value);
         }
+      }
     }
-    else {
-        // So evt must be a string
-        // And listeners must be an array of listeners
-        // Loop over it and pass each one to the multiple method
-        i = listeners.length;
-        while (i--) {
-            single.call(this, evt, listeners[i]);
-        }
+  } else {
+    // So evt must be a string
+    // And listeners must be an array of listeners
+    // Loop over it and pass each one to the multiple method
+    i = listeners.length;
+    while (i--) {
+      single.call(this, evt, listeners[i]);
     }
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -4367,29 +4566,27 @@ proto.manipulateListeners = function manipulateListeners(remove, evt, listeners)
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.removeEvent = function removeEvent(evt) {
-    var type = typeof evt;
-    var events = this._getEvents();
-    var key;
+  var type = typeof evt;
+  var events = this._getEvents();
+  var key;
 
-    // Remove different things depending on the state of evt
-    if (type === 'string') {
-        // Remove all listeners for the specified event
-        delete events[evt];
+  // Remove different things depending on the state of evt
+  if (type === 'string') {
+    // Remove all listeners for the specified event
+    delete events[evt];
+  } else if (evt instanceof RegExp) {
+    // Remove all events matching the regex.
+    for (key in events) {
+      if (events.hasOwnProperty(key) && evt.test(key)) {
+        delete events[key];
+      }
     }
-    else if (evt instanceof RegExp) {
-        // Remove all events matching the regex.
-        for (key in events) {
-            if (events.hasOwnProperty(key) && evt.test(key)) {
-                delete events[key];
-            }
-        }
-    }
-    else {
-        // Remove all listeners in all events
-        delete this._events;
-    }
+  } else {
+    // Remove all listeners in all events
+    delete this._events;
+  }
 
-    return this;
+  return this;
 };
 
 /**
@@ -4412,36 +4609,36 @@ proto.removeAllListeners = alias('removeEvent');
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.emitEvent = function emitEvent(evt, args) {
-    var listenersMap = this.getListenersAsObject(evt);
-    var listeners;
-    var listener;
-    var i;
-    var key;
-    var response;
+  var listenersMap = this.getListenersAsObject(evt);
+  var listeners;
+  var listener;
+  var i;
+  var key;
+  var response;
 
-    for (key in listenersMap) {
-        if (listenersMap.hasOwnProperty(key)) {
-            listeners = listenersMap[key].slice(0);
+  for (key in listenersMap) {
+    if (listenersMap.hasOwnProperty(key)) {
+      listeners = listenersMap[key].slice(0);
 
-            for (i = 0; i < listeners.length; i++) {
-                // If the listener returns true then it shall be removed from the event
-                // The function is executed either with a basic call or an apply if there is an args array
-                listener = listeners[i];
+      for (i = 0; i < listeners.length; i++) {
+        // If the listener returns true then it shall be removed from the event
+        // The function is executed either with a basic call or an apply if there is an args array
+        listener = listeners[i];
 
-                if (listener.once === true) {
-                    this.removeListener(evt, listener.listener);
-                }
-
-                response = listener.listener.apply(this, args || []);
-
-                if (response === this._getOnceReturnValue()) {
-                    this.removeListener(evt, listener.listener);
-                }
-            }
+        if (listener.once === true) {
+          this.removeListener(evt, listener.listener);
         }
-    }
 
-    return this;
+        response = listener.listener.apply(this, args || []);
+
+        if (response === this._getOnceReturnValue()) {
+          this.removeListener(evt, listener.listener);
+        }
+      }
+    }
+  }
+
+  return this;
 };
 
 /**
@@ -4458,8 +4655,8 @@ proto.trigger = alias('emitEvent');
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.emit = function emit(evt) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    return this.emitEvent(evt, args);
+  var args = Array.prototype.slice.call(arguments, 1);
+  return this.emitEvent(evt, args);
 };
 
 /**
@@ -4471,8 +4668,8 @@ proto.emit = function emit(evt) {
  * @return {Object} Current instance of EventEmitter for chaining.
  */
 proto.setOnceReturnValue = function setOnceReturnValue(value) {
-    this._onceReturnValue = value;
-    return this;
+  this._onceReturnValue = value;
+  return this;
 };
 
 /**
@@ -4484,12 +4681,11 @@ proto.setOnceReturnValue = function setOnceReturnValue(value) {
  * @api private
  */
 proto._getOnceReturnValue = function _getOnceReturnValue() {
-    if (this.hasOwnProperty('_onceReturnValue')) {
-        return this._onceReturnValue;
-    }
-    else {
-        return true;
-    }
+  if (this.hasOwnProperty('_onceReturnValue')) {
+    return this._onceReturnValue;
+  } else {
+    return true;
+  }
 };
 
 /**
@@ -4499,331 +4695,397 @@ proto._getOnceReturnValue = function _getOnceReturnValue() {
  * @api private
  */
 proto._getEvents = function _getEvents() {
-    return this._events || (this._events = {});
+  return this._events || (this._events = {});
 };
 
 var BaseAsset = leaflet.Marker.extend({
-    initialize: function (type, latlng, options) {
-        this.feature = options;
-        this.poolListener = [];
-        this.type = type;
-        this.selected = false;
-        this.canMove = false;
-        const htmlStationIcon = type === 'station' ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>' : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>';
-        const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
-        const icon = new leaflet.DivIcon({
-            iconSize: sizeIcon,
-            html: htmlStationIcon
-        });
+  initialize: function(type, latlng, options) {
+    this.feature = options;
+    this.poolListener = [];
+    this.type = type;
+    this.selected = false;
+    this.canMove = false;
+    const htmlStationIcon =
+      type === 'station'
+        ? '<div><img style="width:100%; height:100%" src="assets/images/subway-sign.svg"></div>'
+        : '<div><img style="width:100%; height:100%" src="assets/images/subway-train.svg"></div>';
+    const sizeIcon = type === 'station' ? [28, 28] : [20, 20];
+    const icon = new leaflet.DivIcon({
+      iconSize: sizeIcon,
+      html: htmlStationIcon
+    });
 
-        const _options = { icon: icon };
+    const _options = { icon: icon };
 
-        leaflet.Marker.prototype.initialize.call(this, latlng, _options);
-        this._createPopup();
-        this._createObserver();
-        // this._addEventListener(this);
-    },
+    leaflet.Marker.prototype.initialize.call(this, latlng, _options);
+    this._createPopup();
+    this._createObserver();
+    // this._addEventListener(this);
+  },
 
-    _createPopup() {
-        this.bindPopup(this.feature.properties.name);
-    },
+  _createPopup() {
+    this.bindPopup(this.feature.properties.name);
+  },
 
-    _createObserver() {
-        this.observer = new EventEmitter();
-        const events = {
-            // click: message => {
-            //     console.log('click');
-            //     // this.open
-            // },
-            // hover: message => {
-            //     // console.log('hover')
-            // },
-            toggle: message => {
-                this.selected = !this.selected;
-                this.feature.selected = this.selected;
-            },
+  _createObserver() {
+    this.observer = new EventEmitter();
+    const events = {
+      // click: message => {
+      //     console.log('click');
+      //     // this.open
+      // },
+      // hover: message => {
+      //     // console.log('hover')
+      // },
+      toggle: message => {
+        this.selected = !this.selected;
+        this.feature.selected = this.selected;
+      },
 
-            selected: message => {
-                this.selected = true;
-            },
-
-            unSelected: message => {
-                this.selected = false;
-            }
-        };
-
-        this.observer.addListeners(events);
-    },
-
-    _addEventListener(layer) {
-
-        layer.on('click', (event) => {
-            const message = {
-                originEvent: event,
-                data: this.feature
-            };
-            this.observer.emitEvent('click', [message]);
-        });
-
-        layer.on('mouseover', (event) => {
-            const message = {
-                originEvent: event,
-                data: this.feature
-            };
-            this.observer.emitEvent('hover', message);
-        });
-
-        layer.on('mouseout', (event) => {
-            const message = {
-                originEvent: event,
-                data: this.feature
-            };
-            this.observer.emitEvent('hover', message);
-        });
-    },
-
-    onSeleted() {
+      selected: message => {
         this.selected = true;
-    },
+      },
 
-    unSeleted() {
+      unSelected: message => {
         this.selected = false;
-    },
+      }
+    };
 
-    isSeleted() {
-        return this.selected;
-    },
+    this.observer.addListeners(events);
+  },
 
-    action(type) {
-        this.observer.emitEvent(type);
-    }
+  _addEventListener(layer) {
+    layer.on('click', event => {
+      const message = {
+        originEvent: event,
+        data: this.feature
+      };
+      this.observer.emitEvent('click', [message]);
+    });
+
+    layer.on('mouseover', event => {
+      const message = {
+        originEvent: event,
+        data: this.feature
+      };
+      this.observer.emitEvent('hover', message);
+    });
+
+    layer.on('mouseout', event => {
+      const message = {
+        originEvent: event,
+        data: this.feature
+      };
+      this.observer.emitEvent('hover', message);
+    });
+  },
+
+  onSeleted() {
+    this.selected = true;
+  },
+
+  unSeleted() {
+    this.selected = false;
+  },
+
+  isSeleted() {
+    return this.selected;
+  },
+
+  action(type) {
+    this.observer.emitEvent(type);
+  }
 });
 
 function baseAsset(type, latlng, options) {
-    return new BaseAsset(type, latlng, options);
+  return new BaseAsset(type, latlng, options);
 }
 
 var StationAsset = BaseAsset.extend({
-    initialize: function (type, latlng, options) {
-        BaseAsset.prototype.initialize.call(this, type, latlng, options);
-    },
+  initialize: function(type, latlng, options) {
+    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+  }
 });
 
 function stationAsset(latlng, options) {
-    return new StationAsset('station', latlng, options);
+  return new StationAsset('station', latlng, options);
 }
 
 var TrainAsset = BaseAsset.extend({
-    initialize: function (type, latlng, options) {
-        BaseAsset.prototype.initialize.call(this, type, latlng, options);
-        this.canMove = true;
-        this._createPopup();
-    },
-    _createPopup() {
-        this.bindPopup('Train: ' + this.feature.properties.name);
-    },
+  initialize: function(type, latlng, options) {
+    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+    this.canMove = true;
+    this._createPopup(options.feature);
+  },
+  _createPopup(data) {
+    data = {
+      trainName: 'TH-756',
+      trainId: 756,
+      coupled: true,
+      lastReport: convertToTimeHuman('2018-09-10T05:01:45.702Z'),
+      destimation: 'Melbourne',
+      lastStation: 'XXX',
+      nextStation: 'YYY'
+    };
 
-    updatePosition(latlng) {
-        var newLatLng = new L.LatLng(latlng);
-        this.setLatLng(newLatLng);
-    }
+    var fieldsMatch = [
+      {
+        name: 'Train Id',
+        field: 'trainId'
+      },
+      {
+        name: 'Coupled train',
+        field: 'coupled'
+      },
+      {
+        name: 'Last report',
+        field: 'lastReport'
+      },
+      {
+        name: 'Destimation',
+        field: 'destimation'
+      },
+      {
+        name: 'Last station',
+        field: 'lastStation'
+      },
+      {
+        name: 'Next station',
+        field: 'nextStation'
+      }
+    ];
+
+    var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
+    var html = leaflet.Util.template(htmlTemplate, data);
+    this.bindPopup(html, { minWidth: 270 });
+  },
+
+  updatePosition(latlng) {
+    var newLatLng = new L.LatLng(latlng);
+    this.setLatLng(newLatLng);
+  },
+
+  getHtmlTemplatePopup(data) {
+    var htmlData = data.reduce((current, next) => {
+      current +=
+        '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
+        next.name +
+        '</div><div class="leaflet-trains-popup-list-item-value">{' +
+        next.field +
+        '}</div></li>';
+      return current;
+    }, '');
+
+    var htmlTemplate =
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH{trainId}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      htmlData +
+      ' </ul></div></div></div>';
+    return htmlTemplate;
+  }
 });
 
 function trainAsset(latlng, options) {
-    return new TrainAsset('train', latlng, options);
+  return new TrainAsset('train', latlng, options);
 }
 
 class EnouvoTrain {
+  constructor(el, options) {
+    this.poolListener = [];
+    this.layerSelected = new Proxy([], {
+      set: (target, property, value, receiver) => {
+        target[property] = value;
+        return true;
+      }
+    });
 
-    constructor(el, options) {
-        this.poolListener = [];
-        this.layerSelected = new Proxy([], {
-            set: (target, property, value, receiver) => {
-                target[property] = value;
-                return true;
-            }
+    this._createObserver();
+    this._createMap(el, options);
+  }
+
+  _createObserver() {
+    this.observer = new EventEmitter();
+    const events = {
+      click: message => {
+        this.poolListener.filter(l => l.event === 'click').forEach(listener => {
+          if (typeof listener.action === 'function') {
+            listener.action(message);
+          }
         });
+      },
+      hover: message => {
+        this.poolListener.filter(l => l.event === 'hover').forEach(listener => {
+          if (typeof listener.action === 'function') {
+            listener.action(message);
+          }
+        });
+      },
 
-        this._createObserver();
-        this._createMap(el, options);
-    }
-
-    _createObserver() {
-        this.observer = new EventEmitter();
-        const events = {
-            click: message => {
-                this.poolListener.filter(l => l.event === 'click').forEach(listener => {
-                    if (typeof listener.action === 'function') {
-                        listener.action(message);
-                    }
-                });
-            },
-            hover: message => {
-                this.poolListener.filter(l => l.event === 'hover').forEach(listener => {
-                    if (typeof listener.action === 'function') {
-                        listener.action(message);
-                    }
-                });
-            },
-
-            selectedTrains: message => {
-                this.poolListener.filter(l => l.event === 'selectedTrains').forEach(listener => {
-                    if (typeof listener.action === 'function') {
-                        let layers = [];
-                        this.networkMaps.eachLayer(l => {
-                            if (l.selected) {
-                                layers.push(l.feature);
-                            }
-                        });
-                        listener.action(layers);
-                    }
-                });
+      selectedTrains: message => {
+        this.poolListener
+          .filter(l => l.event === 'selectedTrains')
+          .forEach(listener => {
+            if (typeof listener.action === 'function') {
+              let layers = [];
+              this.networkMaps.eachLayer(l => {
+                if (l.selected) {
+                  layers.push(l.feature);
+                }
+              });
+              listener.action(layers);
             }
-        };
-        this.observer.addListeners(events);
+          });
+      }
+    };
+    this.observer.addListeners(events);
+  }
+
+  _createMap(el, options) {
+    this._map = new leaflet.Map(el, options);
+    this._createLayer();
+  }
+
+  _createLayer() {
+    basemapLayer('Streets').addTo(this._map);
+  }
+
+  _addEventListener(feature, layer) {
+    if (feature && feature.geometry.type === 'LineString') {
+      const label =
+        feature.geometry.type === 'LineString'
+          ? 'Line: ' + feature.properties.name
+          : 'Train: ' + feature.properties.name;
+      layer.bindTooltip(label);
     }
 
-    _createMap(el, options) {
-        this._map = new leaflet.Map(el, options);
-        this._createLayer();
-    }
+    layer.on('click', event => {
+      const message = {
+        originEvent: event,
+        data: feature
+      };
+      this.observer.emitEvent('click', [message]);
+      this.observer.emitEvent('selectedTrains', [message]);
+    });
 
-    _createLayer() {
-        basemapLayer('Streets').addTo(this._map);
-    }
+    layer.on('mouseover', event => {
+      const message = {
+        originEvent: event,
+        data: feature
+      };
+      this.observer.emitEvent('hover', message);
+    });
 
-    _addEventListener(feature, layer) {
-        if (feature && feature.geometry.type === 'LineString') {
-            const label = feature.geometry.type === 'LineString' ? 'Line: ' + feature.properties.name : 'Train: ' + feature.properties.name;
-            layer.bindTooltip(label);
+    layer.on('mouseout', event => {
+      const message = {
+        originEvent: event,
+        data: feature
+      };
+      this.observer.emitEvent('hover', message);
+    });
+  }
+
+  setNetworkMaps(networkMapsData) {
+    const that = this;
+    this.networkMapsData = networkMapsData;
+    this.networkMaps = new leaflet.GeoJSON(networkMapsData, {
+      style: function() {
+        return { weight: 7 };
+      },
+      onEachFeature: this._addEventListener.bind(that),
+      pointToLayer: (feature, latlng) => {
+        return feature.properties.type === 'STATION'
+          ? stationAsset(latlng, feature)
+          : trainAsset(latlng, feature);
+      }
+    });
+    this.networkMaps.addTo(this._map);
+  }
+
+  addListener(listener) {
+    this.poolListener.push(listener);
+  }
+
+  addListeners(listeners) {
+    this.poolListener = this.poolListener.concat(listeners);
+  }
+
+  setView(latLng, zoom, options) {
+    this._map.setView(latLng, zoom, options);
+  }
+
+  toggleAsset(assetId) {
+    this.networkMaps.eachLayer(layer => {
+      if (layer.feature.id === assetId) {
+        layer.action && layer.action('toggle');
+      }
+    });
+  }
+
+  selectedAsset(assetId) {
+    this.networkMaps.eachLayer(layer => {
+      if (layer.feature.id === assetId) {
+        layer.feature.selected = true;
+        layer.action && layer.action('selected');
+      }
+    });
+  }
+
+  selectedAssets(assets) {
+    this.networkMaps.eachLayer(l => {
+      const layer = assets.find(assetId => {
+        if (assetId !== l.feature.id) {
+          return false;
         }
+        return l;
+      });
 
-        layer.on('click', (event) => {
-            const message = {
-                originEvent: event,
-                data: feature
-            };
-            this.observer.emitEvent('click', [message]);
-            this.observer.emitEvent('selectedTrains', [message]);
-        });
+      if (layer) {
+        layer.feature.selected = true;
+      }
+    });
+  }
 
-        layer.on('mouseover', (event) => {
-            const message = {
-                originEvent: event,
-                data: feature
-            };
-            this.observer.emitEvent('hover', message);
-        });
+  selectedAssetsAll() {
+    this.networkMaps.eachLayer(l => {
+      if (l) {
+        l.feature.selected = true;
+      }
+    });
+  }
 
-        layer.on('mouseout', (event) => {
-            const message = {
-                originEvent: event,
-                data: feature
-            };
-            this.observer.emitEvent('hover', message);
-        });
-    }
+  unSelectedAsset(assetId) {
+    this.networkMaps.eachLayer(layer => {
+      if (layer.feature.id === assetId) {
+        layer.feature.selected = false;
+      }
+    });
+  }
 
-    setNetworkMaps(networkMapsData) {
-        const that = this;
-        this.networkMapsData = networkMapsData;
-        this.networkMaps = new leaflet.GeoJSON(networkMapsData, {
-            onEachFeature: this._addEventListener.bind(that),
-            pointToLayer: (feature, latlng) => {
-                return feature.properties.type === 'STATION' ? stationAsset(latlng, feature) : trainAsset(latlng, feature)
-            }
-        });
-        this.networkMaps.addTo(this._map);
-    }
+  unSelectedAssets(assets) {
+    this.networkMaps.eachLayer(l => {
+      let layer = assets.find(assetId => {
+        if (assetId !== l.feature.id) {
+          return false;
+        }
+        return l;
+      });
 
-    addListener(listener) {
-        this.poolListener.push(listener);
-    }
+      if (layer) {
+        layer.feature.selected = false;
+      }
+    });
+  }
 
-    addListeners(listeners) {
-        this.poolListener = this.poolListener.concat(listeners);
-    }
-
-    setView(latLng, zoom, options) {
-        this._map.setView(latLng, zoom, options);
-    }
-
-    toggleAsset(assetId) {
-        this.networkMaps.eachLayer(layer => {
-            if (layer.feature.id === assetId) {
-                layer.action && layer.action('toggle');
-            }
-        });
-    }
-
-    selectedAsset(assetId) {
-        this.networkMaps.eachLayer(layer => {
-
-            if (layer.feature.id === assetId) {
-                layer.feature.selected = true;
-                layer.action && layer.action('selected');
-            }
-        });
-    }
-
-    selectedAssets(assets) {
-        this.networkMaps.eachLayer(l => {
-            const layer = assets.find(assetId => {
-                if (assetId !== l.feature.id) {
-                    return false;
-                }
-                return l;
-            });
-
-            if (layer) {
-                layer.feature.selected = true;
-            }
-        });
-    }
-
-    selectedAssetsAll() {
-        this.networkMaps.eachLayer(l => {
-            if (l) {
-                l.feature.selected = true;
-            }
-        });
-    }
-
-    unSelectedAsset(assetId) {
-        this.networkMaps.eachLayer(layer => {
-            if (layer.feature.id === assetId) {
-                layer.feature.selected = false;
-            }
-        });
-    }
-
-    unSelectedAssets(assets) {
-        this.networkMaps.eachLayer(l => {
-            let layer = assets.find(assetId => {
-                if (assetId !== l.feature.id) {
-                    return false;
-                }
-                return l;
-            });
-
-            if (layer) {
-                layer.feature.selected = false;
-            }
-        });
-    }
-
-    unSelectedAssetsAll() {
-        this.networkMaps.eachLayer(l => {
-            if (l) {
-                l.feature.selected = false;
-            }
-        });
-    }
-
+  unSelectedAssetsAll() {
+    this.networkMaps.eachLayer(l => {
+      if (l) {
+        l.feature.selected = false;
+      }
+    });
+  }
 }
 
 function enouvoTrainInit(el, options) {
-    return new EnouvoTrain(el, options);
+  return new EnouvoTrain(el, options);
 }
 
 // export version

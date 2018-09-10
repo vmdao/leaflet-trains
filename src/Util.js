@@ -1,4 +1,12 @@
-import { latLng, latLngBounds, LatLng, LatLngBounds, Util, DomUtil, GeoJSON } from 'leaflet';
+import {
+  latLng,
+  latLngBounds,
+  LatLng,
+  LatLngBounds,
+  Util,
+  DomUtil,
+  GeoJSON
+} from 'leaflet';
 import { jsonp } from './Request';
 import { options } from './Options';
 
@@ -18,7 +26,12 @@ export function arcgisToGeoJSON(arcgis, idAttr) {
 // convert an extent (ArcGIS) to LatLngBounds (Leaflet)
 export function extentToBounds(extent) {
   // "NaN" coordinates from ArcGIS Server indicate a null geometry
-  if (extent.xmin !== 'NaN' && extent.ymin !== 'NaN' && extent.xmax !== 'NaN' && extent.ymax !== 'NaN') {
+  if (
+    extent.xmin !== 'NaN' &&
+    extent.ymin !== 'NaN' &&
+    extent.xmax !== 'NaN' &&
+    extent.ymax !== 'NaN'
+  ) {
     var sw = latLng(extent.ymin, extent.xmin);
     var ne = latLng(extent.ymax, extent.xmax);
     return latLngBounds(sw, ne);
@@ -31,12 +44,12 @@ export function extentToBounds(extent) {
 export function boundsToExtent(bounds) {
   bounds = latLngBounds(bounds);
   return {
-    'xmin': bounds.getSouthWest().lng,
-    'ymin': bounds.getSouthWest().lat,
-    'xmax': bounds.getNorthEast().lng,
-    'ymax': bounds.getNorthEast().lat,
-    'spatialReference': {
-      'wkid': 4326
+    xmin: bounds.getSouthWest().lng,
+    ymin: bounds.getSouthWest().lat,
+    xmax: bounds.getNorthEast().lng,
+    ymax: bounds.getNorthEast().lat,
+    spatialReference: {
+      wkid: 4326
     }
   };
 }
@@ -98,7 +111,10 @@ export function responseToFeatureCollection(response, idAttribute) {
 
   if (count) {
     for (var i = features.length - 1; i >= 0; i--) {
-      var feature = arcgisToGeoJSON(features[i], objectIdField || _findIdAttributeFromFeature(features[i]));
+      var feature = arcgisToGeoJSON(
+        features[i],
+        objectIdField || _findIdAttributeFromFeature(features[i])
+      );
       featureCollection.features.push(feature);
     }
   }
@@ -126,7 +142,14 @@ export function getUrlParams(options) {
     options.requestParams = options.requestParams || {};
     var queryString = options.url.substring(options.url.indexOf('?') + 1);
     options.url = options.url.split('?')[0];
-    options.requestParams = JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    options.requestParams = JSON.parse(
+      '{"' +
+        decodeURI(queryString)
+          .replace(/"/g, '\\"')
+          .replace(/&/g, '","')
+          .replace(/=/g, '":"') +
+        '"}'
+    );
   }
   options.url = cleanUrl(options.url.split('?')[0]);
   return options;
@@ -135,7 +158,7 @@ export function getUrlParams(options) {
 export function isArcgisOnline(url) {
   /* hosted feature services support geojson as an output format
   utility.arcgis.com services are proxied from a variety of ArcGIS Server vintages, and may not */
-  return (/^(?!.*utility\.arcgis\.com).*\.arcgis\.com.*FeatureServer/i).test(url);
+  return /^(?!.*utility\.arcgis\.com).*\.arcgis\.com.*FeatureServer/i.test(url);
 }
 
 export function geojsonTypeToArcGIS(geoJsonType) {
@@ -172,26 +195,31 @@ export function warn() {
 
 export function calcAttributionWidth(map) {
   // either crop at 55px or user defined buffer
-  return (map.getSize().x - options.attributionWidthOffset) + 'px';
+  return map.getSize().x - options.attributionWidthOffset + 'px';
 }
 
 export function setEsriAttribution(map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
-    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>');
+    map.attributionControl.setPrefix(
+      '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://www.esri.com">Esri</a>'
+    );
 
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
-    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;' +
-      '}';
+    hoverAttributionStyle.innerHTML =
+      '.esri-truncated-attribution:hover {' + 'white-space: normal;' + '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution:hover'
+    );
 
     // define a new css class in JS to trim attribution into a single line
     var attributionStyle = document.createElement('style');
     attributionStyle.type = 'text/css';
-    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
+    attributionStyle.innerHTML =
+      '.esri-truncated-attribution {' +
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
@@ -199,19 +227,26 @@ export function setEsriAttribution(map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map) + ';' +
+      'max-width: ' +
+      calcAttributionWidth(map) +
+      ';' +
       '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+    DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution'
+    );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
+    map.on('resize', function(e) {
+      map.attributionControl._container.style.maxWidth = calcAttributionWidth(
+        e.target
+      );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -226,21 +261,26 @@ export function setEsriAttribution(map) {
 
 export function setEnouvoAttribution(map) {
   if (map.attributionControl && !map.attributionControl._esriAttributionAdded) {
-    map.attributionControl.setPrefix('<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://enouvo.com">Enouvo</a>');
+    map.attributionControl.setPrefix(
+      '<a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Powered by <a href="https://enouvo.com">Enouvo</a>'
+    );
 
     var hoverAttributionStyle = document.createElement('style');
     hoverAttributionStyle.type = 'text/css';
-    hoverAttributionStyle.innerHTML = '.esri-truncated-attribution:hover {' +
-      'white-space: normal;' +
-      '}';
+    hoverAttributionStyle.innerHTML =
+      '.esri-truncated-attribution:hover {' + 'white-space: normal;' + '}';
 
     document.getElementsByTagName('head')[0].appendChild(hoverAttributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution:hover');
+    DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution:hover'
+    );
 
     // define a new css class in JS to trim attribution into a single line
     var attributionStyle = document.createElement('style');
     attributionStyle.type = 'text/css';
-    attributionStyle.innerHTML = '.esri-truncated-attribution {' +
+    attributionStyle.innerHTML =
+      '.esri-truncated-attribution {' +
       'vertical-align: -3px;' +
       'white-space: nowrap;' +
       'overflow: hidden;' +
@@ -248,19 +288,26 @@ export function setEnouvoAttribution(map) {
       'display: inline-block;' +
       'transition: 0s white-space;' +
       'transition-delay: 1s;' +
-      'max-width: ' + calcAttributionWidth(map) + ';' +
+      'max-width: ' +
+      calcAttributionWidth(map) +
+      ';' +
       '}';
 
     document.getElementsByTagName('head')[0].appendChild(attributionStyle);
-    DomUtil.addClass(map.attributionControl._container, 'esri-truncated-attribution');
+    DomUtil.addClass(
+      map.attributionControl._container,
+      'esri-truncated-attribution'
+    );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
-      map.attributionControl._container.style.maxWidth = calcAttributionWidth(e.target);
+    map.on('resize', function(e) {
+      map.attributionControl._container.style.maxWidth = calcAttributionWidth(
+        e.target
+      );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -320,47 +367,60 @@ export function _setGeometry(geometry) {
   }
 
   // confirm that our GeoJSON is a point, line or polygon
-  if (geometry.type === 'Point' || geometry.type === 'LineString' || geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+  if (
+    geometry.type === 'Point' ||
+    geometry.type === 'LineString' ||
+    geometry.type === 'Polygon' ||
+    geometry.type === 'MultiPolygon'
+  ) {
     params.geometry = geojsonToArcGIS(geometry);
     params.geometryType = geojsonTypeToArcGIS(geometry.type);
     return params;
   }
 
   // warn the user if we havn't found an appropriate object
-  warn('invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object');
+  warn(
+    'invalid geometry passed to spatial query. Should be L.LatLng, L.LatLngBounds, L.Marker or a GeoJSON Point, Line, Polygon or MultiPolygon object'
+  );
 
   return;
 }
 
 export function _getAttributionData(url, map) {
-  jsonp(url, {}, Util.bind(function (error, attributions) {
-    if (error) { return; }
-    map._esriAttributions = [];
-    for (var c = 0; c < attributions.contributors.length; c++) {
-      var contributor = attributions.contributors[c];
-
-      for (var i = 0; i < contributor.coverageAreas.length; i++) {
-        var coverageArea = contributor.coverageAreas[i];
-        var southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
-        var northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
-        map._esriAttributions.push({
-          attribution: contributor.attribution,
-          score: coverageArea.score,
-          bounds: latLngBounds(southWest, northEast),
-          minZoom: coverageArea.zoomMin,
-          maxZoom: coverageArea.zoomMax
-        });
+  jsonp(
+    url,
+    {},
+    Util.bind(function(error, attributions) {
+      if (error) {
+        return;
       }
-    }
+      map._esriAttributions = [];
+      for (var c = 0; c < attributions.contributors.length; c++) {
+        var contributor = attributions.contributors[c];
 
-    map._esriAttributions.sort(function (a, b) {
-      return b.score - a.score;
-    });
+        for (var i = 0; i < contributor.coverageAreas.length; i++) {
+          var coverageArea = contributor.coverageAreas[i];
+          var southWest = latLng(coverageArea.bbox[0], coverageArea.bbox[1]);
+          var northEast = latLng(coverageArea.bbox[2], coverageArea.bbox[3]);
+          map._esriAttributions.push({
+            attribution: contributor.attribution,
+            score: coverageArea.score,
+            bounds: latLngBounds(southWest, northEast),
+            minZoom: coverageArea.zoomMin,
+            maxZoom: coverageArea.zoomMax
+          });
+        }
+      }
 
-    // pass the same argument as the map's 'moveend' event
-    var obj = { target: map };
-    _updateMapAttribution(obj);
-  }, this));
+      map._esriAttributions.sort(function(a, b) {
+        return b.score - a.score;
+      });
+
+      // pass the same argument as the map's 'moveend' event
+      var obj = { target: map };
+      _updateMapAttribution(obj);
+    }, this)
+  );
 }
 
 export function _updateMapAttribution(evt) {
@@ -369,7 +429,9 @@ export function _updateMapAttribution(evt) {
 
   if (!map || !map.attributionControl) return;
 
-  var attributionElement = map.attributionControl._container.querySelector('.esri-dynamic-attribution');
+  var attributionElement = map.attributionControl._container.querySelector(
+    '.esri-dynamic-attribution'
+  );
 
   if (attributionElement && oldAttributions) {
     var newAttributions = '';
@@ -384,8 +446,13 @@ export function _updateMapAttribution(evt) {
       var attribution = oldAttributions[i];
       var text = attribution.attribution;
 
-      if (!newAttributions.match(text) && attribution.bounds.intersects(wrappedBounds) && zoom >= attribution.minZoom && zoom <= attribution.maxZoom) {
-        newAttributions += (', ' + text);
+      if (
+        !newAttributions.match(text) &&
+        attribution.bounds.intersects(wrappedBounds) &&
+        zoom >= attribution.minZoom &&
+        zoom <= attribution.maxZoom
+      ) {
+        newAttributions += ', ' + text;
       }
     }
 
@@ -397,6 +464,11 @@ export function _updateMapAttribution(evt) {
       attribution: newAttributions
     });
   }
+}
+
+export function convertToTimeHuman(timeString) {
+  var event = new Date(timeString);
+  return event.toLocaleString('en-GB', { timeZone: 'UTC' });
 }
 
 export var EsriUtil = {

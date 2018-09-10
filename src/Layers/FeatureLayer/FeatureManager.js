@@ -25,7 +25,7 @@ export var FeatureManager = VirtualGrid.extend({
    * Constructor
    */
 
-  initialize: function (options) {
+  initialize: function(options) {
     VirtualGrid.prototype.initialize.call(this, options);
     if (options && typeof options.url === 'string') {
       options = getUrlParams(options);
@@ -45,7 +45,9 @@ export var FeatureManager = VirtualGrid.extend({
         }
       }
       if (oidCheck === false) {
-        warn('no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.');
+        warn(
+          'no known esriFieldTypeOID field detected in fields Array.  Please add an attribute field containing unique IDs to ensure the layer can be drawn correctly.'
+        );
       }
     }
 
@@ -58,11 +60,11 @@ export var FeatureManager = VirtualGrid.extend({
    * Layer Interface
    */
 
-  onAdd: function (map) {
+  onAdd: function(map) {
     // include 'Powered by Esri' in map attribution
     setEsriAttribution(map);
     if (this.service) {
-      this.service.metadata(function (err, metadata) {
+      this.service.metadata(function(err, metadata) {
         if (!err) {
           var supportedFormats = metadata.supportedQueryFormats;
 
@@ -73,7 +75,11 @@ export var FeatureManager = VirtualGrid.extend({
           }
 
           // Unless we've been told otherwise, check to see whether service can emit GeoJSON natively
-          if (!forceJsonFormat && supportedFormats && supportedFormats.indexOf('geoJSON') !== -1) {
+          if (
+            !forceJsonFormat &&
+            supportedFormats &&
+            supportedFormats.indexOf('geoJSON') !== -1
+          ) {
             this.service.options.isModern = true;
           }
 
@@ -82,7 +88,11 @@ export var FeatureManager = VirtualGrid.extend({
           }
 
           // add copyright text listed in service metadata
-          if (!this.options.attribution && map.attributionControl && metadata.copyrightText) {
+          if (
+            !this.options.attribution &&
+            map.attributionControl &&
+            metadata.copyrightText
+          ) {
             this.options.attribution = metadata.copyrightText;
             map.attributionControl.addAttribution(this.getAttribution());
           }
@@ -95,13 +105,13 @@ export var FeatureManager = VirtualGrid.extend({
     return VirtualGrid.prototype.onAdd.call(this, map);
   },
 
-  onRemove: function (map) {
+  onRemove: function(map) {
     map.off('zoomend', this._handleZoomChange, this);
 
     return VirtualGrid.prototype.onRemove.call(this, map);
   },
 
-  getAttribution: function () {
+  getAttribution: function() {
     return this.options.attribution;
   },
 
@@ -109,24 +119,32 @@ export var FeatureManager = VirtualGrid.extend({
    * Feature Management
    */
 
-  createCell: function (bounds, coords) {
+  createCell: function(bounds, coords) {
     // dont fetch features outside the scale range defined for the layer
     if (this._visibleZoom() && typeof this.options.url === 'string') {
       this._requestFeatures(bounds, coords);
     }
   },
 
-  _requestFeatures: function (bounds, coords, callback) {
+  _requestFeatures: function(bounds, coords, callback) {
     this._activeRequests++;
 
     // our first active request fires loading
     if (this._activeRequests === 1) {
-      this.fire('loading', {
-        bounds: bounds
-      }, true);
+      this.fire(
+        'loading',
+        {
+          bounds: bounds
+        },
+        true
+      );
     }
 
-    return this._buildQuery(bounds).run(function (error, featureCollection, response) {
+    return this._buildQuery(bounds).run(function(
+      error,
+      featureCollection,
+      response
+    ) {
       if (response && response.exceededTransferLimit) {
         this.fire('drawlimitexceeded');
       }
@@ -134,10 +152,12 @@ export var FeatureManager = VirtualGrid.extend({
       // no error, features
       if (!error && featureCollection && featureCollection.features.length) {
         // schedule adding features until the next animation frame
-        Util.requestAnimFrame(Util.bind(function () {
-          this._addFeatures(featureCollection.features, coords);
-          this._postProcessFeatures(bounds);
-        }, this));
+        Util.requestAnimFrame(
+          Util.bind(function() {
+            this._addFeatures(featureCollection.features, coords);
+            this._postProcessFeatures(bounds);
+          }, this)
+        );
       }
 
       // no error, no features
@@ -152,10 +172,11 @@ export var FeatureManager = VirtualGrid.extend({
       if (callback) {
         callback.call(this, error, featureCollection);
       }
-    }, this);
+    },
+    this);
   },
 
-  _postProcessFeatures: function (bounds) {
+  _postProcessFeatures: function(bounds) {
     // deincrement the request counter now that we have processed features
     this._activeRequests--;
 
@@ -167,11 +188,11 @@ export var FeatureManager = VirtualGrid.extend({
     }
   },
 
-  _cacheKey: function (coords) {
+  _cacheKey: function(coords) {
     return coords.z + ':' + coords.x + ':' + coords.y;
   },
 
-  _addFeatures: function (features, coords) {
+  _addFeatures: function(features, coords) {
     var key = this._cacheKey(coords);
     this._cache[key] = this._cache[key] || [];
 
@@ -193,8 +214,9 @@ export var FeatureManager = VirtualGrid.extend({
     this.createLayers(features);
   },
 
-  _buildQuery: function (bounds) {
-    var query = this.service.query()
+  _buildQuery: function(bounds) {
+    var query = this.service
+      .query()
       .intersects(bounds)
       .where(this.options.where)
       .fields(this.options.fields)
@@ -208,7 +230,11 @@ export var FeatureManager = VirtualGrid.extend({
       query.simplify(this._map, this.options.simplifyFactor);
     }
 
-    if (this.options.timeFilterMode === 'server' && this.options.from && this.options.to) {
+    if (
+      this.options.timeFilterMode === 'server' &&
+      this.options.from &&
+      this.options.to
+    ) {
       query.between(this.options.from, this.options.to);
     }
 
@@ -219,14 +245,14 @@ export var FeatureManager = VirtualGrid.extend({
    * Where Methods
    */
 
-  setWhere: function (where, callback, context) {
-    this.options.where = (where && where.length) ? where : '1=1';
+  setWhere: function(where, callback, context) {
+    this.options.where = where && where.length ? where : '1=1';
 
     var oldSnapshot = [];
     var newSnapshot = [];
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = Util.bind(function (error, featureCollection) {
+    var requestCallback = Util.bind(function(error, featureCollection) {
       if (error) {
         requestError = error;
       }
@@ -242,13 +268,15 @@ export var FeatureManager = VirtualGrid.extend({
       if (pendingRequests <= 0 && this._visibleZoom()) {
         this._currentSnapshot = newSnapshot;
         // schedule adding features for the next animation frame
-        Util.requestAnimFrame(Util.bind(function () {
-          this.removeLayers(oldSnapshot);
-          this.addLayers(newSnapshot);
-          if (callback) {
-            callback.call(context, requestError);
-          }
-        }, this));
+        Util.requestAnimFrame(
+          Util.bind(function() {
+            this.removeLayers(oldSnapshot);
+            this.addLayers(newSnapshot);
+            if (callback) {
+              callback.call(context, requestError);
+            }
+          }, this)
+        );
       }
     }, this);
 
@@ -266,7 +294,7 @@ export var FeatureManager = VirtualGrid.extend({
     return this;
   },
 
-  getWhere: function () {
+  getWhere: function() {
     return this.options.where;
   },
 
@@ -274,16 +302,16 @@ export var FeatureManager = VirtualGrid.extend({
    * Time Range Methods
    */
 
-  getTimeRange: function () {
+  getTimeRange: function() {
     return [this.options.from, this.options.to];
   },
 
-  setTimeRange: function (from, to, callback, context) {
+  setTimeRange: function(from, to, callback, context) {
     var oldFrom = this.options.from;
     var oldTo = this.options.to;
     var pendingRequests = 0;
     var requestError = null;
-    var requestCallback = Util.bind(function (error) {
+    var requestCallback = Util.bind(function(error) {
       if (error) {
         requestError = error;
       }
@@ -313,7 +341,7 @@ export var FeatureManager = VirtualGrid.extend({
     return this;
   },
 
-  refresh: function () {
+  refresh: function() {
     for (var key in this._activeCells) {
       var coords = this._keyToCellCoords(key);
       var bounds = this._cellCoordsToBounds(coords);
@@ -321,16 +349,23 @@ export var FeatureManager = VirtualGrid.extend({
     }
 
     if (this.redraw) {
-      this.once('load', function () {
-        this.eachFeature(function (layer) {
-          this._redraw(layer.feature.id);
-        }, this);
-      }, this);
+      this.once(
+        'load',
+        function() {
+          this.eachFeature(function(layer) {
+            this._redraw(layer.feature.id);
+          }, this);
+        },
+        this
+      );
     }
   },
 
-  _filterExistingFeatures: function (oldFrom, oldTo, newFrom, newTo) {
-    var layersToRemove = (oldFrom && oldTo) ? this._getFeaturesInTimeRange(oldFrom, oldTo) : this._currentSnapshot;
+  _filterExistingFeatures: function(oldFrom, oldTo, newFrom, newTo) {
+    var layersToRemove =
+      oldFrom && oldTo
+        ? this._getFeaturesInTimeRange(oldFrom, oldTo)
+        : this._currentSnapshot;
     var layersToAdd = this._getFeaturesInTimeRange(newFrom, newTo);
 
     if (layersToAdd.indexOf) {
@@ -343,13 +378,15 @@ export var FeatureManager = VirtualGrid.extend({
     }
 
     // schedule adding features until the next animation frame
-    Util.requestAnimFrame(Util.bind(function () {
-      this.removeLayers(layersToRemove);
-      this.addLayers(layersToAdd);
-    }, this));
+    Util.requestAnimFrame(
+      Util.bind(function() {
+        this.removeLayers(layersToRemove);
+        this.addLayers(layersToAdd);
+      }, this)
+    );
   },
 
-  _getFeaturesInTimeRange: function (start, end) {
+  _getFeaturesInTimeRange: function(start, end) {
     var ids = [];
     var search;
 
@@ -368,7 +405,7 @@ export var FeatureManager = VirtualGrid.extend({
     return ids;
   },
 
-  _buildTimeIndexes: function (geojson) {
+  _buildTimeIndexes: function(geojson) {
     var i;
     var feature;
     if (this.options.timeField.start && this.options.timeField.end) {
@@ -401,7 +438,7 @@ export var FeatureManager = VirtualGrid.extend({
     }
   },
 
-  _featureWithinTimeRange: function (feature) {
+  _featureWithinTimeRange: function(feature) {
     if (!this.options.from || !this.options.to) {
       return true;
     }
@@ -411,17 +448,20 @@ export var FeatureManager = VirtualGrid.extend({
 
     if (typeof this.options.timeField === 'string') {
       var date = +feature.properties[this.options.timeField];
-      return (date >= from) && (date <= to);
+      return date >= from && date <= to;
     }
 
     if (this.options.timeField.start && this.options.timeField.end) {
       var startDate = +feature.properties[this.options.timeField.start];
       var endDate = +feature.properties[this.options.timeField.end];
-      return ((startDate >= from) && (startDate <= to)) || ((endDate >= from) && (endDate <= to));
+      return (
+        (startDate >= from && startDate <= to) ||
+        (endDate >= from && endDate <= to)
+      );
     }
   },
 
-  _visibleZoom: function () {
+  _visibleZoom: function() {
     // check to see whether the current zoom level of the map is within the optional limit defined for the FeatureLayer
     if (!this._map) {
       return false;
@@ -429,10 +469,12 @@ export var FeatureManager = VirtualGrid.extend({
     var zoom = this._map.getZoom();
     if (zoom > this.options.maxZoom || zoom < this.options.minZoom) {
       return false;
-    } else { return true; }
+    } else {
+      return true;
+    }
   },
 
-  _handleZoomChange: function () {
+  _handleZoomChange: function() {
     if (!this._visibleZoom()) {
       this.removeLayers(this._currentSnapshot);
       this._currentSnapshot = [];
@@ -457,52 +499,91 @@ export var FeatureManager = VirtualGrid.extend({
    * Service Methods
    */
 
-  authenticate: function (token) {
+  authenticate: function(token) {
     this.service.authenticate(token);
     return this;
   },
 
-  metadata: function (callback, context) {
+  metadata: function(callback, context) {
     this.service.metadata(callback, context);
     return this;
   },
 
-  query: function () {
+  query: function() {
     return this.service.query();
   },
 
-  _getMetadata: function (callback) {
+  _getMetadata: function(callback) {
     if (this._metadata) {
       var error;
       callback(error, this._metadata);
     } else {
-      this.metadata(Util.bind(function (error, response) {
-        this._metadata = response;
-        callback(error, this._metadata);
-      }, this));
+      this.metadata(
+        Util.bind(function(error, response) {
+          this._metadata = response;
+          callback(error, this._metadata);
+        }, this)
+      );
     }
   },
 
-  addFeature: function (feature, callback, context) {
+  addFeature: function(feature, callback, context) {
     this.addFeatures(feature, callback, context);
   },
 
-  addFeatures: function (features, callback, context) {
-    this._getMetadata(Util.bind(function (error, metadata) {
-      if (error) {
-        if (callback) { callback.call(this, error, null); }
-        return;
-      }
-      // GeoJSON featureCollection or simple feature
-      var featuresArray = features.features ? features.features : [features];
+  addFeatures: function(features, callback, context) {
+    this._getMetadata(
+      Util.bind(function(error, metadata) {
+        if (error) {
+          if (callback) {
+            callback.call(this, error, null);
+          }
+          return;
+        }
+        // GeoJSON featureCollection or simple feature
+        var featuresArray = features.features ? features.features : [features];
 
-      this.service.addFeatures(features, Util.bind(function (error, response) {
+        this.service.addFeatures(
+          features,
+          Util.bind(function(error, response) {
+            if (!error) {
+              for (var i = featuresArray.length - 1; i >= 0; i--) {
+                // assign ID from result to appropriate objectid field from service metadata
+                featuresArray[i].properties[metadata.objectIdField] =
+                  featuresArray.length > 1
+                    ? response[i].objectId
+                    : response.objectId;
+                // we also need to update the geojson id for createLayers() to function
+                featuresArray[i].id =
+                  featuresArray.length > 1
+                    ? response[i].objectId
+                    : response.objectId;
+              }
+              this.createLayers(featuresArray);
+            }
+
+            if (callback) {
+              callback.call(context, error, response);
+            }
+          }, this)
+        );
+      }, this)
+    );
+  },
+
+  updateFeature: function(feature, callback, context) {
+    this.updateFeatures(feature, callback, context);
+  },
+
+  updateFeatures: function(features, callback, context) {
+    // GeoJSON featureCollection or simple feature
+    var featuresArray = features.features ? features.features : [features];
+    this.service.updateFeatures(
+      features,
+      function(error, response) {
         if (!error) {
           for (var i = featuresArray.length - 1; i >= 0; i--) {
-            // assign ID from result to appropriate objectid field from service metadata
-            featuresArray[i].properties[metadata.objectIdField] = featuresArray.length > 1 ? response[i].objectId : response.objectId;
-            // we also need to update the geojson id for createLayers() to function
-            featuresArray[i].id = featuresArray.length > 1 ? response[i].objectId : response.objectId;
+            this.removeLayers([featuresArray[i].id], true);
           }
           this.createLayers(featuresArray);
         }
@@ -510,46 +591,30 @@ export var FeatureManager = VirtualGrid.extend({
         if (callback) {
           callback.call(context, error, response);
         }
-      }, this));
-    }, this));
+      },
+      this
+    );
   },
 
-  updateFeature: function (feature, callback, context) {
-    this.updateFeatures(feature, callback, context);
-  },
-
-  updateFeatures: function (features, callback, context) {
-    // GeoJSON featureCollection or simple feature
-    var featuresArray = features.features ? features.features : [features];
-    this.service.updateFeatures(features, function (error, response) {
-      if (!error) {
-        for (var i = featuresArray.length - 1; i >= 0; i--) {
-          this.removeLayers([featuresArray[i].id], true);
-        }
-        this.createLayers(featuresArray);
-      }
-
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
-  },
-
-  deleteFeature: function (id, callback, context) {
+  deleteFeature: function(id, callback, context) {
     this.deleteFeatures(id, callback, context);
   },
 
-  deleteFeatures: function (ids, callback, context) {
-    return this.service.deleteFeatures(ids, function (error, response) {
-      var responseArray = response.length ? response : [response];
-      if (!error && responseArray.length > 0) {
-        for (var i = responseArray.length - 1; i >= 0; i--) {
-          this.removeLayers([responseArray[i].objectId], true);
+  deleteFeatures: function(ids, callback, context) {
+    return this.service.deleteFeatures(
+      ids,
+      function(error, response) {
+        var responseArray = response.length ? response : [response];
+        if (!error && responseArray.length > 0) {
+          for (var i = responseArray.length - 1; i >= 0; i--) {
+            this.removeLayers([responseArray[i].objectId], true);
+          }
         }
-      }
-      if (callback) {
-        callback.call(context, error, response);
-      }
-    }, this);
+        if (callback) {
+          callback.call(context, error, response);
+        }
+      },
+      this
+    );
   }
 });
