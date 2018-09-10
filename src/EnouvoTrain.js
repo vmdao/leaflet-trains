@@ -168,9 +168,9 @@ export class EnouvoTrain {
     });
   }
 
-  unSelectedAsset(assetId) {
+  unSelectedAsset(Id) {
     this.networkMaps.eachLayer(layer => {
-      if (layer.feature.id === assetId) {
+      if (layer.feature.properties.Id === Id) {
         layer.feature.selected = false;
       }
     });

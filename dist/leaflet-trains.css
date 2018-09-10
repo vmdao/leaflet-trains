@@ -26,6 +26,7 @@
     font-size: 0.65rem;
     padding: 0 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
 }
 
 .leaflet-trains-station-asset-img {
@@ -91,6 +92,7 @@
     font-size: 0.65rem;
     padding: 0 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
 }
 
 .leaflet-trains-train-asset-img {

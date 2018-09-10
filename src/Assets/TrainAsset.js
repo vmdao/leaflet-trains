@@ -5,22 +5,23 @@ import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
   initialize: function(type, latlng, options) {
-    const icon = trainIcon(latlng);
+    const icon = trainIcon(options);
     const _options = Object.assign({ icon: icon }, options);
     BaseAsset.prototype.initialize.call(this, type, latlng, _options);
 
     this.canMove = true;
-    this._createPopup(options.feature);
+    this._createPopup(options.properties);
   },
   _createPopup(data) {
+    console.log('data', data);
     data = {
-      trainName: 'TH-756',
-      trainId: 756,
-      coupled: true,
+      trainName: data.name,
+      trainId: data.Id,
+      coupled: 'Yes',
       lastReport: convertToTimeHuman('2018-09-10T05:01:45.702Z'),
-      destimation: 'Melbourne',
-      lastStation: 'XXX',
-      nextStation: 'YYY'
+      destimation: 'Fake_Location',
+      lastStation: 'Fake_Last_Location',
+      nextStation: 'Fake_Next_Location'
     };
 
     var fieldsMatch = [
@@ -72,7 +73,7 @@ export var TrainAsset = BaseAsset.extend({
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH{trainId}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainId}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
