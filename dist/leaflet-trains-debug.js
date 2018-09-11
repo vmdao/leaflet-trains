@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:32:14 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:37:18 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5092,7 +5092,7 @@ class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
-    this.networkTrains.setZIndex(10);
+    this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
   }
 
@@ -5116,7 +5116,7 @@ class EnouvoTrain {
   }
 
   toggleAsset(assetId) {
-    this.networkMaps.eachLayer(layer => {
+    this.networkTrains.eachLayer(layer => {
       if (layer.feature.id === assetId) {
         layer.action && layer.action('toggle');
       }
@@ -5124,7 +5124,7 @@ class EnouvoTrain {
   }
 
   selectedAsset(assetId) {
-    this.networkMaps.eachLayer(layer => {
+    this.networkTrains.eachLayer(layer => {
       if (layer.feature.id === assetId) {
         layer.feature.selected = true;
         layer.action && layer.action('selected');
@@ -5133,7 +5133,7 @@ class EnouvoTrain {
   }
 
   selectedAssets(assets) {
-    this.networkMaps.eachLayer(l => {
+    this.networkTrains.eachLayer(l => {
       const layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
@@ -5148,7 +5148,7 @@ class EnouvoTrain {
   }
 
   selectedAssetsAll() {
-    this.networkMaps.eachLayer(l => {
+    this.networkTrains.eachLayer(l => {
       if (l) {
         l.feature.selected = true;
       }
@@ -5156,7 +5156,7 @@ class EnouvoTrain {
   }
 
   unSelectedAsset(Id) {
-    this.networkMaps.eachLayer(layer => {
+    this.networkTrains.eachLayer(layer => {
       if (layer.feature.properties.Id === Id) {
         layer.feature.selected = false;
         layer.selected = false;
@@ -5166,7 +5166,7 @@ class EnouvoTrain {
   }
 
   unSelectedAssets(assets) {
-    this.networkMaps.eachLayer(l => {
+    this.networkTrains.eachLayer(l => {
       let layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
@@ -5181,7 +5181,7 @@ class EnouvoTrain {
   }
 
   unSelectedAssetsAll() {
-    this.networkMaps.eachLayer(layer => {
+    this.networkTrains.eachLayer(layer => {
       if (layer) {
         layer.feature.selected = false;
         layer.selected = false;
