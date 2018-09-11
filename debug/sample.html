@@ -2336,7 +2336,36 @@
     }
 
     function onListenerSelected(event) {
-      map.unSelectedAsset(event.data.properties.Id);
+      console.log(event);
+      const train = event.originEvent.target;
+      const trainLocation = train.getLatLng();;
+      const layers = map.networkMaps.getLayers();
+      layers.forEach((layer, index) => {
+        if (index !== 10 && layer.setStyle) layer.setStyle({
+          opacity: 0,
+          strokeOpacity: 0,
+          width: 0,
+        })
+      });
+      const layer10 = layers[10];
+      const segments = layer10.getLatLngs();
+
+      const closest = segments.reduce((current, next) => {
+        const distance = next.distanceTo(trainLocation);
+        if (distance > current.distance) {
+          return current;
+        }
+        return {
+          distance: distance,
+          segment: next
+        };
+      }, {
+        distance: Infinity,
+        segment: null
+      });
+
+      console.log('closest', closest)
+
     }
     var map = L.enouvo.enouvoTrainInit('map');
     map.setView([-37.81224, 144.97412], 15);
