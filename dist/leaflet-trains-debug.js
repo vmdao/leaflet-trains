@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:06:00 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:22:12 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4835,7 +4835,7 @@ var TrainIcon = leaflet.DivIcon.extend({
     const iconUrl = 'assets/images/ic-marker-train.svg';
     const html =
       '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"></div></div><div class="leaflet-trains-train-asset-name">TH-' +
-      data.Id +
+      data.TrainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
       iconUrl +
       '"></div>';
@@ -4865,19 +4865,25 @@ var TrainAsset = BaseAsset.extend({
   },
   _createPopup(data) {
     data = {
-      trainName: data.name,
+      trainName: data.trainNo,
       trainId: data.Id,
-      coupled: 'Yes',
-      lastReport: convertToTimeHuman('2018-09-10T05:01:45.702Z'),
-      destimation: 'Fake_Location',
-      lastStation: 'Fake_Last_Location',
-      nextStation: 'Fake_Next_Location'
+      coupled: data.coupled ? 'Yes' : 'No',
+      lastReport: convertToTimeHuman(
+        data.LastReport || '2018-09-10T05:01:45.702Z'
+      ),
+      destimation: data.DestinationStation || 'Mock_DestinationStation',
+      lastStation: data.LastStation || 'Mock_LastStation',
+      nextStation: data.NextStation || 'NextStation'
     };
 
     var fieldsMatch = [
       {
         name: 'Train Id',
         field: 'trainId'
+      },
+      {
+        name: 'TrainNo',
+        field: 'trainNo'
       },
       {
         name: 'Coupled train',
@@ -4923,7 +4929,7 @@ var TrainAsset = BaseAsset.extend({
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainId}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainName}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
@@ -5064,6 +5070,7 @@ class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
+    this.networkStations.setZIndex(2);
     this.networkStations.addTo(this._map);
   }
 
@@ -5085,6 +5092,7 @@ class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
+    this.networkStations.setZIndex(10);
     this.networkTrains.addTo(this._map);
   }
 

@@ -6,7 +6,7 @@ export var TrainIcon = DivIcon.extend({
     const iconUrl = 'assets/images/ic-marker-train.svg';
     const html =
       '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"></div></div><div class="leaflet-trains-train-asset-name">TH-' +
-      data.Id +
+      data.TrainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
       iconUrl +
       '"></div>';

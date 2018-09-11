@@ -134,6 +134,7 @@ export class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
+    this.networkStations.setZIndex(2);
     this.networkStations.addTo(this._map);
   }
 
@@ -155,6 +156,7 @@ export class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
+    this.networkStations.setZIndex(10);
     this.networkTrains.addTo(this._map);
   }
 
