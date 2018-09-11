@@ -116,6 +116,55 @@ export class EnouvoTrain {
     this.networkMaps.addTo(this._map);
   }
 
+  clearNetworkMaps() {
+    if (this.networkMaps) {
+      this.networkMaps.clearLayers();
+      this.networkMapsData = null;
+    }
+  }
+
+  setNetworkStations(networkStationsData) {
+    const that = this;
+    this.networkStationsData = networkStationsData;
+    this.networkStations = new GeoJSON(networkStationsData, {
+      onEachFeature: this._addEventListener.bind(that),
+      pointToLayer: (feature, latlng) => {
+        return feature.properties.type === 'STATION'
+          ? stationAsset(latlng, feature)
+          : trainAsset(latlng, feature);
+      }
+    });
+    this.networkStations.addTo(this._map);
+  }
+
+  clearNetworkStations() {
+    if (this.networkStations) {
+      this.networkStations.clearLayers();
+      this.networkStationsData = null;
+    }
+  }
+
+  setNetworkTrains(networkTrainsData) {
+    const that = this;
+    this.networkTrainsData = networkTrainsData;
+    this.networkTrains = new GeoJSON(networkTrainsData, {
+      onEachFeature: this._addEventListener.bind(that),
+      pointToLayer: (feature, latlng) => {
+        return feature.properties.type === 'STATION'
+          ? stationAsset(latlng, feature)
+          : trainAsset(latlng, feature);
+      }
+    });
+    this.networkTrains.addTo(this._map);
+  }
+
+  clearNetworkTrains() {
+    if (this.networkTrains) {
+      this.networkTrains.clearLayers();
+      this.networkTrainsData = null;
+    }
+  }
+
   addListener(listener) {
     this.poolListener.push(listener);
   }
@@ -194,9 +243,11 @@ export class EnouvoTrain {
   }
 
   unSelectedAssetsAll() {
-    this.networkMaps.eachLayer(l => {
-      if (l) {
-        l.feature.selected = false;
+    this.networkMaps.eachLayer(layer => {
+      if (layer) {
+        layer.feature.selected = false;
+        layer.selected = false;
+        layer.feature.properties.selected = false;
       }
     });
   }
