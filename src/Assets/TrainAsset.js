@@ -13,10 +13,10 @@ export var TrainAsset = BaseAsset.extend({
     this._createPopup(options.properties);
   },
   _createPopup(data) {
-    data = {
-      trainName: data.trainNo,
+    const _data = {
+      trainNo: data.TrainNo,
       trainId: data.Id,
-      coupled: data.coupled ? 'Yes' : 'No',
+      coupled: data.Coupled ? 'Yes' : 'No',
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
@@ -57,7 +57,7 @@ export var TrainAsset = BaseAsset.extend({
     ];
 
     var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
-    var html = Util.template(htmlTemplate, data);
+    var html = Util.template(htmlTemplate, _data);
     this.bindPopup(html, { minWidth: 270 });
   },
 
@@ -66,8 +66,8 @@ export var TrainAsset = BaseAsset.extend({
     this.setLatLng(newLatLng);
   },
 
-  getHtmlTemplatePopup(data) {
-    var htmlData = data.reduce((current, next) => {
+  getHtmlTemplatePopup(fieldsMatch) {
+    var htmlData = fieldsMatch.reduce((current, next) => {
       current +=
         '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
         next.name +
@@ -78,7 +78,7 @@ export var TrainAsset = BaseAsset.extend({
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainName}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
