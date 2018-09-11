@@ -20,9 +20,9 @@ export var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.DestinationStation || 'Mock_DestinationStation',
+      destimation: data.DestinationStation || 'Mock_Destination',
       lastStation: data.LastStation || 'Mock_LastStation',
-      nextStation: data.NextStation || 'NextStation'
+      nextStation: data.NextStation || 'Mock_NextStation'
     };
 
     var fieldsMatch = [

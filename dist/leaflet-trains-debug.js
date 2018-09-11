@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:37:18 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 13:47:04 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4843,7 +4843,8 @@ var TrainIcon = leaflet.DivIcon.extend({
 
     const _options = {
       html: html,
-      iconSize: sizeIcon
+      iconSize: sizeIcon,
+      popupAnchor: [0, -41]
     };
 
     leaflet.DivIcon.prototype.initialize.call(this, _options);
@@ -4871,9 +4872,9 @@ var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.DestinationStation || 'Mock_DestinationStation',
+      destimation: data.DestinationStation || 'Mock_Destination',
       lastStation: data.LastStation || 'Mock_LastStation',
-      nextStation: data.NextStation || 'NextStation'
+      nextStation: data.NextStation || 'Mock_NextStation'
     };
 
     var fieldsMatch = [

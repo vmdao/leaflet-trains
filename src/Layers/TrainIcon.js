@@ -14,7 +14,8 @@ export var TrainIcon = DivIcon.extend({
 
     const _options = {
       html: html,
-      iconSize: sizeIcon
+      iconSize: sizeIcon,
+      popupAnchor: [0, -41]
     };
 
     DivIcon.prototype.initialize.call(this, _options);

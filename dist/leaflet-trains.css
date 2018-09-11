@@ -55,7 +55,8 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    right: -26px;
+    right: -24px;
+    top: 7px;
 }
 
 .train-arrow {
