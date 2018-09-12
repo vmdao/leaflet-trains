@@ -185,10 +185,10 @@ export class EnouvoTrain {
       pointToLayer: (feature, latlng) => {
         const lineId = feature.properties.Segment.Route.Line.Id;
         const networkMap = this.networkMaps.find(n => n.Id === lineId);
-        const _feature = {
-          ...{ networkMap: networkMap.networkMap, _map: this._map },
-          ...feature
-        };
+        const _feature = Object.assign(
+          { networkMap: networkMap.networkMap, _map: this._map },
+          feature
+        );
         return feature.properties.type === 'STATION'
           ? stationAsset(latlng, _feature)
           : trainAsset(latlng, _feature);
