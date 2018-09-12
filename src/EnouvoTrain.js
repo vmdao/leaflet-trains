@@ -42,7 +42,7 @@ export class EnouvoTrain {
           .forEach(listener => {
             if (typeof listener.action === 'function') {
               let layers = [];
-              this.networkMaps.eachLayer(l => {
+              this.networkTrains.eachLayer(l => {
                 if (l.selected) {
                   layers.push(l.feature);
                 }

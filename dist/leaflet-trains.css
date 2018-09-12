@@ -1,3 +1,7 @@
+.leaflet-bottom {
+    bottom: 110px !important;
+}
+
 .leaflet-div-icon {
     border: none;
     border-radius: 50%;

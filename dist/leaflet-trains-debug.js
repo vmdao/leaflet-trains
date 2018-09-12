@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 15:01:12 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 15:21:39 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5073,7 +5073,7 @@ class EnouvoTrain {
           .forEach(listener => {
             if (typeof listener.action === 'function') {
               let layers = [];
-              this.networkMaps.eachLayer(l => {
+              this.networkTrains.eachLayer(l => {
                 if (l.selected) {
                   layers.push(l.feature);
                 }
@@ -5216,10 +5216,10 @@ class EnouvoTrain {
       pointToLayer: (feature, latlng) => {
         const lineId = feature.properties.Segment.Route.Line.Id;
         const networkMap = this.networkMaps.find(n => n.Id === lineId);
-        const _feature = {
-          ...{ networkMap: networkMap.networkMap, _map: this._map },
-          ...feature
-        };
+        const _feature = Object.assign(
+          { networkMap: networkMap.networkMap, _map: this._map },
+          feature
+        );
         return feature.properties.type === 'STATION'
           ? stationAsset(latlng, _feature)
           : trainAsset(latlng, _feature);
