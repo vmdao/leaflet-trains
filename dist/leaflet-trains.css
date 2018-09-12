@@ -51,12 +51,22 @@
     border: 2px solid #ffffff;
 }
 
+.leaflet-trains-train-asset-or {
+    position: absolute;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+
 .leaflet-trains-train-asset-arrow {
     position: absolute;
     width: 20px;
     height: 20px;
-    right: -24px;
-    top: 7px;
+    right: -21px;
+    top: 9px;
 }
 
 .train-arrow {

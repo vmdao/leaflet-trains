@@ -1,14 +1,22 @@
 import { Util } from 'leaflet';
-import { convertToTimeHuman } from '../Util';
+import {
+  convertToTimeHuman,
+  getDirectionPoints,
+  computeSegmentHeading
+} from '../Util';
 import { BaseAsset } from './BaseAsset';
 import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
-  initialize: function (type, latlng, options) {
-    const icon = trainIcon(options);
-    const _options = Object.assign({ icon: icon }, options);
-    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
+  initialize: function(type, latlng, options) {
     this.networkMap = options.networkMap || null;
+    this._map = options._map || null;
+
+    BaseAsset.prototype.initialize.call(this, type, latlng, options);
+    const angle = this.getAngle();
+    const _options = Object.assign({ angle: angle }, options);
+    const icon = trainIcon(_options);
+    this.setIcon(icon);
     this.canMove = true;
     this._createPopup(options.properties);
   },
@@ -83,8 +91,59 @@ export var TrainAsset = BaseAsset.extend({
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
-  }
+  },
 
+  getAngle() {
+    const locationTrain = this.getLatLng();
+    const paths = this.getLocationNetworkMap();
+    const locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
+    const locationNextTrain = this.getPointNearNextTrain(
+      paths,
+      locationNearTrain.index,
+      locationTrain
+    );
+
+    const location1 = locationNearTrain.location;
+    const location2 = locationNextTrain;
+
+    const direction = getDirectionPoints(this._map, [location1, location2]);
+    const angle = computeSegmentHeading(direction[0], direction[1]);
+    return angle;
+  },
+
+  getLocationNetworkMap() {
+    const layers = this.networkMap.getLayers();
+    return layers.reduce((current, next) => {
+      const loc = next.getLatLngs();
+      current = current.concat(loc);
+      return current;
+    }, []);
+  },
+
+  getLocationNearTrain(paths, locationTrain) {
+    return paths.reduce(
+      (current, next, index) => {
+        const distance = next.distanceTo(locationTrain);
+        if (distance > current.distance) {
+          return current;
+        }
+        return {
+          distance: distance,
+          location: next,
+          index: index
+        };
+      },
+      {
+        distance: Infinity,
+        location: null,
+        index: 0
+      }
+    );
+  },
+
+  getPointNearNextTrain(paths, nearIndex, locationTrain) {
+    return paths[nearIndex + 1] || locationTrain;
+  }
 });
 
 export function trainAsset(latlng, options) {

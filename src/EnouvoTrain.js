@@ -104,21 +104,22 @@ export class EnouvoTrain {
     this.networkMapsData = networkMapsData;
 
     this.networkMaps = networkMapsData.map(data => {
-
       const template = {
         type: 'FeatureCollection',
-        features: [{
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: data.paths
-          },
-          id: data.properties.Id,
-          properties: data.properties,
-        }]
-      }
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: data.paths
+            },
+            id: data.properties.Id,
+            properties: data.properties
+          }
+        ]
+      };
       const networkMap = new GeoJSON(template, {
-        style: function () {
+        style: function() {
           return { weight: 7 };
         },
         onEachFeature: this._addEventListener.bind(that),
@@ -130,9 +131,12 @@ export class EnouvoTrain {
       });
 
       networkMap.addTo(this._map);
-      return { Id: data.properties.Id, networkMap: networkMap, name: data.properties.Name }
-    })
-
+      return {
+        Id: data.properties.Id,
+        networkMap: networkMap,
+        name: data.properties.Name
+      };
+    });
   }
 
   clearNetworkMaps() {
@@ -170,9 +174,15 @@ export class EnouvoTrain {
     this.networkTrains = new GeoJSON(networkTrainsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
+        const lineId = feature.properties.Segment.Route.Line.Id;
+        const networkMap = this.networkMaps.find(n => n.Id === lineId);
+        const _feature = {
+          ...{ networkMap: networkMap.networkMap, _map: this._map },
+          ...feature
+        };
         return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, feature)
-          : trainAsset(latlng, feature);
+          ? stationAsset(latlng, _feature)
+          : trainAsset(latlng, _feature);
       }
     });
     this.networkTrains.setZIndex(99);
