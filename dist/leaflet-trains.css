@@ -65,30 +65,40 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    right: -21px;
-    top: 9px;
+    /* right: -21px;
+    top: 9px; */
+    right: 9px;
+    top: -21px;
 }
 
 .train-arrow {
     position: relative;
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
+    /* border-top: 10px solid transparent;
     border-left: 20px solid #ffffff;
-    border-bottom: 10px solid transparent;
+    border-bottom: 10px solid transparent; */
+    border-left: 10px solid transparent;
+    border-bottom: 20px solid #ffffff;
+    border-right: 10px solid transparent;
 }
 
 .train-arrow::after {
     position: absolute;
     color: transparent;
-    top: -7px;
-    left: -18px;
+    /* top: -7px;
+    left: -18px; */
+    top: 4px;
+    left: -7px;
     content: ',';
     width: 0;
     height: 0;
-    border-top: 7px solid transparent;
+    /* border-top: 7px solid transparent;
     border-left: 14px solid #3949ab;
-    border-bottom: 7px solid transparent;
+    border-bottom: 7px solid transparent; */
+    border-left: 7px solid transparent;
+    border-bottom: 14px solid #3949ab;
+    border-right: 7px solid transparent;
 }
 
 .leaflet-trains-train-asset-name {

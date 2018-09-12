@@ -13,6 +13,7 @@ export var TrainAsset = BaseAsset.extend({
     this._map = options._map || null;
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
+
     const angle = this.getAngle();
     const _options = Object.assign({ angle: angle }, options);
     const icon = trainIcon(_options);
@@ -93,9 +94,28 @@ export var TrainAsset = BaseAsset.extend({
     return htmlTemplate;
   },
 
-  getAngle() {
-    const locationTrain = this.getLatLng();
+  getDirection() {
     const paths = this.getLocationNetworkMap();
+    const lastStation = this.feature.properties.Segment.DepartureStation;
+    const nextStation = this.feature.properties.Segment.ArrivalStation;
+
+    const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
+    const indexLastSation = stations.findIndex(
+      s => s.Station.Id === lastStation.Id
+    );
+    const indexNextSation = stations.findIndex(
+      s => s.Station.Id === nextStation.Id
+    );
+    if (indexNextSation > indexLastSation) {
+      paths.reverse();
+    }
+
+    return paths;
+  },
+
+  getAngle() {
+    const paths = this.getDirection();
+    const locationTrain = this.getLatLng();
     const locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
     const locationNextTrain = this.getPointNearNextTrain(
       paths,
@@ -106,8 +126,14 @@ export var TrainAsset = BaseAsset.extend({
     const location1 = locationNearTrain.location;
     const location2 = locationNextTrain;
 
-    const direction = getDirectionPoints(this._map, [location1, location2]);
+    const vector =
+      paths.length - 1 === locationNearTrain.index
+        ? [location2, location1]
+        : [location1, location2];
+
+    const direction = getDirectionPoints(this._map, vector);
     const angle = computeSegmentHeading(direction[0], direction[1]);
+
     return angle;
   },
 

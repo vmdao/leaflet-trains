@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 11:51:40 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 14:13:54 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -650,7 +650,7 @@ function geojsonToArcGIS (geojson, idAttribute) {
 }
 
 const computeSegmentHeading = (a, b) =>
-  ((Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI) + 90 + 360) % 360;
+  ((Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI + 90 + 360) % 360;
 
 const getDirectionPoints = (_map, latLngs) =>
   latLngs.map(latLng => _map.project(latLng));
@@ -784,11 +784,11 @@ function getUrlParams(options$$1) {
     options$$1.url = options$$1.url.split('?')[0];
     options$$1.requestParams = JSON.parse(
       '{"' +
-      decodeURI(queryString)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"') +
-      '"}'
+        decodeURI(queryString)
+          .replace(/"/g, '\\"')
+          .replace(/&/g, '","')
+          .replace(/=/g, '":"') +
+        '"}'
     );
   }
   options$$1.url = cleanUrl(options$$1.url.split('?')[0]);
@@ -879,14 +879,14 @@ function setEsriAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
+    map.on('resize', function(e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -940,14 +940,14 @@ function setEnouvoAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function (e) {
+    map.on('resize', function(e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function () {
+    map.on('unload', function() {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -1030,7 +1030,7 @@ function _getAttributionData(url, map) {
   jsonp(
     url,
     {},
-    leaflet.Util.bind(function (error, attributions) {
+    leaflet.Util.bind(function(error, attributions) {
       if (error) {
         return;
       }
@@ -1052,7 +1052,7 @@ function _getAttributionData(url, map) {
         }
       }
 
-      map._esriAttributions.sort(function (a, b) {
+      map._esriAttributions.sort(function(a, b) {
         return b.score - a.score;
       });
 
@@ -4872,6 +4872,7 @@ var TrainAsset = BaseAsset.extend({
     this._map = options._map || null;
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
+
     const angle = this.getAngle();
     const _options = Object.assign({ angle: angle }, options);
     const icon = trainIcon(_options);
@@ -4952,9 +4953,28 @@ var TrainAsset = BaseAsset.extend({
     return htmlTemplate;
   },
 
-  getAngle() {
-    const locationTrain = this.getLatLng();
+  getDirection() {
     const paths = this.getLocationNetworkMap();
+    const lastStation = this.feature.properties.Segment.DepartureStation;
+    const nextStation = this.feature.properties.Segment.ArrivalStation;
+
+    const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
+    const indexLastSation = stations.findIndex(
+      s => s.Station.Id === lastStation.Id
+    );
+    const indexNextSation = stations.findIndex(
+      s => s.Station.Id === nextStation.Id
+    );
+    if (indexNextSation > indexLastSation) {
+      paths.reverse();
+    }
+
+    return paths;
+  },
+
+  getAngle() {
+    const paths = this.getDirection();
+    const locationTrain = this.getLatLng();
     const locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
     const locationNextTrain = this.getPointNearNextTrain(
       paths,
@@ -4965,8 +4985,14 @@ var TrainAsset = BaseAsset.extend({
     const location1 = locationNearTrain.location;
     const location2 = locationNextTrain;
 
-    const direction = getDirectionPoints(this._map, [location1, location2]);
+    const vector =
+      paths.length - 1 === locationNearTrain.index
+        ? [location2, location1]
+        : [location1, location2];
+
+    const direction = getDirectionPoints(this._map, vector);
     const angle = computeSegmentHeading(direction[0], direction[1]);
+
     return angle;
   },
 
@@ -5123,16 +5149,12 @@ class EnouvoTrain {
           }
         ]
       };
+
       const networkMap = new leaflet.GeoJSON(template, {
         style: function() {
           return { weight: 7 };
         },
-        onEachFeature: this._addEventListener.bind(that),
-        pointToLayer: (feature, latlng) => {
-          return feature.properties.type === 'STATION'
-            ? stationAsset(latlng, feature)
-            : trainAsset(latlng, feature);
-        }
+        onEachFeature: this._addEventListener.bind(that)
       });
 
       networkMap.addTo(this._map);

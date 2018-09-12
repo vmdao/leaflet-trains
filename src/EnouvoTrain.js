@@ -118,16 +118,12 @@ export class EnouvoTrain {
           }
         ]
       };
+
       const networkMap = new GeoJSON(template, {
         style: function() {
           return { weight: 7 };
         },
-        onEachFeature: this._addEventListener.bind(that),
-        pointToLayer: (feature, latlng) => {
-          return feature.properties.type === 'STATION'
-            ? stationAsset(latlng, feature)
-            : trainAsset(latlng, feature);
-        }
+        onEachFeature: this._addEventListener.bind(that)
       });
 
       networkMap.addTo(this._map);
