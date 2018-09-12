@@ -1,4 +1,4 @@
-import { Map, GeoJSON } from 'leaflet';
+import { Map, GeoJSON, control } from 'leaflet';
 import { basemapLayer } from './Layers/BasemapLayer';
 import { stationAsset } from './Assets/StationAsset';
 import { trainAsset } from './Assets/TrainAsset';
@@ -57,6 +57,8 @@ export class EnouvoTrain {
 
   _createMap(el, options) {
     this._map = new Map(el, options);
+    this._map.zoomControl.setPosition('bottomleft');
+
     this._createLayer();
   }
 
@@ -102,7 +104,7 @@ export class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-
+    let overlays = {};
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -125,7 +127,7 @@ export class EnouvoTrain {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
-
+      overlays[data.properties.Name] = networkMap;
       networkMap.addTo(this._map);
       return {
         Id: data.properties.Id,
@@ -133,6 +135,10 @@ export class EnouvoTrain {
         name: data.properties.Name
       };
     });
+
+    control
+      .layers([], overlays, { position: 'bottomleft', collapsed: false })
+      .addTo(this._map);
   }
 
   clearNetworkMaps() {

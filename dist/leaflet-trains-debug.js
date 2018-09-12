@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 14:13:54 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 14:45:19 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5088,6 +5088,8 @@ class EnouvoTrain {
 
   _createMap(el, options) {
     this._map = new leaflet.Map(el, options);
+    this._map.zoomControl.setPosition('bottomleft');
+
     this._createLayer();
   }
 
@@ -5133,7 +5135,7 @@ class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-
+    let overlays = {};
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -5156,7 +5158,7 @@ class EnouvoTrain {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
-
+      overlays[data.properties.Name] = networkMap;
       networkMap.addTo(this._map);
       return {
         Id: data.properties.Id,
@@ -5164,6 +5166,10 @@ class EnouvoTrain {
         name: data.properties.Name
       };
     });
+
+    leaflet.control
+      .layers([], overlays, { position: 'bottomleft', collapsed: false })
+      .addTo(this._map);
   }
 
   clearNetworkMaps() {
