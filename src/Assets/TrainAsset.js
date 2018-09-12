@@ -30,9 +30,10 @@ export var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.DestinationStation || 'Mock_Destination',
-      lastStation: data.LastStation || 'Mock_LastStation',
-      nextStation: data.NextStation || 'Mock_NextStation'
+      destimation: data.Segment.Route.Name || 'Mock_Destination',
+      lastStation:
+        data.Segment.DepartureStation.StationName || 'Mock_LastStation',
+      nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
@@ -41,7 +42,7 @@ export var TrainAsset = BaseAsset.extend({
         field: 'trainId'
       },
       {
-        name: 'TrainNo',
+        name: 'Train No',
         field: 'trainNo'
       },
       {

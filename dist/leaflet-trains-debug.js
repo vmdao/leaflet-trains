@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 16:46:27 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 18:24:16 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4882,6 +4882,7 @@ var TrainAsset = BaseAsset.extend({
   },
 
   _createPopup(data) {
+    console.log(data, 'data');
     const _data = {
       trainNo: data.TrainNo,
       trainId: data.Id,
@@ -4889,9 +4890,10 @@ var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.DestinationStation || 'Mock_Destination',
-      lastStation: data.LastStation || 'Mock_LastStation',
-      nextStation: data.NextStation || 'Mock_NextStation'
+      destimation: data.Segment.Route.Name || 'Mock_Destination',
+      lastStation:
+        data.Segment.DepartureStation.StationName || 'Mock_LastStation',
+      nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
@@ -4900,7 +4902,7 @@ var TrainAsset = BaseAsset.extend({
         field: 'trainId'
       },
       {
-        name: 'TrainNo',
+        name: 'Train No',
         field: 'trainNo'
       },
       {
@@ -5038,22 +5040,18 @@ function trainAsset(latlng, options) {
 const Layers = leaflet.Control.Layers;
 
 var OverlayControl = Layers.extend({
-  initialize: function(options) {
-    console.log(123);
-  },
   onAdd: function() {
     this._initLayout();
-    this._customizeButton();
+    this._customizeOverlays();
+    this._update();
     return this._container;
   },
-  _customizeButton: function() {
-    console.log('123');
+  _customizeOverlays: function() {
+    var element = this._container;
+    var img = leaflet.DomUtil.create('img', 'my-button-class', element);
+    img.src = 'assets/images/ic-marker-station.svg';
   }
 });
-
-var overlayControl = function(options) {
-  return new OverlayControl(options);
-};
 
 class EnouvoTrain {
   constructor(el, options) {
@@ -5067,7 +5065,6 @@ class EnouvoTrain {
     this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
-    overlayControl(options);
   }
 
   _createObserver() {
@@ -5251,6 +5248,7 @@ class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
+    // overlayControl(options);
 
     leaflet.control
       .layers(

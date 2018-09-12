@@ -16,7 +16,6 @@ export class EnouvoTrain {
     this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
-    overlayControl(options);
   }
 
   _createObserver() {
@@ -200,6 +199,7 @@ export class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
+    // overlayControl(options);
 
     control
       .layers(

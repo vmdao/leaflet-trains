@@ -1,17 +1,17 @@
-import { Control } from 'leaflet';
+import { Control, DomUtil } from 'leaflet';
 const Layers = Control.Layers;
 
 export var OverlayControl = Layers.extend({
-  initialize: function(options) {
-    console.log(123);
-  },
   onAdd: function() {
     this._initLayout();
-    this._customizeButton();
+    this._customizeOverlays();
+    this._update();
     return this._container;
   },
-  _customizeButton: function() {
-    console.log('123');
+  _customizeOverlays: function() {
+    var element = this._container;
+    var img = DomUtil.create('img', 'my-button-class', element);
+    img.src = 'assets/images/ic-marker-station.svg';
   }
 });
 
