@@ -13,7 +13,7 @@ export class EnouvoTrain {
         return true;
       }
     });
-
+    this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
   }
@@ -102,18 +102,37 @@ export class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-    this.networkMaps = new GeoJSON(networkMapsData, {
-      style: function() {
-        return { weight: 7 };
-      },
-      onEachFeature: this._addEventListener.bind(that),
-      pointToLayer: (feature, latlng) => {
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, feature)
-          : trainAsset(latlng, feature);
+
+    this.networkMaps = networkMapsData.map(data => {
+
+      const template = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: data.paths
+          },
+          id: data.properties.Id,
+          properties: data.properties,
+        }]
       }
-    });
-    this.networkMaps.addTo(this._map);
+      const networkMap = new GeoJSON(template, {
+        style: function () {
+          return { weight: 7 };
+        },
+        onEachFeature: this._addEventListener.bind(that),
+        pointToLayer: (feature, latlng) => {
+          return feature.properties.type === 'STATION'
+            ? stationAsset(latlng, feature)
+            : trainAsset(latlng, feature);
+        }
+      });
+
+      networkMap.addTo(this._map);
+      return { Id: data.properties.Id, networkMap: networkMap, name: data.properties.Name }
+    })
+
   }
 
   clearNetworkMaps() {

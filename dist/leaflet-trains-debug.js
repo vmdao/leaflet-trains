@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 16:34:19 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Tue Sep 11 2018 23:51:52 GMT+0700 (Indochina Time)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -649,6 +649,12 @@ function geojsonToArcGIS (geojson, idAttribute) {
   return result;
 }
 
+const computeSegmentHeading = (a, b) =>
+  ((Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI) + 90 + 360) % 360;
+
+const getDirectionPoints = (_map, latLngs) =>
+  latLngs.map(latLng => _map.project(latLng));
+
 function geojsonToArcGIS$1(geojson, idAttr) {
   return geojsonToArcGIS(geojson, idAttr);
 }
@@ -778,11 +784,11 @@ function getUrlParams(options$$1) {
     options$$1.url = options$$1.url.split('?')[0];
     options$$1.requestParams = JSON.parse(
       '{"' +
-        decodeURI(queryString)
-          .replace(/"/g, '\\"')
-          .replace(/&/g, '","')
-          .replace(/=/g, '":"') +
-        '"}'
+      decodeURI(queryString)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"') +
+      '"}'
     );
   }
   options$$1.url = cleanUrl(options$$1.url.split('?')[0]);
@@ -873,14 +879,14 @@ function setEsriAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function(e) {
+    map.on('resize', function (e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function() {
+    map.on('unload', function () {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -934,14 +940,14 @@ function setEnouvoAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function(e) {
+    map.on('resize', function (e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function() {
+    map.on('unload', function () {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -1024,7 +1030,7 @@ function _getAttributionData(url, map) {
   jsonp(
     url,
     {},
-    leaflet.Util.bind(function(error, attributions) {
+    leaflet.Util.bind(function (error, attributions) {
       if (error) {
         return;
       }
@@ -1046,7 +1052,7 @@ function _getAttributionData(url, map) {
         }
       }
 
-      map._esriAttributions.sort(function(a, b) {
+      map._esriAttributions.sort(function (a, b) {
         return b.score - a.score;
       });
 
@@ -1122,7 +1128,9 @@ var EsriUtil = {
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution,
   _findIdAttributeFromFeature: _findIdAttributeFromFeature,
-  _findIdAttributeFromResponse: _findIdAttributeFromResponse
+  _findIdAttributeFromResponse: _findIdAttributeFromResponse,
+  computeSegmentHeading: computeSegmentHeading,
+  getDirectionPoints: getDirectionPoints
 };
 
 var Task = leaflet.Class.extend({
@@ -4856,14 +4864,15 @@ var trainIcon = function(options) {
 };
 
 var TrainAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
+  initialize: function (type, latlng, options) {
     const icon = trainIcon(options);
     const _options = Object.assign({ icon: icon }, options);
     BaseAsset.prototype.initialize.call(this, type, latlng, _options);
-
+    this.networkMap = options.networkMap || null;
     this.canMove = true;
     this._createPopup(options.properties);
   },
+
   _createPopup(data) {
     const _data = {
       trainNo: data.TrainNo,
@@ -4935,6 +4944,7 @@ var TrainAsset = BaseAsset.extend({
       ' </ul></div></div></div>';
     return htmlTemplate;
   }
+
 });
 
 function trainAsset(latlng, options) {
@@ -4950,7 +4960,7 @@ class EnouvoTrain {
         return true;
       }
     });
-
+    this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
   }
@@ -5039,18 +5049,37 @@ class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-    this.networkMaps = new leaflet.GeoJSON(networkMapsData, {
-      style: function() {
-        return { weight: 7 };
-      },
-      onEachFeature: this._addEventListener.bind(that),
-      pointToLayer: (feature, latlng) => {
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, feature)
-          : trainAsset(latlng, feature);
-      }
+
+    this.networkMaps = networkMapsData.map(data => {
+
+      const template = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: data.paths
+          },
+          id: data.properties.Id,
+          properties: data.properties,
+        }]
+      };
+      const networkMap = new leaflet.GeoJSON(template, {
+        style: function () {
+          return { weight: 7 };
+        },
+        onEachFeature: this._addEventListener.bind(that),
+        pointToLayer: (feature, latlng) => {
+          return feature.properties.type === 'STATION'
+            ? stationAsset(latlng, feature)
+            : trainAsset(latlng, feature);
+        }
+      });
+
+      networkMap.addTo(this._map);
+      return { Id: data.properties.Id, networkMap: networkMap, name: data.properties.Name }
     });
-    this.networkMaps.addTo(this._map);
+
   }
 
   clearNetworkMaps() {

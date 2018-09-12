@@ -4,14 +4,15 @@ import { BaseAsset } from './BaseAsset';
 import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
+  initialize: function (type, latlng, options) {
     const icon = trainIcon(options);
     const _options = Object.assign({ icon: icon }, options);
     BaseAsset.prototype.initialize.call(this, type, latlng, _options);
-
+    this.networkMap = options.networkMap || null;
     this.canMove = true;
     this._createPopup(options.properties);
   },
+
   _createPopup(data) {
     const _data = {
       trainNo: data.TrainNo,
@@ -83,6 +84,7 @@ export var TrainAsset = BaseAsset.extend({
       ' </ul></div></div></div>';
     return htmlTemplate;
   }
+
 });
 
 export function trainAsset(latlng, options) {

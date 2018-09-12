@@ -15,6 +15,12 @@ import {
   arcgisToGeoJSON as a2g
 } from '@esri/arcgis-to-geojson-utils';
 
+export const computeSegmentHeading = (a, b) =>
+  ((Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI) + 90 + 360) % 360;
+
+export const getDirectionPoints = (_map, latLngs) =>
+  latLngs.map(latLng => _map.project(latLng));
+
 export function geojsonToArcGIS(geojson, idAttr) {
   return g2a(geojson, idAttr);
 }
@@ -144,11 +150,11 @@ export function getUrlParams(options) {
     options.url = options.url.split('?')[0];
     options.requestParams = JSON.parse(
       '{"' +
-        decodeURI(queryString)
-          .replace(/"/g, '\\"')
-          .replace(/&/g, '","')
-          .replace(/=/g, '":"') +
-        '"}'
+      decodeURI(queryString)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"') +
+      '"}'
     );
   }
   options.url = cleanUrl(options.url.split('?')[0]);
@@ -239,14 +245,14 @@ export function setEsriAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function(e) {
+    map.on('resize', function (e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function() {
+    map.on('unload', function () {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -300,14 +306,14 @@ export function setEnouvoAttribution(map) {
     );
 
     // update the width used to truncate when the map itself is resized
-    map.on('resize', function(e) {
+    map.on('resize', function (e) {
       map.attributionControl._container.style.maxWidth = calcAttributionWidth(
         e.target
       );
     });
 
     // remove injected scripts and style tags
-    map.on('unload', function() {
+    map.on('unload', function () {
       hoverAttributionStyle.parentNode.removeChild(hoverAttributionStyle);
       attributionStyle.parentNode.removeChild(attributionStyle);
       var nodeList = document.querySelectorAll('.esri-leaflet-jsonp');
@@ -390,7 +396,7 @@ export function _getAttributionData(url, map) {
   jsonp(
     url,
     {},
-    Util.bind(function(error, attributions) {
+    Util.bind(function (error, attributions) {
       if (error) {
         return;
       }
@@ -412,7 +418,7 @@ export function _getAttributionData(url, map) {
         }
       }
 
-      map._esriAttributions.sort(function(a, b) {
+      map._esriAttributions.sort(function (a, b) {
         return b.score - a.score;
       });
 
@@ -488,7 +494,9 @@ export var EsriUtil = {
   _getAttributionData: _getAttributionData,
   _updateMapAttribution: _updateMapAttribution,
   _findIdAttributeFromFeature: _findIdAttributeFromFeature,
-  _findIdAttributeFromResponse: _findIdAttributeFromResponse
+  _findIdAttributeFromResponse: _findIdAttributeFromResponse,
+  computeSegmentHeading: computeSegmentHeading,
+  getDirectionPoints: getDirectionPoints
 };
 
 export default EsriUtil;
