@@ -137,7 +137,6 @@ export class EnouvoTrain {
     });
 
     const overlays = { Line: layerGroup(layers) };
-    console.log('overlays', overlays);
     control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -180,7 +179,6 @@ export class EnouvoTrain {
   }
 
   setNetworkTrains(networkTrainsData) {
-    console.log('networkTrainsData', networkTrainsData);
     const that = this;
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new GeoJSON(networkTrainsData, {

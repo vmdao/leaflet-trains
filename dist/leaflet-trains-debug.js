@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 18:24:16 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 18:33:29 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4882,7 +4882,6 @@ var TrainAsset = BaseAsset.extend({
   },
 
   _createPopup(data) {
-    console.log(data, 'data');
     const _data = {
       trainNo: data.TrainNo,
       trainId: data.Id,
@@ -5186,7 +5185,6 @@ class EnouvoTrain {
     });
 
     const overlays = { Line: leaflet.layerGroup(layers) };
-    console.log('overlays', overlays);
     leaflet.control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -5229,7 +5227,6 @@ class EnouvoTrain {
   }
 
   setNetworkTrains(networkTrainsData) {
-    console.log('networkTrainsData', networkTrainsData);
     const that = this;
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new leaflet.GeoJSON(networkTrainsData, {
