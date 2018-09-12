@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 14:45:19 GMT+0700 (+07)
+/* leaflet-trains - v1.0.1 - Wed Sep 12 2018 14:52:56 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5192,6 +5192,13 @@ class EnouvoTrain {
     });
     this.networkStations.setZIndex(2);
     this.networkStations.addTo(this._map);
+    leaflet.control
+      .layers(
+        [],
+        { Station: this.networkStations },
+        { position: 'bottomleft', collapsed: false }
+      )
+      .addTo(this._map);
   }
 
   clearNetworkStations() {
@@ -5220,6 +5227,11 @@ class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
+    leaflet.control.layers(
+      [],
+      { Train: this.networkTrains },
+      { position: 'bottomleft', collapsed: false }
+    );
   }
 
   clearNetworkTrains() {

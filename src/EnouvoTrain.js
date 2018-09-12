@@ -161,6 +161,13 @@ export class EnouvoTrain {
     });
     this.networkStations.setZIndex(2);
     this.networkStations.addTo(this._map);
+    control
+      .layers(
+        [],
+        { Station: this.networkStations },
+        { position: 'bottomleft', collapsed: false }
+      )
+      .addTo(this._map);
   }
 
   clearNetworkStations() {
@@ -189,6 +196,11 @@ export class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
+    control.layers(
+      [],
+      { Train: this.networkTrains },
+      { position: 'bottomleft', collapsed: false }
+    );
   }
 
   clearNetworkTrains() {
