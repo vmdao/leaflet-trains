@@ -1,9 +1,9 @@
-import { Map, GeoJSON, control } from 'leaflet';
+import { Map, GeoJSON, control, layerGroup } from 'leaflet';
 import { basemapLayer } from './Layers/BasemapLayer';
 import { stationAsset } from './Assets/StationAsset';
 import { trainAsset } from './Assets/TrainAsset';
 import { EventEmitter } from './EventEmitter';
-
+import { overlayControl } from './Layers/OverlayControl';
 export class EnouvoTrain {
   constructor(el, options) {
     this.poolListener = [];
@@ -16,6 +16,7 @@ export class EnouvoTrain {
     this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
+    overlayControl(options);
   }
 
   _createObserver() {
@@ -104,7 +105,7 @@ export class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-    let overlays = {};
+    let layers = [];
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -127,7 +128,7 @@ export class EnouvoTrain {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
-      overlays[data.properties.Name] = networkMap;
+      layers.push(networkMap);
       networkMap.addTo(this._map);
       return {
         Id: data.properties.Id,
@@ -136,6 +137,8 @@ export class EnouvoTrain {
       };
     });
 
+    const overlays = { Line: layerGroup(layers) };
+    console.log('overlays', overlays);
     control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -178,6 +181,7 @@ export class EnouvoTrain {
   }
 
   setNetworkTrains(networkTrainsData) {
+    console.log('networkTrainsData', networkTrainsData);
     const that = this;
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new GeoJSON(networkTrainsData, {
@@ -196,11 +200,14 @@ export class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
-    control.layers(
-      [],
-      { Train: this.networkTrains },
-      { position: 'bottomleft', collapsed: false }
-    );
+
+    control
+      .layers(
+        [],
+        { Trains: this.networkTrains },
+        { position: 'bottomleft', collapsed: false }
+      )
+      .addTo(this._map);
   }
 
   clearNetworkTrains() {

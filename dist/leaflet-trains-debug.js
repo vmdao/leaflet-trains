@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 15:21:39 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 16:46:27 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5035,6 +5035,26 @@ function trainAsset(latlng, options) {
   return new TrainAsset('train', latlng, options);
 }
 
+const Layers = leaflet.Control.Layers;
+
+var OverlayControl = Layers.extend({
+  initialize: function(options) {
+    console.log(123);
+  },
+  onAdd: function() {
+    this._initLayout();
+    this._customizeButton();
+    return this._container;
+  },
+  _customizeButton: function() {
+    console.log('123');
+  }
+});
+
+var overlayControl = function(options) {
+  return new OverlayControl(options);
+};
+
 class EnouvoTrain {
   constructor(el, options) {
     this.poolListener = [];
@@ -5047,6 +5067,7 @@ class EnouvoTrain {
     this.networkMaps = [];
     this._createObserver();
     this._createMap(el, options);
+    overlayControl(options);
   }
 
   _createObserver() {
@@ -5135,7 +5156,7 @@ class EnouvoTrain {
   setNetworkMaps(networkMapsData) {
     const that = this;
     this.networkMapsData = networkMapsData;
-    let overlays = {};
+    let layers = [];
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -5158,7 +5179,7 @@ class EnouvoTrain {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
-      overlays[data.properties.Name] = networkMap;
+      layers.push(networkMap);
       networkMap.addTo(this._map);
       return {
         Id: data.properties.Id,
@@ -5167,6 +5188,8 @@ class EnouvoTrain {
       };
     });
 
+    const overlays = { Line: leaflet.layerGroup(layers) };
+    console.log('overlays', overlays);
     leaflet.control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -5209,6 +5232,7 @@ class EnouvoTrain {
   }
 
   setNetworkTrains(networkTrainsData) {
+    console.log('networkTrainsData', networkTrainsData);
     const that = this;
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new leaflet.GeoJSON(networkTrainsData, {
@@ -5227,11 +5251,14 @@ class EnouvoTrain {
     });
     this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
-    leaflet.control.layers(
-      [],
-      { Train: this.networkTrains },
-      { position: 'bottomleft', collapsed: false }
-    );
+
+    leaflet.control
+      .layers(
+        [],
+        { Trains: this.networkTrains },
+        { position: 'bottomleft', collapsed: false }
+      )
+      .addTo(this._map);
   }
 
   clearNetworkTrains() {

@@ -7,6 +7,8 @@ encodedPaths[0] = new Array();
 encodedPaths[0][0] = 'CityloopPath';
 encodedPaths[0][1] =
   '~gyeFw~xsZtTrjADfA?|@]|Ao@z@mb@lXo@?cAOcAk@eAoAw@uAkAiCg@eB]}AcDyP_FcXoF}X_CiMgAcEk@}CWwBEqC@q@VkBTiA^y@nBgDvA{AxAcAbAk@v@c@`FaBh@SpNgFTEh@Cr@?h@Dr@RbAbAXv@pHje@';
+encodedPaths[0][2] = '1';
+
 encodedPaths[1] = new Array();
 encodedPaths[1][0] = 'CityloopRichmondPath';
 encodedPaths[1][1] =
@@ -130,39 +132,67 @@ encodedPaths[31][1] = 'lmbeFkbsrZ{zK``Ie]tIkmAlPygC}Ama@_J_cAmq@';
 /* END Polylines */
 
 const encodedPaths2 = [];
-encodedPaths2[0] = []
+encodedPaths2[0] = [];
 encodedPaths2[0][0] = 'Glen Waverley Line';
 encodedPaths2[0][1] =
   'be{eFiv`tZ`A{QNgEKoE_@kIEiGLkK^sC^eBh@gBt@iAx@m@|AeA|BcApC{@lCo@|IiCrA{@xBgAvAiAxBuCpAoArAcBnD{BvAgAfCcB`BcCfAwBbAaE`@gF\\kJt@yLt@wD~BmH~CmEtAoAvAw@rEsB|BqAhKiEnF_CfIaGdDmEbFoMvCeMbAcDrAeGlA{FbEiP|@{BfAsBjAyAxKsIdEmCvC{BhFyCdM{E~Bi@rOaDtEmAfIkFvF_FjEaDzBeApL_EpCs@~BqA~AgAhAcAtAkBvAyB~@iB|AyEh@}B^qBTeCBaCE_Bi@cN[cOMyDy@uOaDmTeGw_@wAyPgAuXeD}hA@yBBiAZkDbAaH`@uAdCoKl@{Cb@wCf@}Gl@cQP{YMsbBpDcl@|Bm\\|Pw_A';
-encodedPaths2[0][2] = 'DjFAIvCY'
+encodedPaths2[0][2] = 'DjFAIvCY';
 
-encodedPaths2[1] = []
+encodedPaths2[1] = [];
 encodedPaths2[1][0] = 'Hurstbridge Line';
 encodedPaths2[1][1] =
   'xdseFon~sZkCcA_MsG{IeE}DwBcDsCoA_C{@wCa@cGGoGB}oACgm@CqOMeIY{DwBsK{H_]u@oBgB_DiDuCe]_YcBuCoAgD}GqVeHkK}GkLmCyDsFiIqDsDkDiCcF{DcCeCoI_LcHeK_F{GgGyI_CqCmBeA{CcAsDe@wFQwOs@sDG}OhCmM`BqSbAmFKcEa@oW{IuJuCwKiC{GUiD]cFm@gEa@_FyAwCkBmC{BwBaEoDkJgEuJuCsDyBkBaGqEyBiB{AyByByEmDaEgB{BaSeRaQeT_CeBoN}HaG_EyL}MgByCkAiC]{B]sDNsDn@wDlAcDnBgLj@}ArA{ClB}C|AyC`AiCj@oBv@{BdB}CjAqAjDgDrByA`BcAtCsBxBuAhBeCnDoD`CuCrCcCrLsIhJsHbA_Ax@uAp@_Bn@iBj@uCZ{G\\}Cf@gDhE{Rb@uC`@eDFsD_@iJu@}Cq@}DaH}P_@eEDsD`@aDhAmC~AmCdD{Gt@_EDqEc@mEuAyJm@oDuA_DcCmB_MsGkCgAuB]{HGgEBqEM}BcAeB}AiBmCwEwG}J{OsCkBoE{@}ACyEv@sBtAsI|HoBjAgBf@}B?kCo@kLmGoUsK{C_AyDC}DJ_D\\wAv@eBfBgGbH_E|EqElCaD~@}Bb@oEQmCw@yBiAsBeBaB_CcBcBwCoDkBqCmAcCsBuEcAoDu@eEa@}D[{Da@}L]gD_BeGyBwDwAqC}@_CeAwEcAaFo@aEsByJwA_H}A}GgCeN{AwDqAwBwAkDcAgAaG}BuCm@uIwBuCo@wBo@uB{@oB_CaBoDcBiCgBiBiEqCyFaC_RmG{HaB{Ds@qCd@oDCaC{@iCGsCPcCBmC]uEmCoCw@yB?qCXqCC}Bg@gCmBsAuA';
-encodedPaths2[1][2] = 'J3T9u1H4'
+encodedPaths2[1][2] = 'J3T9u1H4';
 
 encodedPaths2[2] = new Array();
 encodedPaths2[2][0] = 'Alamein Line';
 encodedPaths2[2][1] =
   'p_{eFcyjtZGoEc@}SK{Jo@mIIsBD_ATiBf@eBZq@f@{@z@y@r@a@r@Yt@QdAIdA@lFb@jF\\lBRpK`AnAGbAU|@Wv@]xv@kb@|o@k_@fJ{EzF}CtB{@xBi@`CUrDEbBPzA^nJ|CzOxEdH|BxWfC';
-encodedPaths2[2][2] = 'OjtDTgF5'
+encodedPaths2[2][2] = 'OjtDTgF5';
 
-renderGeoArray(encodedPaths2);
+renderGeoArray(encodedPaths);
 
 function renderGeoArray(paths) {
   var collection = paths.map((path, index) => {
     const line = polyline.decode(path[1]);
     const convertGeoJsonStand = line.map(l => l.reverse());
-    return { properties: { Name: path[0], name: path[0], Id: path[2] }, paths: convertGeoJsonStand };
+    const fixeds = [
+      {
+        id: 'DjFAIvCY',
+        name: 'Glen Waverley Line',
+        code: 'BurnleyGlenwaverlyPath'
+      },
+      {
+        id: 'J3T9u1H4',
+        name: 'Hurstbridge Line',
+        code: 'CliftonhillHurstbridgePath'
+      },
+      { id: 'OjtDTgF5', name: 'Alamein Line', code: 'CamberwellAlameinPath' }
+    ];
+    const fixed = fixeds.find(f => f.code === path[0]);
+    console.log('fixed', fixed);
+    if (fixed) {
+      return {
+        properties: { Name: fixed.name, name: fixed.name, Id: fixed.id },
+        paths: convertGeoJsonStand
+      };
+    }
+    return {
+      properties: { Name: path[0], name: path[0], Id: index + 1 },
+      paths: convertGeoJsonStand
+    };
   });
 
-  fs.writeFile('./profiles/metrotrains.json', JSON.stringify(collection), error => {
-    if (error) {
-      return console.log('error', error);
+  fs.writeFile(
+    './profiles/metrotrains.json',
+    JSON.stringify(collection),
+    error => {
+      if (error) {
+        return console.log('error', error);
+      }
+      console.log('Done: profiles/metrotrains.json');
     }
-    console.log('Done: profiles/metrotrains.json');
-  });
+  );
 }
 
 function renderGeoCollection(paths) {
@@ -183,10 +213,14 @@ function renderGeoCollection(paths) {
     Object.assign(f, { id: index + 1 })
   );
 
-  fs.writeFile('./profiles/metrotrains.geojson', JSON.stringify(geoCollection), error => {
-    if (error) {
-      return console.log('error', error);
+  fs.writeFile(
+    './profiles/metrotrains.geojson',
+    JSON.stringify(geoCollection),
+    error => {
+      if (error) {
+        return console.log('error', error);
+      }
+      console.log('Done: profiles/metrotrains.geojson');
     }
-    console.log('Done: profiles/metrotrains.geojson');
-  });
+  );
 }
