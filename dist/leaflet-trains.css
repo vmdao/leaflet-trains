@@ -131,7 +131,8 @@
     transform: translate(-50%, -50%);
 }
 
-.leaflet-popup-content-wrapper {
+/* Popup */
+.leaflet-trains-popup .leaflet-popup-content-wrapper {
     padding: 0px
 }
 

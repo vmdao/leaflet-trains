@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 12:10:34 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 15:10:04 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4924,7 +4924,7 @@ var TrainAsset = BaseAsset.extend({
 
     var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
     var html = leaflet.Util.template(htmlTemplate, _data);
-    this.bindPopup(html, { minWidth: 270 });
+    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
   },
 
   _createPopupEventSameTooltip(data) {
@@ -4976,7 +4976,7 @@ var TrainAsset = BaseAsset.extend({
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;

@@ -65,7 +65,7 @@ export var TrainAsset = BaseAsset.extend({
 
     var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
     var html = Util.template(htmlTemplate, _data);
-    this.bindPopup(html, { minWidth: 270 });
+    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
   },
 
   _createPopupEventSameTooltip(data) {
@@ -117,7 +117,7 @@ export var TrainAsset = BaseAsset.extend({
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">TH-{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
