@@ -2,6 +2,7 @@ import { Map, GeoJSON, control, layerGroup } from 'leaflet';
 import { basemapLayer } from './Layers/BasemapLayer';
 import { stationAsset } from './Assets/StationAsset';
 import { trainAsset } from './Assets/TrainAsset';
+import { KeyboardHook } from './Layers/KeyboardHook';
 import { EventEmitter } from './EventEmitter';
 import { overlayControl } from './Layers/OverlayControl';
 export class EnouvoTrain {
@@ -58,7 +59,6 @@ export class EnouvoTrain {
   _createMap(el, options) {
     this._map = new Map(el, options);
     this._map.zoomControl.setPosition('bottomleft');
-
     this._createLayer();
   }
 

@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 15:10:04 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 18:20:02 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5083,6 +5083,30 @@ function trainAsset(latlng, options) {
   return new TrainAsset('train', latlng, options);
 }
 
+var KeyboardHook = leaflet.Handler.extend({
+  addHooks: function() {
+    this._map.on('contextmenu', this._onDown, this);
+  },
+  removeHooks: function() {
+    this._map.off('contextmenu', this._onDown, this);
+  },
+
+  _onDown: function(e) {
+    var map = this._map,
+      oldZoom = map.getZoom(),
+      delta = map.options.zoomDelta,
+      zoom = e.originalEvent.shiftKey ? oldZoom - delta : oldZoom + delta;
+
+    if (map.options.doubleClickZoom === 'center') {
+      map.setZoom(zoom);
+    } else {
+      map.setZoomAround(e.containerPoint, zoom);
+    }
+  }
+});
+
+leaflet.Map.addInitHook('addHandler', 'keyboard', KeyboardHook);
+
 const Layers = leaflet.Control.Layers;
 
 var OverlayControl = Layers.extend({
@@ -5153,7 +5177,6 @@ class EnouvoTrain {
   _createMap(el, options) {
     this._map = new leaflet.Map(el, options);
     this._map.zoomControl.setPosition('bottomleft');
-
     this._createLayer();
   }
 
