@@ -12,7 +12,7 @@ export var TrainIcon = DivIcon.extend({
       iconUrl +
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
       angle +
-      'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"></div></div></div>';
+      'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"><div class="train-arrow-after"></div></div></div></div>';
     const sizeIcon = [38, 38];
 
     const _options = {

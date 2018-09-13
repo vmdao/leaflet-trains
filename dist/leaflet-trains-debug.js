@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 09:47:18 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 12:10:34 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4849,7 +4849,7 @@ var TrainIcon = leaflet.DivIcon.extend({
       iconUrl +
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
       angle +
-      'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"></div></div></div>';
+      'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"><div class="train-arrow-after"></div></div></div></div>';
     const sizeIcon = [38, 38];
 
     const _options = {
@@ -4878,7 +4878,7 @@ var TrainAsset = BaseAsset.extend({
     const icon = trainIcon(_options);
     this.setIcon(icon);
     this.canMove = true;
-    this._createPopup(options.properties);
+    this._createPopupEventSameTooltip(options.properties);
   },
 
   _createPopup(data) {
@@ -4925,6 +4925,38 @@ var TrainAsset = BaseAsset.extend({
     var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
     var html = leaflet.Util.template(htmlTemplate, _data);
     this.bindPopup(html, { minWidth: 270 });
+  },
+
+  _createPopupEventSameTooltip(data) {
+    this._createPopup(data);
+    this.on('mouseover', () => {
+      this.changeStyleWhenHover('#c6c6c6');
+      this.openPopup();
+    });
+    this.on('mouseout', () => {
+      this.changeStyleWhenHover('');
+      this.closePopup();
+    });
+  },
+
+  changeStyleWhenHover(color) {
+    const assets = this._icon.getElementsByClassName(
+      'leaflet-trains-train-asset'
+    );
+    const assetsName = this._icon.getElementsByClassName(
+      'leaflet-trains-train-asset-name'
+    );
+    const assetsArrow = this._icon.getElementsByClassName('train-arrow-after');
+
+    if (assets.length) {
+      assets[0].style.backgroundColor = color;
+    }
+    if (assetsName && assetsName.length) {
+      assetsName[0].style.backgroundColor = color;
+    }
+    if (assetsArrow && assetsArrow.length) {
+      assetsArrow[0].style.borderBottomColor = color;
+    }
   },
 
   updatePosition(latlng) {

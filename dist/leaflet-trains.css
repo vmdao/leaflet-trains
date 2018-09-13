@@ -87,7 +87,7 @@
     border-right: 10px solid transparent;
 }
 
-.train-arrow::after {
+.train-arrow-after {
     position: absolute;
     color: transparent;
     /* top: -7px;
