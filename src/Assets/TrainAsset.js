@@ -1,4 +1,4 @@
-import { Util } from 'leaflet';
+import { Util, latLng } from 'leaflet';
 import {
   convertToTimeHuman,
   getDirectionPoints,
@@ -14,7 +14,7 @@ export var TrainAsset = BaseAsset.extend({
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
 
-    const angle = this.getAngle();
+    const angle = this.getAngleWithNextStation();
     const _options = Object.assign({ angle: angle }, options);
     const icon = trainIcon(_options);
     this.setIcon(icon);
@@ -30,17 +30,13 @@ export var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.Segment.Route.Name || 'Mock_Destination',
+      destination: data.Segment.Route.Name || 'Mock_Destination',
       lastStation:
         data.Segment.DepartureStation.StationName || 'Mock_LastStation',
       nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
-      {
-        name: 'Train Id',
-        field: 'trainId'
-      },
       {
         name: 'Train No',
         field: 'trainNo'
@@ -54,8 +50,8 @@ export var TrainAsset = BaseAsset.extend({
         field: 'lastReport'
       },
       {
-        name: 'Destimation',
-        field: 'destimation'
+        name: 'Destination',
+        field: 'destination'
       },
       {
         name: 'Last station',
@@ -135,6 +131,25 @@ export var TrainAsset = BaseAsset.extend({
     const direction = getDirectionPoints(this._map, vector);
     const angle = computeSegmentHeading(direction[0], direction[1]);
 
+    return angle;
+  },
+
+  getAngleWithNextStation() {
+    const ArrivalStation = this.feature.properties.Segment.ArrivalStation;
+    const LongitudeNextStation = ArrivalStation.Longitude;
+    const LatitudeNextStation = ArrivalStation.Latitude;
+
+    const nextStation = latLng(LatitudeNextStation, LongitudeNextStation);
+
+    const locationTrain = this.getLatLng();
+
+    const location1 = locationTrain;
+    const location2 = nextStation;
+
+    const vector = [location1, location2];
+
+    const direction = getDirectionPoints(this._map, vector);
+    const angle = computeSegmentHeading(direction[0], direction[1]);
     return angle;
   },
 

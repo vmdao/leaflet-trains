@@ -136,7 +136,7 @@ export class EnouvoTrain {
       };
     });
 
-    const overlays = { Line: layerGroup(layers) };
+    const overlays = { Lines: layerGroup(layers) };
     control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -165,7 +165,7 @@ export class EnouvoTrain {
     control
       .layers(
         [],
-        { Station: this.networkStations },
+        { Stations: this.networkStations },
         { position: 'bottomleft', collapsed: false }
       )
       .addTo(this._map);

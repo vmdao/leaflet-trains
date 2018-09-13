@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Wed Sep 12 2018 18:33:29 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 09:47:18 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4873,7 +4873,7 @@ var TrainAsset = BaseAsset.extend({
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
 
-    const angle = this.getAngle();
+    const angle = this.getAngleWithNextStation();
     const _options = Object.assign({ angle: angle }, options);
     const icon = trainIcon(_options);
     this.setIcon(icon);
@@ -4889,17 +4889,13 @@ var TrainAsset = BaseAsset.extend({
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destimation: data.Segment.Route.Name || 'Mock_Destination',
+      destination: data.Segment.Route.Name || 'Mock_Destination',
       lastStation:
         data.Segment.DepartureStation.StationName || 'Mock_LastStation',
       nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
-      {
-        name: 'Train Id',
-        field: 'trainId'
-      },
       {
         name: 'Train No',
         field: 'trainNo'
@@ -4913,8 +4909,8 @@ var TrainAsset = BaseAsset.extend({
         field: 'lastReport'
       },
       {
-        name: 'Destimation',
-        field: 'destimation'
+        name: 'Destination',
+        field: 'destination'
       },
       {
         name: 'Last station',
@@ -4994,6 +4990,25 @@ var TrainAsset = BaseAsset.extend({
     const direction = getDirectionPoints(this._map, vector);
     const angle = computeSegmentHeading(direction[0], direction[1]);
 
+    return angle;
+  },
+
+  getAngleWithNextStation() {
+    const ArrivalStation = this.feature.properties.Segment.ArrivalStation;
+    const LongitudeNextStation = ArrivalStation.Longitude;
+    const LatitudeNextStation = ArrivalStation.Latitude;
+
+    const nextStation = leaflet.latLng(LatitudeNextStation, LongitudeNextStation);
+
+    const locationTrain = this.getLatLng();
+
+    const location1 = locationTrain;
+    const location2 = nextStation;
+
+    const vector = [location1, location2];
+
+    const direction = getDirectionPoints(this._map, vector);
+    const angle = computeSegmentHeading(direction[0], direction[1]);
     return angle;
   },
 
@@ -5184,7 +5199,7 @@ class EnouvoTrain {
       };
     });
 
-    const overlays = { Line: leaflet.layerGroup(layers) };
+    const overlays = { Lines: leaflet.layerGroup(layers) };
     leaflet.control
       .layers([], overlays, { position: 'bottomleft', collapsed: false })
       .addTo(this._map);
@@ -5213,7 +5228,7 @@ class EnouvoTrain {
     leaflet.control
       .layers(
         [],
-        { Station: this.networkStations },
+        { Stations: this.networkStations },
         { position: 'bottomleft', collapsed: false }
       )
       .addTo(this._map);
