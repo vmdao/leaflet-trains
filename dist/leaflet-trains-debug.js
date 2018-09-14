@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Fri Sep 14 2018 09:51:01 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Fri Sep 14 2018 17:17:37 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5101,6 +5101,25 @@ var KeyboardHook = leaflet.Handler.extend({
       map.setZoom(zoom);
     } else {
       map.setZoomAround(e.containerPoint, zoom);
+    }
+  },
+  _setPanDelta: function(panDelta) {
+    var keys = (this._panKeys = {}),
+      codes = this.keyCodes,
+      i,
+      len;
+
+    for (i = 0, len = codes.left.length; i < len; i++) {
+      keys[codes.left[i]] = [-1 * panDelta, 0];
+    }
+    for (i = 0, len = codes.right.length; i < len; i++) {
+      keys[codes.right[i]] = [panDelta, 0];
+    }
+    for (i = 0, len = codes.down.length; i < len; i++) {
+      keys[codes.down[i]] = [0, panDelta];
+    }
+    for (i = 0, len = codes.up.length; i < len; i++) {
+      keys[codes.up[i]] = [0, -1 * panDelta];
     }
   }
 });
