@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Thu Sep 13 2018 18:20:02 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Fri Sep 14 2018 09:51:01 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
