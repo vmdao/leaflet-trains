@@ -215,8 +215,6 @@
     padding: 0;
     border: none;
     cursor: pointer;
-    display: flex !important;
-    flex-flow: column-reverse;
 }
 
 .leaflet-trains .leaflet-trains-overlays-layers-separator {
