@@ -49,7 +49,7 @@ export class EnouvoTrain {
                   layers.push(l.feature);
                 }
               });
-              listener.action(layers);
+              listener.action(message);
             }
           });
       }
@@ -64,6 +64,14 @@ export class EnouvoTrain {
     this._map.zoomControl.setPosition('bottomleft');
     this._createLayer();
     this._createOverlayControl();
+    this._map.on('areaSelect', event => {
+      var assets = this.selectedAssetsWithBounds(event.areaSelectBounds);
+      const message = {
+        originEvent: event.event,
+        data: assets
+      };
+      this.observer.emitEvent('selectedTrains', [message]);
+    });
   }
 
   _createLayer() {
@@ -96,7 +104,6 @@ export class EnouvoTrain {
         data: feature
       };
       this.observer.emitEvent('click', [message]);
-      this.observer.emitEvent('selectedTrains', [message]);
     });
 
     layer.on('mouseover', event => {
@@ -254,6 +261,20 @@ export class EnouvoTrain {
         layer.feature.selected = true;
       }
     });
+  }
+
+  selectedAssetsWithBounds(bounds) {
+    const layers = this.networkTrains.getLayers();
+    const layersSelected = layers
+      .filter(l => {
+        return bounds.contains(l.getLatLng());
+      })
+      .map(l => {
+        l.feature.selected = true;
+        l.action && l.action('selected');
+        return l.feature;
+      });
+    return layersSelected;
   }
 
   selectedAssetsAll() {

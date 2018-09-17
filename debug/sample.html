@@ -82,16 +82,29 @@
       // const direction = L.enouvo.Util.getDirectionPoints(map_, [trainLocation, point1]);
       // const angle = L.enouvo.Util.computeSegmentHeading(direction[0], direction[1]);
       // console.log('angle', angle);
+      console.log('click', event);
+
 
     }
-    var map = L.enouvo.enouvoTrainInit('map');
+    var selectedTrains = function (messge) {
+      console.log('selectedTrains', messge);
+    }
+    var map = L.enouvo.enouvoTrainInit('map', {
+      boxZoom: false,
+      areaSelect: true
+    });
     var map_ = map._map;
     map.setView([-37.81224, 144.97412], 15);
     map.setNetworkMaps(collections);
     map.addListeners([{
-      event: 'click',
-      action: onListenerSelected
-    }]);
+        event: 'click',
+        action: onListenerSelected
+      },
+      {
+        event: 'selectedTrains',
+        action: selectedTrains
+      }
+    ]);
     map.setNetworkStations(stationsCollection);
     map.setNetworkTrains(trainsCollection);
   </script>
