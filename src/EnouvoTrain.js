@@ -15,6 +15,7 @@ export class EnouvoTrain {
       }
     });
     this.networkMaps = [];
+
     this._createObserver();
     this._createMap(el, options);
   }
@@ -58,12 +59,26 @@ export class EnouvoTrain {
 
   _createMap(el, options) {
     this._map = new Map(el, options);
+    this._map._container.className =
+      this._map._container.className + ' leaflet-trains';
     this._map.zoomControl.setPosition('bottomleft');
     this._createLayer();
+    this._createOverlayControl();
   }
 
   _createLayer() {
     basemapLayer('Streets').addTo(this._map);
+  }
+
+  _createOverlayControl() {
+    this.overlaysControl = overlayControl(
+      [],
+      {},
+      {
+        position: 'bottomleft',
+        collapsed: false
+      }
+    ).addTo(this._map);
   }
 
   _addEventListener(feature, layer) {
@@ -135,11 +150,7 @@ export class EnouvoTrain {
         name: data.properties.Name
       };
     });
-
-    const overlays = { Lines: layerGroup(layers) };
-    control
-      .layers([], overlays, { position: 'bottomleft', collapsed: false })
-      .addTo(this._map);
+    this.overlaysControl.addOverlay(layerGroup(layers), 'Line');
   }
 
   clearNetworkMaps() {
@@ -160,15 +171,9 @@ export class EnouvoTrain {
           : trainAsset(latlng, feature);
       }
     });
-    this.networkStations.setZIndex(2);
     this.networkStations.addTo(this._map);
-    control
-      .layers(
-        [],
-        { Stations: this.networkStations },
-        { position: 'bottomleft', collapsed: false }
-      )
-      .addTo(this._map);
+    this.overlaysControl.addOverlay(this.networkStations, 'Stations');
+    this.networkStations.setZIndex(2);
   }
 
   clearNetworkStations() {
@@ -195,17 +200,9 @@ export class EnouvoTrain {
           : trainAsset(latlng, _feature);
       }
     });
-    this.networkTrains.setZIndex(99);
     this.networkTrains.addTo(this._map);
-    // overlayControl(options);
-
-    control
-      .layers(
-        [],
-        { Trains: this.networkTrains },
-        { position: 'bottomleft', collapsed: false }
-      )
-      .addTo(this._map);
+    this.networkTrains.setZIndex(10000000);
+    this.overlaysControl.addOverlay(this.networkTrains, 'Trains');
   }
 
   clearNetworkTrains() {
