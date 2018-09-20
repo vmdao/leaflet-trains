@@ -45,58 +45,62 @@
   <script src="data.js"></script>
   <script>
     function onListenerSelected(event) {
-      // const train = event.originEvent.target;
-      // const trainLocation = train.getLatLng();
-      // const layers = map.networkMaps.getLayers();
+      console.log('click', event, trainsCollection);
+      var train = {
+        type: 'TRAIN',
+        id: 'wzhDHzF2',
+        Segment: {
+          Id: '4ltPixCp',
+          SegmentOrder: 1,
+          StopAtDestinationStation: true,
+          DepartureStation: {
+            Id: 'jrCWs3hK',
+            StationName: 'Alamein', // [145.06974, -37.83092],
+            Longitude: 145.06974,
+            Latitude: -37.83092,
+            CapitalZone: 19847,
+            Address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
+          },
+          ArrivalStation: {
+            Id: 'Dnc3ivTN',
+            StationName: 'Ashburton',
+            Longitude: 145.081341,
+            Latitude: -37.861968,
+            CapitalZone: 19848,
+            Address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
+          },
+          Route: {
+            Id: 'yBS5iVIy',
+            Name: 'Alamein To City',
+            Line: {
+              Id: 'OjtDTgF5',
+              Name: 'Alamein Line'
+            }
+          }
+        },
+        Id: 'wzhDHzF2',
+        Coupled: false,
+        LastReport: '2018-10-09T05:00:00',
+        DestinationStation: null,
+        LastStation: null,
+        NextStation: null,
+        TrainNo: 'M006',
+        Longitude: 145.070659,
+        Latitude: -37.865317,
+        UpdateAt: '2018-10-09T05:00:00'
 
-      // const layer10 = layers[30];
-      // layers.forEach((l, index) => {
-      //   if (l.setStyle && index !== 30) {
-      //     l.setStyle({
-      //       opacity: 0
-      //     })
-      //   }
-      // });
-
-      // const paths = layer10.getLatLngs();
-      // const pathsLength = paths.length;
-      // const closest = paths.reduce((current, next, index) => {
-      //   const distance = next.distanceTo(trainLocation);
-      //   if (distance > current.distance) {
-      //     return current;
-      //   }
-      //   return {
-      //     distance: distance,
-      //     path: next,
-      //     index: index
-      //   };
-      // }, {
-      //   distance: Infinity,
-      //   path: null,
-      //   index: 0
-      // });
-
-      // const closest2 = paths[closest.index + 1] || trainLocation;
-      // const point1 = closest.path;
-      // const point2 = closest2;
-      // const direction = L.enouvo.Util.getDirectionPoints(map_, [trainLocation, point1]);
-      // const angle = L.enouvo.Util.computeSegmentHeading(direction[0], direction[1]);
-      // console.log('angle', angle);
-      console.log('click', event);
-
-
+      };
+      enouvoTrains.replaceTrain(train);
     }
     var selectedTrains = function (messge) {
       console.log('selectedTrains', messge);
     }
-    var map = L.enouvo.enouvoTrainInit('map', {
-      boxZoom: false,
-      areaSelect: true
-    });
-    var map_ = map._map;
-    map.setView([-37.81224, 144.97412], 15);
-    map.setNetworkMaps(collections);
-    map.addListeners([{
+
+    var enouvoTrains = new L.enouvo.EnouvoTrains('map');
+
+    enouvoTrains.setView([-37.81224, 144.97412], 15);
+    enouvoTrains.setNetworkMaps(collections);
+    enouvoTrains.addListeners([{
         event: 'click',
         action: onListenerSelected
       },
@@ -105,8 +109,8 @@
         action: selectedTrains
       }
     ]);
-    map.setNetworkStations(stationsCollection);
-    map.setNetworkTrains(trainsCollection);
+    enouvoTrains.setNetworkStations(stationsCollection);
+    enouvoTrains.setNetworkTrains(trainsCollection);
   </script>
 
 </body>

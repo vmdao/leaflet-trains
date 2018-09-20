@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.2 - Mon Sep 17 2018 18:40:38 GMT+0700 (+07)
+/* leaflet-trains - v1.0.2 - Thu Sep 20 2018 12:15:20 GMT+0700 (Indochina Time)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -4254,6 +4254,39 @@ function featureLayer(options) {
   return new FeatureLayer(options);
 }
 
+leaflet.Map.mergeOptions({
+  boxZoom: false,
+  areaSelect: true
+});
+
+var AreaSelect = leaflet.Map.BoxZoom.extend({
+  _onMouseUp: function(e) {
+    if (e.which !== 1 && e.button !== 1) {
+      return;
+    }
+
+    this._finish();
+
+    if (!this._moved) {
+      return;
+    }
+
+    this._clearDeferredResetState();
+    this._resetStateTimeout = setTimeout(leaflet.Util.bind(this._resetState, this), 0);
+
+    var bounds = new leaflet.LatLngBounds(
+      this._map.containerPointToLatLng(this._startPoint),
+      this._map.containerPointToLatLng(this._point)
+    );
+    this._map.fire('areaSelect', { areaSelectBounds: bounds, event: e });
+  }
+});
+
+// @section Handlers
+// @property boxZoom: Handler
+// Box (shift-drag with mouse) zoom handler.
+leaflet.Map.addInitHook('addHandler', 'areaSelect', AreaSelect);
+
 function EventEmitter() {}
 
 // Shortcuts to improve speed and size
@@ -5083,151 +5116,6 @@ function trainAsset(latlng, options) {
   return new TrainAsset('train', latlng, options);
 }
 
-leaflet.Map.mergeOptions({
-  areaSelect: true
-});
-
-var KeyboardHook = leaflet.Handler.extend({
-  initialize: function(map) {
-    this._map = map;
-    this._container = map._container;
-    this._pane = map._panes.overlayPane;
-    this._resetStateTimeout = 0;
-    map.on('unload', this._destroy, this);
-  },
-
-  addHooks: function() {
-    leaflet.DomEvent.on(this._container, 'mousedown', this._onMouseDown, this);
-  },
-
-  removeHooks: function() {
-    leaflet.DomEvent.off(this._container, 'mousedown', this._onMouseDown, this);
-  },
-
-  moved: function() {
-    return this._moved;
-  },
-
-  _destroy: function() {
-    leaflet.DomUtil.remove(this._pane);
-    delete this._pane;
-  },
-
-  _resetState: function() {
-    this._resetStateTimeout = 0;
-    this._moved = false;
-  },
-
-  _clearDeferredResetState: function() {
-    if (this._resetStateTimeout !== 0) {
-      clearTimeout(this._resetStateTimeout);
-      this._resetStateTimeout = 0;
-    }
-  },
-
-  _onMouseDown: function(e) {
-    if (!e.shiftKey || (e.which !== 1 && e.button !== 1)) {
-      return false;
-    }
-
-    // Clear the deferred resetState if it hasn't executed yet, otherwise it
-    // will interrupt the interaction and orphan a box element in the container.
-    this._clearDeferredResetState();
-    this._resetState();
-
-    leaflet.DomUtil.disableTextSelection();
-    leaflet.DomUtil.disableImageDrag();
-
-    this._startPoint = this._map.mouseEventToContainerPoint(e);
-
-    leaflet.DomEvent.on(
-      document,
-      {
-        contextmenu: leaflet.DomEvent.stop,
-        mousemove: this._onMouseMove,
-        mouseup: this._onMouseUp,
-        keydown: this._onKeyDown
-      },
-      this
-    );
-  },
-
-  _onMouseMove: function(e) {
-    if (!this._moved) {
-      this._moved = true;
-
-      this._box = leaflet.DomUtil.create('div', 'leaflet-zoom-box', this._container);
-      leaflet.DomUtil.addClass(this._container, 'leaflet-crosshair');
-
-      this._map.fire('boxzoomstart');
-    }
-
-    this._point = this._map.mouseEventToContainerPoint(e);
-
-    var bounds = new leaflet.Bounds(this._point, this._startPoint),
-      size = bounds.getSize();
-
-    leaflet.DomUtil.setPosition(this._box, bounds.min);
-
-    this._box.style.width = size.x + 'px';
-    this._box.style.height = size.y + 'px';
-  },
-
-  _finish: function() {
-    if (this._moved) {
-      leaflet.DomUtil.remove(this._box);
-      leaflet.DomUtil.removeClass(this._container, 'leaflet-crosshair');
-    }
-
-    leaflet.DomUtil.enableTextSelection();
-    leaflet.DomUtil.enableImageDrag();
-
-    leaflet.DomEvent.off(
-      document,
-      {
-        contextmenu: leaflet.DomEvent.stop,
-        mousemove: this._onMouseMove,
-        mouseup: this._onMouseUp,
-        keydown: this._onKeyDown
-      },
-      this
-    );
-  },
-
-  _onMouseUp: function(e) {
-    if (e.which !== 1 && e.button !== 1) {
-      return;
-    }
-
-    this._finish();
-
-    if (!this._moved) {
-      return;
-    }
-    // Postpone to next JS tick so internal click event handling
-    // still see it as "moved".
-    this._clearDeferredResetState();
-    this._resetStateTimeout = setTimeout(leaflet.Util.bind(this._resetState, this), 0);
-
-    var bounds = new leaflet.LatLngBounds(
-      this._map.containerPointToLatLng(this._startPoint),
-      this._map.containerPointToLatLng(this._point)
-    );
-    this._map.fire('areaSelect', { areaSelectBounds: bounds, event: e });
-  },
-
-  _onKeyDown: function(e) {
-    if (e.keyCode === 27) {
-      this._finish();
-    }
-  }
-});
-
-// @section Handlers
-// @property boxZoom: Handler
-// Box (shift-drag with mouse) zoom handler.
-leaflet.Map.addInitHook('addHandler', 'areaSelect', KeyboardHook);
-
 const Layers = leaflet.Control.Layers;
 
 var OverlayControl = Layers.extend({
@@ -5351,7 +5239,7 @@ var overlayControl = function(baseLayers, overlays, options) {
   return new OverlayControl(baseLayers, overlays, options);
 };
 
-class EnouvoTrain {
+class EnouvoTrains {
   constructor(el, options) {
     this.poolListener = [];
     this.layerSelected = new Proxy([], {
@@ -5519,9 +5407,7 @@ class EnouvoTrain {
     this.networkStations = new leaflet.GeoJSON(networkStationsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, feature)
-          : trainAsset(latlng, feature);
+        return stationAsset(latlng, feature);
       }
     });
     this.networkStations.addTo(this._map);
@@ -5538,24 +5424,73 @@ class EnouvoTrain {
 
   setNetworkTrains(networkTrainsData) {
     const that = this;
+
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new leaflet.GeoJSON(networkTrainsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        const lineId = feature.properties.Segment.Route.Line.Id;
-        const networkMap = this.networkMaps.find(n => n.Id === lineId);
-        const _feature = Object.assign(
-          { networkMap: networkMap.networkMap, _map: this._map },
-          feature
-        );
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, _feature)
-          : trainAsset(latlng, _feature);
+        try {
+          const lineId = feature.properties.Segment.Route.Line.Id;
+          const networkMap = this.networkMaps.find(n => n.Id === lineId);
+          const _feature = Object.assign(
+            { networkMap: networkMap.networkMap, _map: this._map },
+            feature
+          );
+          return trainAsset(latlng, _feature);
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
     this.networkTrains.addTo(this._map);
     this.networkTrains.setZIndex(10000000);
     this.overlaysControl.addOverlay(this.networkTrains, 'Trains');
+  }
+
+  addTrain(trainData) {
+    const latlng = leaflet.latLng(trainData.Latitude, trainData.Longitude);
+    const lineId = trainData.Segment.Route.Line.Id;
+    const networkMap = this.networkMaps.find(n => n.Id === lineId);
+    const _feature = Object.assign(
+      { properties: trainData },
+      {
+        networkMap: networkMap.networkMap,
+        _map: this._map
+      }
+    );
+
+    const trainLayer = trainAsset(latlng, _feature);
+    trainLayer.addTo(this._map);
+    this.networkTrains.addLayer(trainLayer);
+  }
+
+  updateTrain(trainData) {
+    const trainsLayer = this.networkTrains.getLayers();
+    const trainFinded = trainsLayer.find(t => {
+      return t.feature.properties.Id === trainData.Id;
+    });
+
+    if (trainFinded) {
+      trainFinded.feature.properties = Object.assign(
+        trainFinded.feature.properties,
+        trainData
+      );
+      const latlng = leaflet.latLng(trainData.Latitude, trainData.Longitude);
+      trainFinded.setLatLng(latlng);
+    }
+    return trainFinded;
+  }
+
+  replaceTrain(trainData) {
+    if (!trainData) {
+      return;
+    }
+
+    const trainUpdated = this.updateTrain(trainData);
+
+    if (!trainUpdated) {
+      this.addTrain(trainData);
+    }
   }
 
   clearNetworkTrains() {
@@ -5667,10 +5602,6 @@ class EnouvoTrain {
   }
 }
 
-function enouvoTrainInit(el, options) {
-  return new EnouvoTrain(el, options);
-}
-
 // export version
 
 exports.VERSION = version;
@@ -5712,14 +5643,14 @@ exports.dynamicMapLayer = dynamicMapLayer;
 exports.FeatureManager = FeatureManager;
 exports.FeatureLayer = FeatureLayer;
 exports.featureLayer = featureLayer;
+exports.AreaSelect = AreaSelect;
 exports.BaseAsset = BaseAsset;
 exports.baseAsset = baseAsset;
 exports.StationAsset = StationAsset;
 exports.stationAsset = stationAsset;
 exports.TrainAsset = TrainAsset;
 exports.trainAsset = trainAsset;
-exports.EnouvoTrain = EnouvoTrain;
-exports.enouvoTrainInit = enouvoTrainInit;
+exports.EnouvoTrains = EnouvoTrains;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

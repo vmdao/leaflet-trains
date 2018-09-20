@@ -19,7 +19,10 @@ export { IdentifyImage, identifyImage } from './Tasks/IdentifyImage';
 export { Service, service } from './Services/Service';
 export { MapService, mapService } from './Services/MapService';
 export { ImageService, imageService } from './Services/ImageService';
-export { FeatureLayerService, featureLayerService } from './Services/FeatureLayerService';
+export {
+  FeatureLayerService,
+  featureLayerService
+} from './Services/FeatureLayerService';
 
 // export layers
 export { BasemapLayer, basemapLayer } from './Layers/BasemapLayer';
@@ -29,8 +32,8 @@ export { ImageMapLayer, imageMapLayer } from './Layers/ImageMapLayer';
 export { DynamicMapLayer, dynamicMapLayer } from './Layers/DynamicMapLayer';
 export { FeatureManager } from './Layers/FeatureLayer/FeatureManager';
 export { FeatureLayer, featureLayer } from './Layers/FeatureLayer/FeatureLayer';
+export { AreaSelect } from './Layers/AreaSelect';
 export { BaseAsset, baseAsset } from './Assets/BaseAsset';
 export { StationAsset, stationAsset } from './Assets/StationAsset';
 export { TrainAsset, trainAsset } from './Assets/TrainAsset';
-export { EnouvoTrain, enouvoTrainInit } from './EnouvoTrain';
-
+export { EnouvoTrains } from './EnouvoTrain';

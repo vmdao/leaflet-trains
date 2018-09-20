@@ -1,11 +1,11 @@
-import { Map, GeoJSON, control, layerGroup } from 'leaflet';
+import { EventEmitter } from './EventEmitter';
+import { Map, GeoJSON, layerGroup, latLng } from 'leaflet';
+import { overlayControl } from './Layers/OverlayControl';
 import { basemapLayer } from './Layers/BasemapLayer';
 import { stationAsset } from './Assets/StationAsset';
 import { trainAsset } from './Assets/TrainAsset';
-import { KeyboardHook } from './Layers/KeyboardHook';
-import { EventEmitter } from './EventEmitter';
-import { overlayControl } from './Layers/OverlayControl';
-export class EnouvoTrain {
+
+export class EnouvoTrains {
   constructor(el, options) {
     this.poolListener = [];
     this.layerSelected = new Proxy([], {
@@ -173,9 +173,7 @@ export class EnouvoTrain {
     this.networkStations = new GeoJSON(networkStationsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, feature)
-          : trainAsset(latlng, feature);
+        return stationAsset(latlng, feature);
       }
     });
     this.networkStations.addTo(this._map);
@@ -192,24 +190,73 @@ export class EnouvoTrain {
 
   setNetworkTrains(networkTrainsData) {
     const that = this;
+
     this.networkTrainsData = networkTrainsData;
     this.networkTrains = new GeoJSON(networkTrainsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        const lineId = feature.properties.Segment.Route.Line.Id;
-        const networkMap = this.networkMaps.find(n => n.Id === lineId);
-        const _feature = Object.assign(
-          { networkMap: networkMap.networkMap, _map: this._map },
-          feature
-        );
-        return feature.properties.type === 'STATION'
-          ? stationAsset(latlng, _feature)
-          : trainAsset(latlng, _feature);
+        try {
+          const lineId = feature.properties.Segment.Route.Line.Id;
+          const networkMap = this.networkMaps.find(n => n.Id === lineId);
+          const _feature = Object.assign(
+            { networkMap: networkMap.networkMap, _map: this._map },
+            feature
+          );
+          return trainAsset(latlng, _feature);
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
     this.networkTrains.addTo(this._map);
     this.networkTrains.setZIndex(10000000);
     this.overlaysControl.addOverlay(this.networkTrains, 'Trains');
+  }
+
+  addTrain(trainData) {
+    const latlng = latLng(trainData.Latitude, trainData.Longitude);
+    const lineId = trainData.Segment.Route.Line.Id;
+    const networkMap = this.networkMaps.find(n => n.Id === lineId);
+    const _feature = Object.assign(
+      { properties: trainData },
+      {
+        networkMap: networkMap.networkMap,
+        _map: this._map
+      }
+    );
+
+    const trainLayer = trainAsset(latlng, _feature);
+    trainLayer.addTo(this._map);
+    this.networkTrains.addLayer(trainLayer);
+  }
+
+  updateTrain(trainData) {
+    const trainsLayer = this.networkTrains.getLayers();
+    const trainFinded = trainsLayer.find(t => {
+      return t.feature.properties.Id === trainData.Id;
+    });
+
+    if (trainFinded) {
+      trainFinded.feature.properties = Object.assign(
+        trainFinded.feature.properties,
+        trainData
+      );
+      const latlng = latLng(trainData.Latitude, trainData.Longitude);
+      trainFinded.setLatLng(latlng);
+    }
+    return trainFinded;
+  }
+
+  replaceTrain(trainData) {
+    if (!trainData) {
+      return;
+    }
+
+    const trainUpdated = this.updateTrain(trainData);
+
+    if (!trainUpdated) {
+      this.addTrain(trainData);
+    }
   }
 
   clearNetworkTrains() {
@@ -319,8 +366,4 @@ export class EnouvoTrain {
       }
     });
   }
-}
-
-export function enouvoTrainInit(el, options) {
-  return new EnouvoTrain(el, options);
 }
