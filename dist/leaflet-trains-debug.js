@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.3 - Thu Sep 20 2018 13:11:49 GMT+0700 (Indochina Time)
+/* leaflet-trains - v1.0.3 - Thu Sep 20 2018 15:10:36 GMT+0700 (Indochina Time)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -5510,6 +5510,14 @@ class EnouvoTrains {
 
   setView(latLng, zoom, options) {
     this._map.setView(latLng, zoom, options);
+  }
+
+  controlPopupAsset(assetId, switchPopup) {
+    this.networkTrains.eachLayer(train => {
+      if (train.feature.properties.Id === assetId) {
+        switchPopup ? train.openPopup() : train.closePopup();
+      }
+    });
   }
 
   toggleAsset(assetId) {

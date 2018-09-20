@@ -278,6 +278,14 @@ export class EnouvoTrains {
     this._map.setView(latLng, zoom, options);
   }
 
+  controlPopupAsset(assetId, switchPopup) {
+    this.networkTrains.eachLayer(train => {
+      if (train.feature.properties.Id === assetId) {
+        switchPopup ? train.openPopup() : train.closePopup();
+      }
+    });
+  }
+
   toggleAsset(assetId) {
     this.networkTrains.eachLayer(layer => {
       if (layer.feature.id === assetId) {

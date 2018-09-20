@@ -27,7 +27,7 @@
       left: 0;
     }
 
-    #info-pane {
+    #show {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -41,10 +41,14 @@
 <body>
 
   <div id="map"></div>
+  <div id="show">
+    <button id="updatePosition" onclick="onClickUpdatePostion()">Update Position</button>
+    <ul id="list"></ul>
+  </div>
   <script src="data.js"></script>
   <script>
-    function onListenerSelected(event) {
-      console.log('click', event, trainsCollection);
+    var fleetTrains = [];
+    var onClickUpdatePostion = function () {
       var train = {
         type: 'TRAIN',
         id: 'wzhDHzF2',
@@ -91,10 +95,44 @@
       };
       enouvoTrains.replaceTrain(train);
     }
-    var selectedTrains = function (messge) {
-      console.log('selectedTrains', messge);
+
+    var onListenerSelected = function (event) {
+      fleetTrains.push(event.data.properties);
+      renderTrains(fleetTrains)
     }
 
+    var selectedTrains = function (event) {
+      var trains = event.data.map(t => t.properties);
+      fleetTrains = fleetTrains.concat(trains);
+      renderTrains(fleetTrains)
+    }
+
+    var renderTrains = function (trains) {
+      var html = trains.reduce((current, next) => {
+        var li = '<li class="item" data-id="' + next.Id + '">' + next.TrainNo + '</li>';
+        current += li;
+        return current;
+      }, '')
+
+      var ul = document.getElementById('list');
+      ul.innerHTML = html;
+      setEventListItem();
+    }
+    var setEventListItem = function () {
+      var elements = document.querySelectorAll('.item');
+      Array.prototype.forEach.call(elements, element => {
+        element.addEventListener('mouseenter', function () {
+          var id = this.dataset.id;
+          enouvoTrains.controlPopupAsset(id, true);
+          console.log('mouseenter:', id);
+        })
+        element.addEventListener('mouseleave', function () {
+          var id = this.dataset.id;
+          enouvoTrains.controlPopupAsset(id, false);
+          console.log('mouseleave:', id);
+        })
+      });
+    }
     var enouvoTrains = new L.enouvo.EnouvoTrains('map');
 
     enouvoTrains.setView([-37.81224, 144.97412], 15);
