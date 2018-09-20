@@ -1,7 +1,7 @@
 {
   "name": "leaflet-trains",
   "description": "Leaflet trains",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "dan.vu",
   "browser": "dist/leaflet-trains-debug.js",
   "dependencies": {
@@ -48,19 +48,17 @@
     "dist/leaflet-trains-debug.js.map",
     "dist/leaflet-trains.css"
   ],
-  "homepage": "http://esri.github.io/leaflet-trains",
-  "module": "src/EsriLeaflet.js",
-  "jsnext:main": "src/EsriLeaflet.js",
+  "homepage": "http://vmdao.github.io/leaflet-trains",
+  "module": "src/LeafletTrains.js",
+  "jsnext:main": "src/LeafletTrains.js",
   "jspm": {
     "registry": "npm",
     "format": "es6",
-    "main": "src/EsriLeaflet.js"
+    "main": "src/LeafletTrains.js"
   },
   "keywords": [
-    "arcgis",
-    "esri",
-    "esri leaflet",
-    "gis",
+    "leaflet",
+    "leaflet train",
     "leaflet plugin",
     "mapping"
   ],
