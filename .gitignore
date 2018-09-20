@@ -28,11 +28,6 @@ coverage
 
 # Debugging Files
 working
-debug/*.html
-debug/*.js
-debug/*.json
-debug/archive/
-!debug/sample.html
 
 # Docs Build
 site/build
