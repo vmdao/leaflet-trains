@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.8 - Fri Sep 21 2018 11:22:17 GMT+0700 (+07)
+/* leaflet-trains - v1.0.9 - Fri Sep 21 2018 17:49:06 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.8";
+var version = "1.0.9";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -1104,11 +1104,6 @@ function _updateMapAttribution(evt) {
       attribution: newAttributions
     });
   }
-}
-
-function convertToTimeHuman(timeString) {
-  var event = new Date(timeString);
-  return event.toLocaleString('en-GB', { timeZone: 'UTC' });
 }
 
 var EsriUtil = {
@@ -4740,20 +4735,30 @@ proto._getEvents = function _getEvents() {
 };
 
 var BaseAsset = leaflet.Marker.extend({
-  initialize: function(type, latlng, options) {
-    const _options = { icon: options.icon };
-    leaflet.Marker.prototype.initialize.call(this, latlng, _options);
+  initialize: function(options, properties) {
+    leaflet.Marker.prototype.initialize.call(this, options.latlng);
+    this._map = options._map;
+    var data = options.data;
 
-    this.feature = options;
     this.poolListener = [];
-    this.type = type;
-    this.selected = false;
-    this.canMove = false;
 
+    this.assetCanMove = false;
+    this.assetCanSelect = false;
+    this.assetSelected = false;
+
+    this._initData(data, properties);
     this._createObserver();
 
     // this._createPopup();
     // this._addEventListener(this);
+  },
+
+  _initData(data, properties) {
+    this.assetProperties = properties;
+    this.assetId = data.id;
+    this.assetType = data.type;
+    this.assetLatitude = data.latitude;
+    this.assetLongitude = data.longitude;
   },
 
   _createPopup() {
@@ -4761,7 +4766,8 @@ var BaseAsset = leaflet.Marker.extend({
   },
 
   _createObserver() {
-    this.observer = new EventEmitter();
+    this.assetObserver = new EventEmitter();
+
     const events = {
       // click: message => {
       //     console.log('click');
@@ -4771,20 +4777,20 @@ var BaseAsset = leaflet.Marker.extend({
       //     // console.log('hover')
       // },
       toggle: message => {
-        this.selected = !this.selected;
-        this.feature.selected = this.selected;
+        this.assetSelected = !this.assetSelected;
+        this.feature.assetSelected = this.assetSelected;
       },
 
       selected: message => {
-        this.selected = true;
+        this.assetSelected = true;
       },
 
       unSelected: message => {
-        this.selected = false;
+        this.assetSelected = false;
       }
     };
 
-    this.observer.addListeners(events);
+    this.assetObserver.addListeners(events);
   },
 
   _addEventListener(layer) {
@@ -4813,69 +4819,78 @@ var BaseAsset = leaflet.Marker.extend({
     });
   },
 
-  onSeleted() {
-    this.selected = true;
-  },
+  // onSeleted() {
+  //   this.assetSelected = true;
+  // },
 
-  unSeleted() {
-    this.selected = false;
-  },
+  // unSeleted() {
+  //   this.assetSelected = false;
+  // },
 
   isSeleted() {
-    return this.selected;
+    return this.assetSelected;
   },
 
   action(type) {
-    this.observer.emitEvent(type);
+    this.assetObserver.emitEvent(type);
   }
 });
 
-function baseAsset(type, latlng, options) {
-  return new BaseAsset(type, latlng, options);
+function baseAsset(options, properties) {
+  return new BaseAsset(options, properties);
 }
 
 var StationIcon = leaflet.DivIcon.extend({
-  initialize: function(options) {
-    const data = options.properties;
-    const iconUrl = 'assets/images/ic-marker-station.svg';
-    const html =
+  initialize: function(options, properties) {
+    var data = properties;
+    var iconUrl = 'assets/images/ic-marker-station.svg';
+    var html =
       '<div class="leaflet-trains-station-asset"><div class="leaflet-trains-station-asset-name">' +
       data.name +
       '</div><img class="leaflet-trains-station-asset-img" src="' +
       iconUrl +
       '"></div>';
-    const sizeIcon = [24, 24];
+    var sizeIcon = [24, 24];
 
-    const _options = {
+    var _options = {
       html: html,
       iconSize: sizeIcon
     };
+
     leaflet.DivIcon.prototype.initialize.call(this, _options);
   }
 });
 
-var stationIcon = function(options) {
-  return new StationIcon(options);
+var stationIcon = function(options, properties) {
+  return new StationIcon(options, properties);
 };
 
 var StationAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
-    const icon = stationIcon(options);
-    const _options = Object.assign({ icon: icon }, options);
-    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
+  initialize: function(options, properties) {
+    BaseAsset.prototype.initialize.call(this, options, properties);
+
+    this.assetCanMove = false;
+    this.assetCanSelect = false;
+    this.assetSelected = false;
+    this._createIcon(properties);
+  },
+
+  _createIcon(properties) {
+    const icon = stationIcon({}, properties);
+    this.setIcon(icon);
   }
 });
 
-function stationAsset(latlng, options) {
-  return new StationAsset('station', latlng, options);
+function stationAsset(options, properties) {
+  return new StationAsset(options, properties);
 }
 
 var TrainIcon = leaflet.DivIcon.extend({
-  initialize: function(options) {
-    const angle = options.angle || 0;
-    const data = options.properties;
-    const iconUrl = 'assets/images/ic-marker-train.svg';
-    const html =
+  initialize: function(options, properties) {
+    var angle = options.angle || 0;
+    var data = properties;
+    var iconUrl = 'assets/images/ic-marker-train.svg';
+    var html =
       '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">' +
       data.trainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
@@ -4883,9 +4898,9 @@ var TrainIcon = leaflet.DivIcon.extend({
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
       angle +
       'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"><div class="train-arrow-after"></div></div></div></div>';
-    const sizeIcon = [38, 38];
+    var sizeIcon = [38, 38];
 
-    const _options = {
+    var _options = {
       html: html,
       iconSize: sizeIcon,
       popupAnchor: [0, -41]
@@ -4895,69 +4910,26 @@ var TrainIcon = leaflet.DivIcon.extend({
   }
 });
 
-var trainIcon = function(options) {
-  return new TrainIcon(options);
+var trainIcon = function(options, properties) {
+  return new TrainIcon(options, properties);
 };
 
 var TrainAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
+  initialize: function(options, properties) {
+    BaseAsset.prototype.initialize.call(this, options, properties);
+    var popup = options.popup;
     this.networkMap = options.networkMap || null;
-    this._map = options._map || null;
 
-    BaseAsset.prototype.initialize.call(this, type, latlng, options);
-    this.canMove = true;
-    this._createPopupEventSameTooltip(options.properties);
-    this._createIcon(options);
+    this.assetCanMove = true;
+    this.assetCanSelect = true;
+    this.assetSelected = false;
+
+    this._createPopupEventSameTooltip(popup, properties);
+    this._createIcon(properties);
   },
 
-  _createPopup(data) {
-    const _data = {
-      trainNo: data.trainNo,
-      trainId: data.id,
-      coupled: data.coupled ? 'Yes' : 'No',
-      lastReport: convertToTimeHuman(
-        data.LastReport || '2018-09-10T05:01:45.702Z'
-      ),
-      destination: data.segment.route.name || 'Mock_Destination',
-      lastStation:
-        data.segment.departureStation.stationName || 'Mock_LastStation',
-      nextStation: data.segment.arrivalStation.stationName || 'Mock_NextStation'
-    };
-
-    var fieldsMatch = [
-      {
-        name: 'Train No',
-        field: 'trainNo'
-      },
-      {
-        name: 'Coupled train',
-        field: 'coupled'
-      },
-      {
-        name: 'Last report',
-        field: 'lastReport'
-      },
-      {
-        name: 'Destination',
-        field: 'destination'
-      },
-      {
-        name: 'Last station',
-        field: 'lastStation'
-      },
-      {
-        name: 'Next station',
-        field: 'nextStation'
-      }
-    ];
-
-    var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
-    var html = leaflet.Util.template(htmlTemplate, _data);
-    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
-  },
-
-  _createPopupEventSameTooltip(data) {
-    this._createPopup(data);
+  _createPopupEventSameTooltip(popup, properties) {
+    this._createPopup(popup, properties);
     this.on('mouseover', () => {
       this.changeStyleWhenHover('#c6c6c6');
       this.openPopup();
@@ -4968,21 +4940,43 @@ var TrainAsset = BaseAsset.extend({
     });
   },
 
-  _createIcon(options) {
-    const angle = this.getAngleWithNextStation();
-    const _options = Object.assign({ angle: angle }, options);
-    const icon = trainIcon(_options);
+  _createPopup(popup) {
+    var fieldsMatch = popup.list || [
+      {
+        name: 'Train No',
+        field: 'trainNo',
+        value: this.assetsName
+      },
+      {
+        name: 'Last station',
+        field: 'lastStation',
+        value: this.assetLastStationName
+      },
+      {
+        name: 'Next station',
+        field: 'nextStation',
+        value: this.assetNextStationName
+      }
+    ];
+
+    var html = this.getHtmlTemplatePopup(fieldsMatch);
+    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
+  },
+
+  _createIcon(properties) {
+    var angle = this.getAngleWithNextStation();
+    var icon = trainIcon({ angle: angle }, properties);
     this.setIcon(icon);
   },
 
   changeStyleWhenHover(color) {
-    const assets = this._icon.getElementsByClassName(
+    var assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
     );
-    const assetsName = this._icon.getElementsByClassName(
+    var assetsName = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset-name'
     );
-    const assetsArrow = this._icon.getElementsByClassName('train-arrow-after');
+    var assetsArrow = this._icon.getElementsByClassName('train-arrow-after');
 
     if (assets.length) {
       assets[0].style.backgroundColor = color;
@@ -4995,10 +4989,35 @@ var TrainAsset = BaseAsset.extend({
     }
   },
 
+  _initData(data, properties) {
+    this.assetProperties = properties;
+
+    this.assetName = data.name;
+    this.assetLastStationId = data.lastStation.id;
+    this.assetLastStationName = data.lastStation.name;
+    this.assetLastStationLatitude = data.lastStation.latitude;
+    this.assetLastStationLongitude = data.lastStation.longitude;
+
+    this.assetNextStationId = data.nextStation.id;
+    this.assetNextStationName = data.nextStation.name;
+    this.assetNextStationLatitude = data.nextStation.latitude;
+    this.assetNextStationLongitude = data.nextStation.longitude;
+
+    this.assetRouteId = data.route.rountId;
+    this.assetRouteName = data.route.routeName;
+    this.assetRouteLineId = data.route.lineId;
+    this.assetRouteLineName = data.route.lineName;
+  },
+
+  updateData(data, properties) {
+    this.initData(data, properties);
+    this.updatePosition([this.assetLatitude, this.assetLongitude]);
+    this._createIcon(properties);
+  },
+
   updatePosition(latlng) {
-    var newLatLng = new L.LatLng(latlng);
+    var newLatLng = leaflet.latLng(latlng);
     this.setLatLng(newLatLng);
-    this._createIcon(this.feature);
   },
 
   getHtmlTemplatePopup(fieldsMatch) {
@@ -5006,29 +5025,31 @@ var TrainAsset = BaseAsset.extend({
       current +=
         '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
         next.name +
-        '</div><div class="leaflet-trains-popup-list-item-value">{' +
-        next.field +
-        '}</div></li>';
+        '</div><div class="leaflet-trains-popup-list-item-value">' +
+        next.value +
+        '</div></li>';
       return current;
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">' +
+      this.assetName +
+      '</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
   },
 
   getDirection() {
-    const paths = this.getLocationNetworkMap();
-    const lastStation = this.feature.properties.segment.departureStation;
-    const nextStation = this.feature.properties.segment.arrivalStation;
+    var paths = this.getLocationNetworkMap();
+    var lastStation = this.feature.properties.segment.departureStation;
+    var nextStation = this.feature.properties.segment.arrivalStation;
 
-    const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
-    const indexLastSation = stations.findIndex(
+    var stations = this.networkMap.getLayers()[0].feature.properties.Stations;
+    var indexLastSation = stations.findIndex(
       s => s.station.id === lastStation.id
     );
-    const indexNextSation = stations.findIndex(
+    var indexNextSation = stations.findIndex(
       s => s.station.id === nextStation.id
     );
     if (indexNextSation > indexLastSation) {
@@ -5039,51 +5060,50 @@ var TrainAsset = BaseAsset.extend({
   },
 
   getAngle() {
-    const paths = this.getDirection();
-    const locationTrain = this.getLatLng();
-    const locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
-    const locationNextTrain = this.getPointNearNextTrain(
+    var paths = this.getDirection();
+    var locationTrain = this.getLatLng();
+    var locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
+    var locationNextTrain = this.getPointNearNextTrain(
       paths,
       locationNearTrain.index,
       locationTrain
     );
 
-    const location1 = locationNearTrain.location;
-    const location2 = locationNextTrain;
+    var location1 = locationNearTrain.location;
+    var location2 = locationNextTrain;
 
-    const vector =
+    var vector =
       paths.length - 1 === locationNearTrain.index
         ? [location2, location1]
         : [location1, location2];
 
-    const direction = getDirectionPoints(this._map, vector);
-    const angle = computeSegmentHeading(direction[0], direction[1]);
+    var direction = getDirectionPoints(this._map, vector);
+    var angle = computeSegmentHeading(direction[0], direction[1]);
 
     return angle;
   },
 
   getAngleWithNextStation() {
-    const arrivalStation = this.feature.properties.segment.arrivalStation;
-    const longitudeNextStation = arrivalStation.longitude;
-    const latitudeNextStation = arrivalStation.latitude;
-    const nextStation = leaflet.latLng(latitudeNextStation, longitudeNextStation);
+    var longitudeNextStation = this.assetNextStationLongitude;
+    var latitudeNextStation = this.assetNextStationLatitude;
 
-    const locationTrain = this.getLatLng();
+    var nextStation = leaflet.latLng(latitudeNextStation, longitudeNextStation);
 
-    const location1 = locationTrain;
-    const location2 = nextStation;
+    var locationTrain = this.getLatLng();
 
-    const vector = [location1, location2];
+    var location1 = locationTrain;
+    var location2 = nextStation;
+    var vector = [location1, location2];
 
-    const direction = getDirectionPoints(this._map, vector);
-    const angle = computeSegmentHeading(direction[0], direction[1]);
+    var direction = getDirectionPoints(this._map, vector);
+    var angle = computeSegmentHeading(direction[0], direction[1]);
     return angle;
   },
 
   getLocationNetworkMap() {
-    const layers = this.networkMap.getLayers();
+    var layers = this.networkMap.getLayers();
     return layers.reduce((current, next) => {
-      const loc = next.getLatLngs();
+      var loc = next.getLatLngs();
       current = current.concat(loc);
       return current;
     }, []);
@@ -5092,7 +5112,7 @@ var TrainAsset = BaseAsset.extend({
   getLocationNearTrain(paths, locationTrain) {
     return paths.reduce(
       (current, next, index) => {
-        const distance = next.distanceTo(locationTrain);
+        var distance = next.distanceTo(locationTrain);
         if (distance > current.distance) {
           return current;
         }
@@ -5115,8 +5135,8 @@ var TrainAsset = BaseAsset.extend({
   }
 });
 
-function trainAsset(latlng, options) {
-  return new TrainAsset('train', latlng, options);
+function trainAsset(options, properties) {
+  return new TrainAsset(options, properties);
 }
 
 const Layers = leaflet.Control.Layers;
@@ -5259,7 +5279,7 @@ class EnouvoTrains {
 
   _createObserver() {
     this.observer = new EventEmitter();
-    const events = {
+    var events = {
       click: message => {
         this.poolListener.filter(l => l.event === 'click').forEach(listener => {
           if (typeof listener.action === 'function') {
@@ -5328,7 +5348,7 @@ class EnouvoTrains {
 
   _addEventListener(feature, layer) {
     if (feature && feature.geometry.type === 'LineString') {
-      const label =
+      var label =
         feature.geometry.type === 'LineString'
           ? 'Line: ' + feature.properties.name
           : 'Train: ' + feature.properties.name;
@@ -5336,7 +5356,7 @@ class EnouvoTrains {
     }
 
     layer.on('click', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -5344,7 +5364,7 @@ class EnouvoTrains {
     });
 
     layer.on('mouseover', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -5352,7 +5372,7 @@ class EnouvoTrains {
     });
 
     layer.on('mouseout', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -5361,9 +5381,10 @@ class EnouvoTrains {
   }
 
   setNetworkMaps(networkMapsData) {
-    const that = this;
+    var that = this;
     this.networkMapsData = networkMapsData;
-    let layers = [];
+    var layers = [];
+
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -5409,14 +5430,28 @@ class EnouvoTrains {
   }
 
   setNetworkStations(networkStationsData) {
-    const that = this;
-    this.networkStationsData = networkStationsData;
-    this.networkStations = new leaflet.GeoJSON(networkStationsData, {
+    var that = this;
+    this.networkStationsData = createStationGeoJson(networkStationsData);
+
+    this.networkStations = new leaflet.GeoJSON(this.networkStationsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        return stationAsset(latlng, feature);
+        var properties = feature.properties.properties;
+
+        var stationData = {
+          id: properties.id,
+          type: 'STATION',
+          name: properties.stationName,
+          latitude: properties.latitude,
+          longitude: properties.longitude
+        };
+
+        var options = { latlng: latlng, data: stationData };
+
+        return stationAsset(options, properties);
       }
     });
+
     this.networkStations.addTo(this._map);
     this.overlaysControl.addOverlay(this.networkStations, 'Stations');
     this.networkStations.setZIndex(2);
@@ -5430,60 +5465,95 @@ class EnouvoTrains {
   }
 
   setNetworkTrains(networkTrainsData) {
-    const that = this;
+    var that = this;
 
-    this.networkTrainsData = networkTrainsData;
-    this.networkTrains = new leaflet.GeoJSON(networkTrainsData, {
+    this.networkTrainsData = createTrainGeoJson(networkTrainsData);
+
+    this.networkTrains = new leaflet.GeoJSON(this.networkTrainsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
-          const lineId = feature.properties.segment.route.line.id;
-          const networkMap = this.networkMaps.find(n => n.id === lineId);
-          const _feature = Object.assign(
-            { networkMap: networkMap.networkMap, _map: this._map },
-            feature
-          );
-          return trainAsset(latlng, _feature);
+          var data = feature.properties.data;
+          var properties = feature.properties.properties;
+          var lineId = data.route.lineId;
+
+          var networkMap = this.networkMaps.find(n => n.id === lineId);
+
+          var trainData = {
+            id: data.id,
+            type: 'TRAIN',
+            name: data.name,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            nextStation: {
+              id: data.nextStation.id,
+              name: data.nextStation.name,
+              latitude: data.nextStation.latitude,
+              longitude: data.nextStation.longitude
+            },
+            lastStation: {
+              id: data.lastStation.id,
+              name: data.lastStation.name,
+              latitude: data.lastStation.latitude,
+              longitude: data.lastStation.longitude
+            },
+            route: {
+              routeId: data.routeId,
+              rountName: data.rountName,
+              lineId: data.lineId,
+              lineName: data.lineName
+            }
+          };
+
+          var options = {
+            latlng: latlng,
+            networkMap: networkMap.networkMap,
+            data: trainData,
+            popup: feature.properties.popup,
+            _map: this._map
+          };
+
+          return trainAsset(options, properties);
         } catch (error) {
           console.log(error);
         }
       }
     });
+
     this.networkTrains.addTo(this._map);
     this.networkTrains.setZIndex(10000000);
     this.overlaysControl.addOverlay(this.networkTrains, 'Trains');
   }
 
   addTrain(trainData) {
-    const latlng = leaflet.latLng(trainData.latitude, trainData.longitude);
-    const lineId = trainData.segment.route.line.id;
-    const networkMap = this.networkMaps.find(n => n.id === lineId);
-    const _feature = Object.assign(
-      { properties: trainData },
-      {
-        networkMap: networkMap.networkMap,
-        _map: this._map
-      }
-    );
+    var data = trainData.data;
+    var properties = trainData.properties;
+    var latlng = leaflet.latLng(data.latitude, data.longitude);
+    var lineId = data.route.lineId;
+    var networkMap = this.networkMaps.find(n => n.id === lineId);
 
-    const trainLayer = trainAsset(latlng, _feature);
+    var options = Object.assign(trainData, {
+      networkMap: networkMap.networkMap,
+      _map: this._map,
+      data: data,
+      latlng: latlng
+    });
+
+    var trainLayer = trainAsset(options, properties);
     trainLayer.addTo(this._map);
     this.networkTrains.addLayer(trainLayer);
   }
 
   updateTrain(trainData) {
-    const trainsLayer = this.networkTrains.getLayers();
-    const trainFinded = trainsLayer.find(t => {
-      return t.feature.properties.id === trainData.id;
+    var data = trainData.data;
+    var properties = trainData.properties;
+    var trainsLayer = this.networkTrains.getLayers();
+    var trainFinded = trainsLayer.find(t => {
+      return t.assetId === data.id;
     });
 
     if (trainFinded) {
-      trainFinded.feature.properties = Object.assign(
-        trainFinded.feature.properties,
-        trainData
-      );
-      const latlng = leaflet.latLng(trainData.latitude, trainData.longitude);
-      trainFinded.setLatLng(latlng);
+      trainFinded.updateData(data, properties);
     }
     return trainFinded;
   }
@@ -5546,7 +5616,7 @@ class EnouvoTrains {
 
   selectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
-      const layer = assets.find(assetId => {
+      var layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
         }
@@ -5560,8 +5630,8 @@ class EnouvoTrains {
   }
 
   selectedAssetsWithBounds(bounds) {
-    const layers = this.networkTrains.getLayers();
-    const layersSelected = layers
+    var layers = this.networkTrains.getLayers();
+    var layersSelected = layers
       .filter(l => {
         return bounds.contains(l.getLatLng());
       })
@@ -5593,7 +5663,7 @@ class EnouvoTrains {
 
   unSelectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
-      let layer = assets.find(assetId => {
+      var layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
         }
@@ -5616,6 +5686,48 @@ class EnouvoTrains {
     });
   }
 }
+
+var createStationGeoJson = function(stations) {
+  return stations.reduce(
+    (current, next) => {
+      var data = next.data;
+      var template = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [data.longitude, data.latitude]
+        },
+        id: data.id,
+        properties: next
+      };
+
+      current.features.push(template);
+      return current;
+    },
+    { type: 'FeatureCollection', features: [] }
+  );
+};
+
+var createTrainGeoJson = function(trains) {
+  return trains.reduce(
+    (current, next) => {
+      var data = next.data;
+      var template = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [data.longitude, data.latitude]
+        },
+        id: data.id,
+        properties: next
+      };
+
+      current.features.push(template);
+      return current;
+    },
+    { type: 'FeatureCollection', features: [] }
+  );
+};
 
 // export version
 

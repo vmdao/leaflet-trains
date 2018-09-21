@@ -92,7 +92,69 @@
         updateAt: '2018-10-09T05:00:00'
 
       };
-      enouvoTrains.replaceTrain(train);
+      var trainData = {
+        data: {
+          id: train.id,
+          type: 'TRAIN',
+          name: train.trainNo,
+          latitude: train.latitude,
+          longitude: train.longitude,
+          nextStation: {
+            id: train.segment.arrivalStation.id,
+            name: train.segment.arrivalStation.stationName,
+            longitude: train.segment.arrivalStation.longitude,
+            latitude: train.segment.arrivalStation.latitude
+          },
+          lastStation: {
+            id: train.segment.departureStation.id,
+            name: train.segment.departureStation.stationName,
+            longitude: train.segment.departureStation.longitude,
+            latitude: train.segment.departureStation.latitude
+          },
+          route: {
+            routeId: train.segment.route.id,
+            rountName: train.segment.route.name,
+            lineId: train.segment.route.line.id,
+            lineName: train.segment.route.line.name
+          }
+        },
+        popup: {
+          list: [{
+              name: 'Train No',
+              field: 'trainNo',
+              value: train.trainNo
+            },
+            {
+              name: 'Coupled train',
+              field: 'coupled',
+              value: train.coupled
+            },
+            {
+              name: 'Last report',
+              field: 'lastReport',
+              value: convertToTimeHuman(train.lastReport)
+            },
+            {
+              name: 'Destination',
+              field: 'destination',
+              value: train.segment.route.name || 'Mock_Destination'
+            },
+            {
+              name: 'Last station',
+              field: 'lastStation',
+              value: train.segment.departureStation.stationName || 'Mock_LastStation'
+            },
+            {
+              name: 'Next station',
+              field: 'nextStation',
+              value: train.segment.arrivalStation.stationName || 'Mock_NextStation'
+            }
+          ]
+        },
+        properties: train
+
+      }
+      enouvoTrains.replaceTrain(trainData);
     }
 
     var onListenerSelected = function (event) {
@@ -145,8 +207,8 @@
         action: selectedTrains
       }
     ]);
-    enouvoTrains.setNetworkStations(stationsCollection);
-    enouvoTrains.setNetworkTrains(trainsCollection);
+    enouvoTrains.setNetworkStations(stationsCollectionData);
+    enouvoTrains.setNetworkTrains(trainsCollectionData);
   </script>
 
 </body>

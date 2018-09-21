@@ -8,64 +8,21 @@ import { BaseAsset } from './BaseAsset';
 import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
+  initialize: function(options, properties) {
+    BaseAsset.prototype.initialize.call(this, options, properties);
+    var popup = options.popup;
     this.networkMap = options.networkMap || null;
-    this._map = options._map || null;
 
-    BaseAsset.prototype.initialize.call(this, type, latlng, options);
-    this.canMove = true;
-    this._createPopupEventSameTooltip(options.properties);
-    this._createIcon(options);
+    this.assetCanMove = true;
+    this.assetCanSelect = true;
+    this.assetSelected = false;
+
+    this._createPopupEventSameTooltip(popup, properties);
+    this._createIcon(properties);
   },
 
-  _createPopup(data) {
-    const _data = {
-      trainNo: data.trainNo,
-      trainId: data.id,
-      coupled: data.coupled ? 'Yes' : 'No',
-      lastReport: convertToTimeHuman(
-        data.LastReport || '2018-09-10T05:01:45.702Z'
-      ),
-      destination: data.segment.route.name || 'Mock_Destination',
-      lastStation:
-        data.segment.departureStation.stationName || 'Mock_LastStation',
-      nextStation: data.segment.arrivalStation.stationName || 'Mock_NextStation'
-    };
-
-    var fieldsMatch = [
-      {
-        name: 'Train No',
-        field: 'trainNo'
-      },
-      {
-        name: 'Coupled train',
-        field: 'coupled'
-      },
-      {
-        name: 'Last report',
-        field: 'lastReport'
-      },
-      {
-        name: 'Destination',
-        field: 'destination'
-      },
-      {
-        name: 'Last station',
-        field: 'lastStation'
-      },
-      {
-        name: 'Next station',
-        field: 'nextStation'
-      }
-    ];
-
-    var htmlTemplate = this.getHtmlTemplatePopup(fieldsMatch);
-    var html = Util.template(htmlTemplate, _data);
-    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
-  },
-
-  _createPopupEventSameTooltip(data) {
-    this._createPopup(data);
+  _createPopupEventSameTooltip(popup, properties) {
+    this._createPopup(popup, properties);
     this.on('mouseover', () => {
       this.changeStyleWhenHover('#c6c6c6');
       this.openPopup();
@@ -76,21 +33,43 @@ export var TrainAsset = BaseAsset.extend({
     });
   },
 
-  _createIcon(options) {
-    const angle = this.getAngleWithNextStation();
-    const _options = Object.assign({ angle: angle }, options);
-    const icon = trainIcon(_options);
+  _createPopup(popup) {
+    var fieldsMatch = popup.list || [
+      {
+        name: 'Train No',
+        field: 'trainNo',
+        value: this.assetsName
+      },
+      {
+        name: 'Last station',
+        field: 'lastStation',
+        value: this.assetLastStationName
+      },
+      {
+        name: 'Next station',
+        field: 'nextStation',
+        value: this.assetNextStationName
+      }
+    ];
+
+    var html = this.getHtmlTemplatePopup(fieldsMatch);
+    this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
+  },
+
+  _createIcon(properties) {
+    var angle = this.getAngleWithNextStation();
+    var icon = trainIcon({ angle: angle }, properties);
     this.setIcon(icon);
   },
 
   changeStyleWhenHover(color) {
-    const assets = this._icon.getElementsByClassName(
+    var assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
     );
-    const assetsName = this._icon.getElementsByClassName(
+    var assetsName = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset-name'
     );
-    const assetsArrow = this._icon.getElementsByClassName('train-arrow-after');
+    var assetsArrow = this._icon.getElementsByClassName('train-arrow-after');
 
     if (assets.length) {
       assets[0].style.backgroundColor = color;
@@ -103,10 +82,35 @@ export var TrainAsset = BaseAsset.extend({
     }
   },
 
+  _initData(data, properties) {
+    this.assetProperties = properties;
+
+    this.assetName = data.name;
+    this.assetLastStationId = data.lastStation.id;
+    this.assetLastStationName = data.lastStation.name;
+    this.assetLastStationLatitude = data.lastStation.latitude;
+    this.assetLastStationLongitude = data.lastStation.longitude;
+
+    this.assetNextStationId = data.nextStation.id;
+    this.assetNextStationName = data.nextStation.name;
+    this.assetNextStationLatitude = data.nextStation.latitude;
+    this.assetNextStationLongitude = data.nextStation.longitude;
+
+    this.assetRouteId = data.route.rountId;
+    this.assetRouteName = data.route.routeName;
+    this.assetRouteLineId = data.route.lineId;
+    this.assetRouteLineName = data.route.lineName;
+  },
+
+  updateData(data, properties) {
+    this.initData(data, properties);
+    this.updatePosition([this.assetLatitude, this.assetLongitude]);
+    this._createIcon(properties);
+  },
+
   updatePosition(latlng) {
-    var newLatLng = new L.LatLng(latlng);
+    var newLatLng = latLng(latlng);
     this.setLatLng(newLatLng);
-    this._createIcon(this.feature);
   },
 
   getHtmlTemplatePopup(fieldsMatch) {
@@ -114,29 +118,31 @@ export var TrainAsset = BaseAsset.extend({
       current +=
         '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
         next.name +
-        '</div><div class="leaflet-trains-popup-list-item-value">{' +
-        next.field +
-        '}</div></li>';
+        '</div><div class="leaflet-trains-popup-list-item-value">' +
+        next.value +
+        '</div></li>';
       return current;
     }, '');
 
     var htmlTemplate =
-      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">{trainNo}</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
+      '<div class="leaflet-trains-popup"><div class="leaflet-trains-popup-wrapper"><div class="leaflet-trains-popup-head"><span class="leaflet-trains-popup-head-name"></span><span class="leaflet-trains-popup-head-value">' +
+      this.assetName +
+      '</span></div><div class="leaflet-trains-popup-body"><ul class="leaflet-trains-popup-list"> ' +
       htmlData +
       ' </ul></div></div></div>';
     return htmlTemplate;
   },
 
   getDirection() {
-    const paths = this.getLocationNetworkMap();
-    const lastStation = this.feature.properties.segment.departureStation;
-    const nextStation = this.feature.properties.segment.arrivalStation;
+    var paths = this.getLocationNetworkMap();
+    var lastStation = this.feature.properties.segment.departureStation;
+    var nextStation = this.feature.properties.segment.arrivalStation;
 
-    const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
-    const indexLastSation = stations.findIndex(
+    var stations = this.networkMap.getLayers()[0].feature.properties.Stations;
+    var indexLastSation = stations.findIndex(
       s => s.station.id === lastStation.id
     );
-    const indexNextSation = stations.findIndex(
+    var indexNextSation = stations.findIndex(
       s => s.station.id === nextStation.id
     );
     if (indexNextSation > indexLastSation) {
@@ -147,51 +153,50 @@ export var TrainAsset = BaseAsset.extend({
   },
 
   getAngle() {
-    const paths = this.getDirection();
-    const locationTrain = this.getLatLng();
-    const locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
-    const locationNextTrain = this.getPointNearNextTrain(
+    var paths = this.getDirection();
+    var locationTrain = this.getLatLng();
+    var locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
+    var locationNextTrain = this.getPointNearNextTrain(
       paths,
       locationNearTrain.index,
       locationTrain
     );
 
-    const location1 = locationNearTrain.location;
-    const location2 = locationNextTrain;
+    var location1 = locationNearTrain.location;
+    var location2 = locationNextTrain;
 
-    const vector =
+    var vector =
       paths.length - 1 === locationNearTrain.index
         ? [location2, location1]
         : [location1, location2];
 
-    const direction = getDirectionPoints(this._map, vector);
-    const angle = computeSegmentHeading(direction[0], direction[1]);
+    var direction = getDirectionPoints(this._map, vector);
+    var angle = computeSegmentHeading(direction[0], direction[1]);
 
     return angle;
   },
 
   getAngleWithNextStation() {
-    const arrivalStation = this.feature.properties.segment.arrivalStation;
-    const longitudeNextStation = arrivalStation.longitude;
-    const latitudeNextStation = arrivalStation.latitude;
-    const nextStation = latLng(latitudeNextStation, longitudeNextStation);
+    var longitudeNextStation = this.assetNextStationLongitude;
+    var latitudeNextStation = this.assetNextStationLatitude;
 
-    const locationTrain = this.getLatLng();
+    var nextStation = latLng(latitudeNextStation, longitudeNextStation);
 
-    const location1 = locationTrain;
-    const location2 = nextStation;
+    var locationTrain = this.getLatLng();
 
-    const vector = [location1, location2];
+    var location1 = locationTrain;
+    var location2 = nextStation;
+    var vector = [location1, location2];
 
-    const direction = getDirectionPoints(this._map, vector);
-    const angle = computeSegmentHeading(direction[0], direction[1]);
+    var direction = getDirectionPoints(this._map, vector);
+    var angle = computeSegmentHeading(direction[0], direction[1]);
     return angle;
   },
 
   getLocationNetworkMap() {
-    const layers = this.networkMap.getLayers();
+    var layers = this.networkMap.getLayers();
     return layers.reduce((current, next) => {
-      const loc = next.getLatLngs();
+      var loc = next.getLatLngs();
       current = current.concat(loc);
       return current;
     }, []);
@@ -200,7 +205,7 @@ export var TrainAsset = BaseAsset.extend({
   getLocationNearTrain(paths, locationTrain) {
     return paths.reduce(
       (current, next, index) => {
-        const distance = next.distanceTo(locationTrain);
+        var distance = next.distanceTo(locationTrain);
         if (distance > current.distance) {
           return current;
         }
@@ -223,6 +228,6 @@ export var TrainAsset = BaseAsset.extend({
   }
 });
 
-export function trainAsset(latlng, options) {
-  return new TrainAsset('train', latlng, options);
+export function trainAsset(options, properties) {
+  return new TrainAsset(options, properties);
 }

@@ -22,7 +22,7 @@ export class EnouvoTrains {
 
   _createObserver() {
     this.observer = new EventEmitter();
-    const events = {
+    var events = {
       click: message => {
         this.poolListener.filter(l => l.event === 'click').forEach(listener => {
           if (typeof listener.action === 'function') {
@@ -91,7 +91,7 @@ export class EnouvoTrains {
 
   _addEventListener(feature, layer) {
     if (feature && feature.geometry.type === 'LineString') {
-      const label =
+      var label =
         feature.geometry.type === 'LineString'
           ? 'Line: ' + feature.properties.name
           : 'Train: ' + feature.properties.name;
@@ -99,7 +99,7 @@ export class EnouvoTrains {
     }
 
     layer.on('click', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -107,7 +107,7 @@ export class EnouvoTrains {
     });
 
     layer.on('mouseover', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -115,7 +115,7 @@ export class EnouvoTrains {
     });
 
     layer.on('mouseout', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: feature
       };
@@ -124,9 +124,10 @@ export class EnouvoTrains {
   }
 
   setNetworkMaps(networkMapsData) {
-    const that = this;
+    var that = this;
     this.networkMapsData = networkMapsData;
-    let layers = [];
+    var layers = [];
+
     this.networkMaps = networkMapsData.map(data => {
       const template = {
         type: 'FeatureCollection',
@@ -172,14 +173,28 @@ export class EnouvoTrains {
   }
 
   setNetworkStations(networkStationsData) {
-    const that = this;
-    this.networkStationsData = networkStationsData;
-    this.networkStations = new GeoJSON(networkStationsData, {
+    var that = this;
+    this.networkStationsData = createStationGeoJson(networkStationsData);
+
+    this.networkStations = new GeoJSON(this.networkStationsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
-        return stationAsset(latlng, feature);
+        var properties = feature.properties.properties;
+
+        var stationData = {
+          id: properties.id,
+          type: 'STATION',
+          name: properties.stationName,
+          latitude: properties.latitude,
+          longitude: properties.longitude
+        };
+
+        var options = { latlng: latlng, data: stationData };
+
+        return stationAsset(options, properties);
       }
     });
+
     this.networkStations.addTo(this._map);
     this.overlaysControl.addOverlay(this.networkStations, 'Stations');
     this.networkStations.setZIndex(2);
@@ -193,60 +208,95 @@ export class EnouvoTrains {
   }
 
   setNetworkTrains(networkTrainsData) {
-    const that = this;
+    var that = this;
 
-    this.networkTrainsData = networkTrainsData;
-    this.networkTrains = new GeoJSON(networkTrainsData, {
+    this.networkTrainsData = createTrainGeoJson(networkTrainsData);
+
+    this.networkTrains = new GeoJSON(this.networkTrainsData, {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
-          const lineId = feature.properties.segment.route.line.id;
-          const networkMap = this.networkMaps.find(n => n.id === lineId);
-          const _feature = Object.assign(
-            { networkMap: networkMap.networkMap, _map: this._map },
-            feature
-          );
-          return trainAsset(latlng, _feature);
+          var data = feature.properties.data;
+          var properties = feature.properties.properties;
+          var lineId = data.route.lineId;
+
+          var networkMap = this.networkMaps.find(n => n.id === lineId);
+
+          var trainData = {
+            id: data.id,
+            type: 'TRAIN',
+            name: data.name,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            nextStation: {
+              id: data.nextStation.id,
+              name: data.nextStation.name,
+              latitude: data.nextStation.latitude,
+              longitude: data.nextStation.longitude
+            },
+            lastStation: {
+              id: data.lastStation.id,
+              name: data.lastStation.name,
+              latitude: data.lastStation.latitude,
+              longitude: data.lastStation.longitude
+            },
+            route: {
+              routeId: data.routeId,
+              rountName: data.rountName,
+              lineId: data.lineId,
+              lineName: data.lineName
+            }
+          };
+
+          var options = {
+            latlng: latlng,
+            networkMap: networkMap.networkMap,
+            data: trainData,
+            popup: feature.properties.popup,
+            _map: this._map
+          };
+
+          return trainAsset(options, properties);
         } catch (error) {
           console.log(error);
         }
       }
     });
+
     this.networkTrains.addTo(this._map);
     this.networkTrains.setZIndex(10000000);
     this.overlaysControl.addOverlay(this.networkTrains, 'Trains');
   }
 
   addTrain(trainData) {
-    const latlng = latLng(trainData.latitude, trainData.longitude);
-    const lineId = trainData.segment.route.line.id;
-    const networkMap = this.networkMaps.find(n => n.id === lineId);
-    const _feature = Object.assign(
-      { properties: trainData },
-      {
-        networkMap: networkMap.networkMap,
-        _map: this._map
-      }
-    );
+    var data = trainData.data;
+    var properties = trainData.properties;
+    var latlng = latLng(data.latitude, data.longitude);
+    var lineId = data.route.lineId;
+    var networkMap = this.networkMaps.find(n => n.id === lineId);
 
-    const trainLayer = trainAsset(latlng, _feature);
+    var options = Object.assign(trainData, {
+      networkMap: networkMap.networkMap,
+      _map: this._map,
+      data: data,
+      latlng: latlng
+    });
+
+    var trainLayer = trainAsset(options, properties);
     trainLayer.addTo(this._map);
     this.networkTrains.addLayer(trainLayer);
   }
 
   updateTrain(trainData) {
-    const trainsLayer = this.networkTrains.getLayers();
-    const trainFinded = trainsLayer.find(t => {
-      return t.feature.properties.id === trainData.id;
+    var data = trainData.data;
+    var properties = trainData.properties;
+    var trainsLayer = this.networkTrains.getLayers();
+    var trainFinded = trainsLayer.find(t => {
+      return t.assetId === data.id;
     });
 
     if (trainFinded) {
-      trainFinded.feature.properties = Object.assign(
-        trainFinded.feature.properties,
-        trainData
-      );
-      const latlng = latLng(trainData.latitude, trainData.longitude);
-      trainFinded.setLatLng(latlng);
+      trainFinded.updateData(data, properties);
     }
     return trainFinded;
   }
@@ -309,7 +359,7 @@ export class EnouvoTrains {
 
   selectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
-      const layer = assets.find(assetId => {
+      var layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
         }
@@ -323,8 +373,8 @@ export class EnouvoTrains {
   }
 
   selectedAssetsWithBounds(bounds) {
-    const layers = this.networkTrains.getLayers();
-    const layersSelected = layers
+    var layers = this.networkTrains.getLayers();
+    var layersSelected = layers
       .filter(l => {
         return bounds.contains(l.getLatLng());
       })
@@ -356,7 +406,7 @@ export class EnouvoTrains {
 
   unSelectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
-      let layer = assets.find(assetId => {
+      var layer = assets.find(assetId => {
         if (assetId !== l.feature.id) {
           return false;
         }
@@ -379,3 +429,45 @@ export class EnouvoTrains {
     });
   }
 }
+
+var createStationGeoJson = function(stations) {
+  return stations.reduce(
+    (current, next) => {
+      var data = next.data;
+      var template = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [data.longitude, data.latitude]
+        },
+        id: data.id,
+        properties: next
+      };
+
+      current.features.push(template);
+      return current;
+    },
+    { type: 'FeatureCollection', features: [] }
+  );
+};
+
+var createTrainGeoJson = function(trains) {
+  return trains.reduce(
+    (current, next) => {
+      var data = next.data;
+      var template = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [data.longitude, data.latitude]
+        },
+        id: data.id,
+        properties: next
+      };
+
+      current.features.push(template);
+      return current;
+    },
+    { type: 'FeatureCollection', features: [] }
+  );
+};

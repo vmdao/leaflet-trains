@@ -1,11 +1,11 @@
 import { DivIcon } from 'leaflet';
 
 export var TrainIcon = DivIcon.extend({
-  initialize: function(options) {
-    const angle = options.angle || 0;
-    const data = options.properties;
-    const iconUrl = 'assets/images/ic-marker-train.svg';
-    const html =
+  initialize: function(options, properties) {
+    var angle = options.angle || 0;
+    var data = properties;
+    var iconUrl = 'assets/images/ic-marker-train.svg';
+    var html =
       '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">' +
       data.trainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
@@ -13,9 +13,9 @@ export var TrainIcon = DivIcon.extend({
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
       angle +
       'deg);"><div class="leaflet-trains-train-asset-arrow arrow-es"><div class="train-arrow"><div class="train-arrow-after"></div></div></div></div>';
-    const sizeIcon = [38, 38];
+    var sizeIcon = [38, 38];
 
-    const _options = {
+    var _options = {
       html: html,
       iconSize: sizeIcon,
       popupAnchor: [0, -41]
@@ -25,6 +25,6 @@ export var TrainIcon = DivIcon.extend({
   }
 });
 
-export var trainIcon = function(options) {
-  return new TrainIcon(options);
+export var trainIcon = function(options, properties) {
+  return new TrainIcon(options, properties);
 };

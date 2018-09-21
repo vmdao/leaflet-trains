@@ -1,21 +1,31 @@
-import { DivIcon, Marker } from 'leaflet';
+import { Marker } from 'leaflet';
 import { EventEmitter } from '../EventEmitter';
 
 export var BaseAsset = Marker.extend({
-  initialize: function(type, latlng, options) {
-    const _options = { icon: options.icon };
-    Marker.prototype.initialize.call(this, latlng, _options);
+  initialize: function(options, properties) {
+    Marker.prototype.initialize.call(this, options.latlng);
+    this._map = options._map;
+    var data = options.data;
 
-    this.feature = options;
     this.poolListener = [];
-    this.type = type;
-    this.selected = false;
-    this.canMove = false;
 
+    this.assetCanMove = false;
+    this.assetCanSelect = false;
+    this.assetSelected = false;
+
+    this._initData(data, properties);
     this._createObserver();
 
     // this._createPopup();
     // this._addEventListener(this);
+  },
+
+  _initData(data, properties) {
+    this.assetProperties = properties;
+    this.assetId = data.id;
+    this.assetType = data.type;
+    this.assetLatitude = data.latitude;
+    this.assetLongitude = data.longitude;
   },
 
   _createPopup() {
@@ -23,7 +33,8 @@ export var BaseAsset = Marker.extend({
   },
 
   _createObserver() {
-    this.observer = new EventEmitter();
+    this.assetObserver = new EventEmitter();
+
     const events = {
       // click: message => {
       //     console.log('click');
@@ -33,20 +44,20 @@ export var BaseAsset = Marker.extend({
       //     // console.log('hover')
       // },
       toggle: message => {
-        this.selected = !this.selected;
-        this.feature.selected = this.selected;
+        this.assetSelected = !this.assetSelected;
+        this.feature.assetSelected = this.assetSelected;
       },
 
       selected: message => {
-        this.selected = true;
+        this.assetSelected = true;
       },
 
       unSelected: message => {
-        this.selected = false;
+        this.assetSelected = false;
       }
     };
 
-    this.observer.addListeners(events);
+    this.assetObserver.addListeners(events);
   },
 
   _addEventListener(layer) {
@@ -75,23 +86,23 @@ export var BaseAsset = Marker.extend({
     });
   },
 
-  onSeleted() {
-    this.selected = true;
-  },
+  // onSeleted() {
+  //   this.assetSelected = true;
+  // },
 
-  unSeleted() {
-    this.selected = false;
-  },
+  // unSeleted() {
+  //   this.assetSelected = false;
+  // },
 
   isSeleted() {
-    return this.selected;
+    return this.assetSelected;
   },
 
   action(type) {
-    this.observer.emitEvent(type);
+    this.assetObserver.emitEvent(type);
   }
 });
 
-export function baseAsset(type, latlng, options) {
-  return new BaseAsset(type, latlng, options);
+export function baseAsset(options, properties) {
+  return new BaseAsset(options, properties);
 }

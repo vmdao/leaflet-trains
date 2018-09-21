@@ -2,13 +2,21 @@ import { BaseAsset } from './BaseAsset';
 import { stationIcon } from '../Layers/StationIcon';
 
 export var StationAsset = BaseAsset.extend({
-  initialize: function(type, latlng, options) {
-    const icon = stationIcon(options);
-    const _options = Object.assign({ icon: icon }, options);
-    BaseAsset.prototype.initialize.call(this, type, latlng, _options);
+  initialize: function(options, properties) {
+    BaseAsset.prototype.initialize.call(this, options, properties);
+
+    this.assetCanMove = false;
+    this.assetCanSelect = false;
+    this.assetSelected = false;
+    this._createIcon(properties);
+  },
+
+  _createIcon(properties) {
+    const icon = stationIcon({}, properties);
+    this.setIcon(icon);
   }
 });
 
-export function stationAsset(latlng, options) {
-  return new StationAsset('station', latlng, options);
+export function stationAsset(options, properties) {
+  return new StationAsset(options, properties);
 }
