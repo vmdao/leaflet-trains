@@ -108,7 +108,7 @@
 
     var renderTrains = function (trains) {
       var html = trains.reduce((current, next) => {
-        var li = '<li class="item" data-id="' + next.Id + '">' + next.TrainNo + '</li>';
+        var li = '<li class="item" data-id="' + next.id + '">' + next.trainNo + '</li>';
         current += li;
         return current;
       }, '')

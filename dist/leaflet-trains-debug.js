@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.7 - Fri Sep 21 2018 10:15:34 GMT+0700 (+07)
+/* leaflet-trains - v1.0.8 - Fri Sep 21 2018 11:22:17 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.7";
+var version = "1.0.8";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -4905,13 +4905,9 @@ var TrainAsset = BaseAsset.extend({
     this._map = options._map || null;
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
-
-    const angle = this.getAngleWithNextStation();
-    const _options = Object.assign({ angle: angle }, options);
-    const icon = trainIcon(_options);
-    this.setIcon(icon);
     this.canMove = true;
     this._createPopupEventSameTooltip(options.properties);
+    this._createIcon(options);
   },
 
   _createPopup(data) {
@@ -4972,6 +4968,13 @@ var TrainAsset = BaseAsset.extend({
     });
   },
 
+  _createIcon(options) {
+    const angle = this.getAngleWithNextStation();
+    const _options = Object.assign({ angle: angle }, options);
+    const icon = trainIcon(_options);
+    this.setIcon(icon);
+  },
+
   changeStyleWhenHover(color) {
     const assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
@@ -4995,6 +4998,7 @@ var TrainAsset = BaseAsset.extend({
   updatePosition(latlng) {
     var newLatLng = new L.LatLng(latlng);
     this.setLatLng(newLatLng);
+    this._createIcon(this.feature);
   },
 
   getHtmlTemplatePopup(fieldsMatch) {
@@ -5022,10 +5026,10 @@ var TrainAsset = BaseAsset.extend({
 
     const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
     const indexLastSation = stations.findIndex(
-      s => s.Station.Id === lastStation.Id
+      s => s.station.id === lastStation.id
     );
     const indexNextSation = stations.findIndex(
-      s => s.Station.Id === nextStation.Id
+      s => s.station.id === nextStation.id
     );
     if (indexNextSation > indexLastSation) {
       paths.reverse();
@@ -5062,7 +5066,6 @@ var TrainAsset = BaseAsset.extend({
     const arrivalStation = this.feature.properties.segment.arrivalStation;
     const longitudeNextStation = arrivalStation.longitude;
     const latitudeNextStation = arrivalStation.latitude;
-
     const nextStation = leaflet.latLng(latitudeNextStation, longitudeNextStation);
 
     const locationTrain = this.getLatLng();
@@ -5479,7 +5482,7 @@ class EnouvoTrains {
         trainFinded.feature.properties,
         trainData
       );
-      const latlng = leaflet.latLng(trainData.Latitude, trainData.Longitude);
+      const latlng = leaflet.latLng(trainData.latitude, trainData.longitude);
       trainFinded.setLatLng(latlng);
     }
     return trainFinded;

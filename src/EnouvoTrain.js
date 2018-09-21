@@ -245,7 +245,7 @@ export class EnouvoTrains {
         trainFinded.feature.properties,
         trainData
       );
-      const latlng = latLng(trainData.Latitude, trainData.Longitude);
+      const latlng = latLng(trainData.latitude, trainData.longitude);
       trainFinded.setLatLng(latlng);
     }
     return trainFinded;

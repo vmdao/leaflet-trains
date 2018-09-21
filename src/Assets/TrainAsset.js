@@ -13,13 +13,9 @@ export var TrainAsset = BaseAsset.extend({
     this._map = options._map || null;
 
     BaseAsset.prototype.initialize.call(this, type, latlng, options);
-
-    const angle = this.getAngleWithNextStation();
-    const _options = Object.assign({ angle: angle }, options);
-    const icon = trainIcon(_options);
-    this.setIcon(icon);
     this.canMove = true;
     this._createPopupEventSameTooltip(options.properties);
+    this._createIcon(options);
   },
 
   _createPopup(data) {
@@ -80,6 +76,13 @@ export var TrainAsset = BaseAsset.extend({
     });
   },
 
+  _createIcon(options) {
+    const angle = this.getAngleWithNextStation();
+    const _options = Object.assign({ angle: angle }, options);
+    const icon = trainIcon(_options);
+    this.setIcon(icon);
+  },
+
   changeStyleWhenHover(color) {
     const assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
@@ -103,6 +106,7 @@ export var TrainAsset = BaseAsset.extend({
   updatePosition(latlng) {
     var newLatLng = new L.LatLng(latlng);
     this.setLatLng(newLatLng);
+    this._createIcon(this.feature);
   },
 
   getHtmlTemplatePopup(fieldsMatch) {
@@ -130,10 +134,10 @@ export var TrainAsset = BaseAsset.extend({
 
     const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
     const indexLastSation = stations.findIndex(
-      s => s.Station.Id === lastStation.Id
+      s => s.station.id === lastStation.id
     );
     const indexNextSation = stations.findIndex(
-      s => s.Station.Id === nextStation.Id
+      s => s.station.id === nextStation.id
     );
     if (indexNextSation > indexLastSation) {
       paths.reverse();
@@ -170,7 +174,6 @@ export var TrainAsset = BaseAsset.extend({
     const arrivalStation = this.feature.properties.segment.arrivalStation;
     const longitudeNextStation = arrivalStation.longitude;
     const latitudeNextStation = arrivalStation.latitude;
-
     const nextStation = latLng(latitudeNextStation, longitudeNextStation);
 
     const locationTrain = this.getLatLng();
