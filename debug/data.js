@@ -1,6 +1,6 @@
 var collections = [
   {
-    properties: { Name: 'CityloopPath', name: 'CityloopPath', Id: 1 },
+    properties: { name: 'CityloopPath', name: 'CityloopPath', id: 1 },
     paths: [
       [144.96764, -37.81776],
       [144.95554, -37.82123],
@@ -49,9 +49,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CityloopRichmondPath',
       name: 'CityloopRichmondPath',
-      Id: 2
+      name: 'CityloopRichmondPath',
+      id: 2
     },
     paths: [
       [144.98973, -37.82391],
@@ -74,9 +74,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'RichmondSouthYarraPath',
       name: 'RichmondSouthYarraPath',
-      Id: 3
+      name: 'RichmondSouthYarraPath',
+      id: 3
     },
     paths: [
       [144.99232, -37.83839],
@@ -96,9 +96,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'SouthYarraSandringhamPath',
       name: 'SouthYarraSandringhamPath',
-      Id: 4
+      name: 'SouthYarraSandringhamPath',
+      id: 4
     },
     paths: [
       [145.00455, -37.95036],
@@ -181,9 +181,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'SouthYarraCaulfieldPath',
       name: 'SouthYarraCaulfieldPath',
-      Id: 5
+      name: 'SouthYarraCaulfieldPath',
+      id: 5
     },
     paths: [
       [145.04215, -37.87729],
@@ -219,9 +219,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CaulfieldFrankstonPath',
       name: 'CaulfieldFrankstonPath',
-      Id: 6
+      name: 'CaulfieldFrankstonPath',
+      id: 6
     },
     paths: [
       [145.04215, -37.87729],
@@ -328,9 +328,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'FrankstonStonypointPath',
       name: 'FrankstonStonypointPath',
-      Id: 7
+      name: 'FrankstonStonypointPath',
+      id: 7
     },
     paths: [
       [145.12591, -38.14333],
@@ -433,9 +433,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CaulfieldDandenongPath',
       name: 'CaulfieldDandenongPath',
-      Id: 8
+      name: 'CaulfieldDandenongPath',
+      id: 8
     },
     paths: [
       [145.04215, -37.87729],
@@ -476,9 +476,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'DandenongCranbournePath',
       name: 'DandenongCranbournePath',
-      Id: 9
+      name: 'DandenongCranbournePath',
+      id: 9
     },
     paths: [
       [145.20979, -37.9901],
@@ -524,9 +524,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'DandenongPakenhamPath',
       name: 'DandenongPakenhamPath',
-      Id: 10
+      name: 'DandenongPakenhamPath',
+      id: 10
     },
     paths: [
       [145.20979, -37.9901],
@@ -596,9 +596,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'RichmondBurnleyPath',
       name: 'RichmondBurnleyPath',
-      Id: 11
+      name: 'RichmondBurnleyPath',
+      id: 11
     },
     paths: [
       [144.98973, -37.82391],
@@ -622,228 +622,228 @@ var collections = [
   },
   {
     properties: {
-      Name: 'Glen Waverley Line',
       name: 'Glen Waverley Line',
-      Id: 'DjFAIvCY',
+      name: 'Glen Waverley Line',
+      id: 'DjFAIvCY',
       Stations: [
         {
           StationOrder: 1,
           Station: {
-            Id: '0RTqfRsv',
-            StationName: 'Flagstaff',
-            Longitude: 144.955653,
-            Latitude: -37.811978,
-            CapitalZone: 19841,
-            Address: 'William St / La Trobe St, Melbourne City 3000'
+            id: '0RTqfRsv',
+            stationName: 'Flagstaff',
+            longitude: 144.955653,
+            latitude: -37.811978,
+            capitalZone: 19841,
+            address: 'William St / La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 2,
           Station: {
-            Id: '2mTDiQUm',
-            StationName: 'East Richmond',
-            Longitude: 144.997068,
-            Latitude: -37.826403,
-            CapitalZone: 19907,
-            Address: 'Church St / Adolph St, Richmond 3121'
+            id: '2mTDiQUm',
+            stationName: 'East Richmond',
+            longitude: 144.997068,
+            latitude: -37.826403,
+            capitalZone: 19907,
+            address: 'Church St / Adolph St, Richmond 3121'
           }
         },
         {
           StationOrder: 3,
           Station: {
-            Id: '5dF9SqtW',
-            StationName: 'Richmond ',
-            Longitude: 144.990161,
-            Latitude: -37.824072,
-            CapitalZone: 19908,
-            Address: 'Punt Rd / Swan St, Richmond 3121'
+            id: '5dF9SqtW',
+            stationName: 'Richmond ',
+            longitude: 144.990161,
+            latitude: -37.824072,
+            capitalZone: 19908,
+            address: 'Punt Rd / Swan St, Richmond 3121'
           }
         },
         {
           StationOrder: 4,
           Station: {
-            Id: '9GC9IBHY',
-            StationName: 'Holmesglen',
-            Longitude: 145.090657,
-            Latitude: -37.874401,
-            CapitalZone: 19839,
-            Address: 'Warrigal Rd, Malvern East 3145'
+            id: '9GC9IBHY',
+            stationName: 'Holmesglen',
+            longitude: 145.090657,
+            latitude: -37.874401,
+            capitalZone: 19839,
+            address: 'Warrigal Rd, Malvern East 3145'
           }
         },
         {
           StationOrder: 5,
           Station: {
-            Id: 'bat2i2Fo',
-            StationName: 'Flinders Street',
-            Longitude: 144.966967,
-            Latitude: -37.818308,
-            CapitalZone: 19854,
-            Address: 'Flinders St, Melbourne City 3000'
+            id: 'bat2i2Fo',
+            stationName: 'Flinders Street',
+            longitude: 144.966967,
+            latitude: -37.818308,
+            capitalZone: 19854,
+            address: 'Flinders St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 6,
           Station: {
-            Id: 'bNTvc6C5',
-            StationName: 'Kooyong',
-            Longitude: 145.03355,
-            Latitude: -37.839926,
-            CapitalZone: 19910,
-            Address: 'Glenferrie Rd / Monaro Rd, Kooyong 3144'
+            id: 'bNTvc6C5',
+            stationName: 'Kooyong',
+            longitude: 145.03355,
+            latitude: -37.839926,
+            capitalZone: 19910,
+            address: 'Glenferrie Rd / Monaro Rd, Kooyong 3144'
           }
         },
         {
           StationOrder: 7,
           Station: {
-            Id: 'dAIPCKSe',
-            StationName: 'Melbourne Central',
-            Longitude: 144.962599,
-            Latitude: -37.809936,
-            CapitalZone: 19842,
-            Address: 'La Trobe St, Melbourne City 3000'
+            id: 'dAIPCKSe',
+            stationName: 'Melbourne Central',
+            longitude: 144.962599,
+            latitude: -37.809936,
+            capitalZone: 19842,
+            address: 'La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 8,
           Station: {
-            Id: 'eKubFRIx',
-            StationName: 'Southern Cross',
-            Longitude: 144.951409,
-            Latitude: -37.817933,
-            CapitalZone: 22180,
-            Address: 'Collins St / Spencer St, Melbourne City 3000'
+            id: 'eKubFRIx',
+            stationName: 'Southern Cross',
+            longitude: 144.951409,
+            latitude: -37.817933,
+            capitalZone: 22180,
+            address: 'Collins St / Spencer St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 9,
           Station: {
-            Id: 'eytocOCR',
-            StationName: 'Tooronga',
-            Longitude: 145.042601,
-            Latitude: -37.850663,
-            CapitalZone: 13663,
-            Address: 'Milton Pde / Tooronga Rd, Glen Iris 3146'
+            id: 'eytocOCR',
+            stationName: 'Tooronga',
+            longitude: 145.042601,
+            latitude: -37.850663,
+            capitalZone: 13663,
+            address: 'Milton Pde / Tooronga Rd, Glen Iris 3146'
           }
         },
         {
           StationOrder: 10,
           Station: {
-            Id: 'gAiwt8C9',
-            StationName: 'East Malvern',
-            Longitude: 145.069397,
-            Latitude: -37.87693,
-            CapitalZone: 19838,
-            Address: 'Waverley Rd, Malvern East 3145'
+            id: 'gAiwt8C9',
+            stationName: 'East Malvern',
+            longitude: 145.069397,
+            latitude: -37.87693,
+            capitalZone: 19838,
+            address: 'Waverley Rd, Malvern East 3145'
           }
         },
         {
           StationOrder: 11,
           Station: {
-            Id: 'gjios8Hy',
-            StationName: 'Burnley',
-            Longitude: 145.007553,
-            Latitude: -37.827558,
-            CapitalZone: 19906,
-            Address: 'Burnley St / Madden Gr, Burnley 3121'
+            id: 'gjios8Hy',
+            stationName: 'Burnley',
+            longitude: 145.007553,
+            latitude: -37.827558,
+            capitalZone: 19906,
+            address: 'Burnley St / Madden Gr, Burnley 3121'
           }
         },
         {
           StationOrder: 12,
           Station: {
-            Id: 'JBubf2F4',
-            StationName: 'Gardiner',
-            Longitude: 145.05166,
-            Latitude: -37.853283,
-            CapitalZone: 19912,
-            Address: 'Burke Rd, Glen Iris 3146'
+            id: 'JBubf2F4',
+            stationName: 'Gardiner',
+            longitude: 145.05166,
+            latitude: -37.853283,
+            capitalZone: 19912,
+            address: 'Burke Rd, Glen Iris 3146'
           }
         },
         {
           StationOrder: 13,
           Station: {
-            Id: 'lpFAcdsq',
-            StationName: 'Jordanville',
-            Longitude: 145.112089,
-            Latitude: -37.873599,
-            CapitalZone: 19840,
-            Address: 'Hillview Ave / Windsor Ave, Mount Waverley 3149'
+            id: 'lpFAcdsq',
+            stationName: 'Jordanville',
+            longitude: 145.112089,
+            latitude: -37.873599,
+            capitalZone: 19840,
+            address: 'Hillview Ave / Windsor Ave, Mount Waverley 3149'
           }
         },
         {
           StationOrder: 14,
           Station: {
-            Id: 'lqCrHxtQ',
-            StationName: 'Parliament ',
-            Longitude: 144.972907,
-            Latitude: -37.811055,
-            CapitalZone: 19843,
-            Address: 'Spring St, Melbourne City 3000'
+            id: 'lqCrHxtQ',
+            stationName: 'Parliament ',
+            longitude: 144.972907,
+            latitude: -37.811055,
+            capitalZone: 19843,
+            address: 'Spring St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 15,
           Station: {
-            Id: 'nXcACysE',
-            StationName: 'Syndal',
-            Longitude: 145.149776,
-            Latitude: -37.876228,
-            CapitalZone: 19874,
-            Address: 'Fiander Ave / Coleman Pde, Glen Waverley 3150'
+            id: 'nXcACysE',
+            stationName: 'Syndal',
+            longitude: 145.149776,
+            latitude: -37.876228,
+            capitalZone: 19874,
+            address: 'Fiander Ave / Coleman Pde, Glen Waverley 3150'
           }
         },
         {
           StationOrder: 16,
           Station: {
-            Id: 'o0udCbc4',
-            StationName: 'Glen Waverley',
-            Longitude: 145.162063,
-            Latitude: -37.879502,
-            CapitalZone: 19873,
-            Address: 'Glendale St / Coleman Pde, Glen Waverley 3150'
+            id: 'o0udCbc4',
+            stationName: 'Glen Waverley',
+            longitude: 145.162063,
+            latitude: -37.879502,
+            capitalZone: 19873,
+            address: 'Glendale St / Coleman Pde, Glen Waverley 3150'
           }
         },
         {
           StationOrder: 17,
           Station: {
-            Id: 'PYtlFrHX',
-            StationName: 'Mount Waverley',
-            Longitude: 145.128057,
-            Latitude: -37.875251,
-            CapitalZone: 19875,
-            Address: 'Stephensons Rd / Miller Cres, Mount Waverley 3149'
+            id: 'PYtlFrHX',
+            stationName: 'Mount Waverley',
+            longitude: 145.128057,
+            latitude: -37.875251,
+            capitalZone: 19875,
+            address: 'Stephensons Rd / Miller Cres, Mount Waverley 3149'
           }
         },
         {
           StationOrder: 18,
           Station: {
-            Id: 'r6T6sMSp',
-            StationName: 'Heyington',
-            Longitude: 145.022633,
-            Latitude: -37.83467,
-            CapitalZone: 19909,
-            Address: 'Gawith Ct / Heyington Pl, Toorak 3142'
+            id: 'r6T6sMSp',
+            stationName: 'Heyington',
+            longitude: 145.022633,
+            latitude: -37.83467,
+            capitalZone: 19909,
+            address: 'Gawith Ct / Heyington Pl, Toorak 3142'
           }
         },
         {
           StationOrder: 19,
           Station: {
-            Id: 'zmc3HYIl',
-            StationName: 'Darling',
-            Longitude: 145.060746,
-            Latitude: -37.870029,
-            CapitalZone: 21999,
-            Address: 'Malvern Rd / Darling Rd, Malvern East 3145'
+            id: 'zmc3HYIl',
+            stationName: 'Darling',
+            longitude: 145.060746,
+            latitude: -37.870029,
+            capitalZone: 21999,
+            address: 'Malvern Rd / Darling Rd, Malvern East 3145'
           }
         },
         {
           StationOrder: 20,
           Station: {
-            Id: 'ZZFPIrCd',
-            StationName: 'Glen Iris',
-            Longitude: 145.058223,
-            Latitude: -37.859306,
-            CapitalZone: 19835,
-            Address: 'High St / Wills St, Glen Iris 3146'
+            id: 'ZZFPIrCd',
+            stationName: 'Glen Iris',
+            longitude: 145.058223,
+            latitude: -37.859306,
+            capitalZone: 19835,
+            address: 'High St / Wills St, Glen Iris 3146'
           }
         }
       ]
@@ -955,9 +955,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'BurnleyCamberwellPath',
       name: 'BurnleyCamberwellPath',
-      Id: 13
+      name: 'BurnleyCamberwellPath',
+      id: 13
     },
     paths: [
       [145.00725, -37.82754],
@@ -1008,206 +1008,206 @@ var collections = [
   },
   {
     properties: {
-      Name: 'Alamein Line',
       name: 'Alamein Line',
-      Id: 'OjtDTgF5',
+      name: 'Alamein Line',
+      id: 'OjtDTgF5',
       Stations: [
         {
           StationOrder: 1,
           Station: {
-            Id: '0RTqfRsv',
-            StationName: 'Flagstaff',
-            Longitude: 144.955653,
-            Latitude: -37.811978,
-            CapitalZone: 19841,
-            Address: 'William St / La Trobe St, Melbourne City 3000'
+            id: '0RTqfRsv',
+            stationName: 'Flagstaff',
+            longitude: 144.955653,
+            latitude: -37.811978,
+            capitalZone: 19841,
+            address: 'William St / La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 2,
           Station: {
-            Id: '2mTDiQUm',
-            StationName: 'East Richmond',
-            Longitude: 144.997068,
-            Latitude: -37.826403,
-            CapitalZone: 19907,
-            Address: 'Church St / Adolph St, Richmond 3121'
+            id: '2mTDiQUm',
+            stationName: 'East Richmond',
+            longitude: 144.997068,
+            latitude: -37.826403,
+            capitalZone: 19907,
+            address: 'Church St / Adolph St, Richmond 3121'
           }
         },
         {
           StationOrder: 3,
           Station: {
-            Id: '5dF9SqtW',
-            StationName: 'Richmond ',
-            Longitude: 144.990161,
-            Latitude: -37.824072,
-            CapitalZone: 19908,
-            Address: 'Punt Rd / Swan St, Richmond 3121'
+            id: '5dF9SqtW',
+            stationName: 'Richmond ',
+            longitude: 144.990161,
+            latitude: -37.824072,
+            capitalZone: 19908,
+            address: 'Punt Rd / Swan St, Richmond 3121'
           }
         },
         {
           StationOrder: 4,
           Station: {
-            Id: '5wugf6Ir',
-            StationName: 'Willison',
-            Longitude: 145.070298,
-            Latitude: -37.835712,
-            CapitalZone: 19851,
-            Address: 'Shalless Dr, Camberwell 3124'
+            id: '5wugf6Ir',
+            stationName: 'Willison',
+            longitude: 145.070298,
+            latitude: -37.835712,
+            capitalZone: 19851,
+            address: 'Shalless Dr, Camberwell 3124'
           }
         },
         {
           StationOrder: 5,
           Station: {
-            Id: 'ADHysNhK',
-            StationName: 'Hawthorn',
-            Longitude: 145.022897,
-            Latitude: -37.821824,
-            CapitalZone: 19905,
-            Address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
+            id: 'ADHysNhK',
+            stationName: 'Hawthorn',
+            longitude: 145.022897,
+            latitude: -37.821824,
+            capitalZone: 19905,
+            address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
           }
         },
         {
           StationOrder: 6,
           Station: {
-            Id: 'bat2i2Fo',
-            StationName: 'Flinders Street',
-            Longitude: 144.966967,
-            Latitude: -37.818308,
-            CapitalZone: 19854,
-            Address: 'Flinders St, Melbourne City 3000'
+            id: 'bat2i2Fo',
+            stationName: 'Flinders Street',
+            longitude: 144.966967,
+            latitude: -37.818308,
+            capitalZone: 19854,
+            address: 'Flinders St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 7,
           Station: {
-            Id: 'bBu3fRHq',
-            StationName: 'Burwood',
-            Longitude: 145.080508,
-            Latitude: -37.851561,
-            CapitalZone: 19849,
-            Address: 'Maverston St / Bardolph St, Glen Iris 3146'
+            id: 'bBu3fRHq',
+            stationName: 'Burwood',
+            longitude: 145.080508,
+            latitude: -37.851561,
+            capitalZone: 19849,
+            address: 'Maverston St / Bardolph St, Glen Iris 3146'
           }
         },
         {
           StationOrder: 8,
           Station: {
-            Id: 'dAIPCKSe',
-            StationName: 'Melbourne Central',
-            Longitude: 144.962599,
-            Latitude: -37.809936,
-            CapitalZone: 19842,
-            Address: 'La Trobe St, Melbourne City 3000'
+            id: 'dAIPCKSe',
+            stationName: 'Melbourne Central',
+            longitude: 144.962599,
+            latitude: -37.809936,
+            capitalZone: 19842,
+            address: 'La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 9,
           Station: {
-            Id: 'Dnc3ivTN',
-            StationName: 'Ashburton',
-            Longitude: 145.081341,
-            Latitude: -37.861968,
-            CapitalZone: 19848,
-            Address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
+            id: 'Dnc3ivTN',
+            stationName: 'Ashburton',
+            longitude: 145.081341,
+            latitude: -37.861968,
+            capitalZone: 19848,
+            address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
           }
         },
         {
           StationOrder: 10,
           Station: {
-            Id: 'eJivUQhL',
-            StationName: 'Hartwell',
-            Longitude: 145.075561,
-            Latitude: -37.843984,
-            CapitalZone: 19850,
-            Address: 'Tyrone St / Georgina Pde, Camberwell 3124'
+            id: 'eJivUQhL',
+            stationName: 'Hartwell',
+            longitude: 145.075561,
+            latitude: -37.843984,
+            capitalZone: 19850,
+            address: 'Tyrone St / Georgina Pde, Camberwell 3124'
           }
         },
         {
           StationOrder: 11,
           Station: {
-            Id: 'eKubFRIx',
-            StationName: 'Southern Cross',
-            Longitude: 144.951409,
-            Latitude: -37.817933,
-            CapitalZone: 22180,
-            Address: 'Collins St / Spencer St, Melbourne City 3000'
+            id: 'eKubFRIx',
+            stationName: 'Southern Cross',
+            longitude: 144.951409,
+            latitude: -37.817933,
+            capitalZone: 22180,
+            address: 'Collins St / Spencer St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 12,
           Station: {
-            Id: 'gjios8Hy',
-            StationName: 'Burnley',
-            Longitude: 145.007553,
-            Latitude: -37.827558,
-            CapitalZone: 19906,
-            Address: 'Burnley St / Madden Gr, Burnley 3121'
+            id: 'gjios8Hy',
+            stationName: 'Burnley',
+            longitude: 145.007553,
+            latitude: -37.827558,
+            capitalZone: 19906,
+            address: 'Burnley St / Madden Gr, Burnley 3121'
           }
         },
         {
           StationOrder: 13,
           Station: {
-            Id: 'jrCWs3hK',
-            StationName: 'Alamein',
-            Longitude: 145.079659,
-            Latitude: -37.868317,
-            CapitalZone: 19847,
-            Address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
+            id: 'jrCWs3hK',
+            stationName: 'Alamein',
+            longitude: 145.079659,
+            latitude: -37.868317,
+            capitalZone: 19847,
+            address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
           }
         },
         {
           StationOrder: 14,
           Station: {
-            Id: 'lqCrHxtQ',
-            StationName: 'Parliament ',
-            Longitude: 144.972907,
-            Latitude: -37.811055,
-            CapitalZone: 19843,
-            Address: 'Spring St, Melbourne City 3000'
+            id: 'lqCrHxtQ',
+            stationName: 'Parliament ',
+            longitude: 144.972907,
+            latitude: -37.811055,
+            capitalZone: 19843,
+            address: 'Spring St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 15,
           Station: {
-            Id: 'LyCKFatQ',
-            StationName: 'Auburn',
-            Longitude: 145.045197,
-            Latitude: -37.822068,
-            CapitalZone: 21238,
-            Address: 'Victoria St / Auburn Rd, Hawthorn East 3123'
+            id: 'LyCKFatQ',
+            stationName: 'Auburn',
+            longitude: 145.045197,
+            latitude: -37.822068,
+            capitalZone: 21238,
+            address: 'Victoria St / Auburn Rd, Hawthorn East 3123'
           }
         },
         {
           StationOrder: 16,
           Station: {
-            Id: 'MxT5t9fa',
-            StationName: 'Riversdale',
-            Longitude: 145.069648,
-            Latitude: -37.831502,
-            CapitalZone: 19852,
-            Address: 'Wandin Rd, Camberwell 3124'
+            id: 'MxT5t9fa',
+            stationName: 'Riversdale',
+            longitude: 145.069648,
+            latitude: -37.831502,
+            capitalZone: 19852,
+            address: 'Wandin Rd, Camberwell 3124'
           }
         },
         {
           StationOrder: 17,
           Station: {
-            Id: 'QpSXtPfY',
-            StationName: 'Camberwell',
-            Longitude: 145.058692,
-            Latitude: -37.826564,
-            CapitalZone: 19853,
-            Address: 'Burke Rd / Cookson St, Camberwell 3124'
+            id: 'QpSXtPfY',
+            stationName: 'Camberwell',
+            longitude: 145.058692,
+            latitude: -37.826564,
+            capitalZone: 19853,
+            address: 'Burke Rd / Cookson St, Camberwell 3124'
           }
         },
         {
           StationOrder: 18,
           Station: {
-            Id: 'z4HofmS8',
-            StationName: 'Glenferrie',
-            Longitude: 145.036438,
-            Latitude: -37.821466,
-            CapitalZone: 19904,
-            Address: 'Glenferrie Rd, Hawthorn 3122'
+            id: 'z4HofmS8',
+            stationName: 'Glenferrie',
+            longitude: 145.036438,
+            latitude: -37.821466,
+            capitalZone: 19904,
+            address: 'Glenferrie Rd, Hawthorn 3122'
           }
         }
       ]
@@ -1256,9 +1256,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CamberwellRingwoodPath',
       name: 'CamberwellRingwoodPath',
-      Id: 15
+      name: 'CamberwellRingwoodPath',
+      id: 15
     },
     paths: [
       [145.0589, -37.82665],
@@ -1344,9 +1344,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'RingwoodBelgraveDecodedPath',
       name: 'RingwoodBelgraveDecodedPath',
-      Id: 16
+      name: 'RingwoodBelgraveDecodedPath',
+      id: 16
     },
     paths: [
       [145.23209, -37.81453],
@@ -1463,9 +1463,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'RingwoodLilydaleDecodedPath',
       name: 'RingwoodLilydaleDecodedPath',
-      Id: 17
+      name: 'RingwoodLilydaleDecodedPath',
+      id: 17
     },
     paths: [
       [145.23209, -37.81453],
@@ -1536,9 +1536,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'ParliamentCliftonhillPath',
       name: 'ParliamentCliftonhillPath',
-      Id: 18
+      name: 'ParliamentCliftonhillPath',
+      id: 18
     },
     paths: [
       [144.97311, -37.81179],
@@ -1585,316 +1585,316 @@ var collections = [
   },
   {
     properties: {
-      Name: 'Hurstbridge Line',
       name: 'Hurstbridge Line',
-      Id: 'J3T9u1H4',
+      name: 'Hurstbridge Line',
+      id: 'J3T9u1H4',
       Stations: [
         {
           StationOrder: 1,
           Station: {
-            Id: '0RTqfRsv',
-            StationName: 'Flagstaff',
-            Longitude: 144.955653,
-            Latitude: -37.811978,
-            CapitalZone: 19841,
-            Address: 'William St / La Trobe St, Melbourne City 3000'
+            id: '0RTqfRsv',
+            stationName: 'Flagstaff',
+            longitude: 144.955653,
+            latitude: -37.811978,
+            capitalZone: 19841,
+            address: 'William St / La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 2,
           Station: {
-            Id: '27smCquG',
-            StationName: 'Eltham',
-            Longitude: 145.147827,
-            Latitude: -37.713552,
-            CapitalZone: 19987,
-            Address: 'Pryor St / Main Rd, Eltham 3095'
+            id: '27smCquG',
+            stationName: 'Eltham',
+            longitude: 145.147827,
+            latitude: -37.713552,
+            capitalZone: 19987,
+            address: 'Pryor St / Main Rd, Eltham 3095'
           }
         },
         {
           StationOrder: 3,
           Station: {
-            Id: '3QTNu2t9',
-            StationName: 'Ivanhoe',
-            Longitude: 145.045426,
-            Latitude: -37.768898,
-            CapitalZone: 19933,
-            Address: 'Young St / Norman St, Ivanhoe 3079'
+            id: '3QTNu2t9',
+            stationName: 'Ivanhoe',
+            longitude: 145.045426,
+            latitude: -37.768898,
+            capitalZone: 19933,
+            address: 'Young St / Norman St, Ivanhoe 3079'
           }
         },
         {
           StationOrder: 4,
           Station: {
-            Id: '6luKSGs0',
-            StationName: 'Victoria Park',
-            Longitude: 144.994447,
-            Latitude: -37.799155,
-            CapitalZone: 19975,
-            Address: 'Johnston St / Lulie St, Abbotsford 3067'
+            id: '6luKSGs0',
+            stationName: 'Victoria Park',
+            longitude: 144.994447,
+            latitude: -37.799155,
+            capitalZone: 19975,
+            address: 'Johnston St / Lulie St, Abbotsford 3067'
           }
         },
         {
           StationOrder: 5,
           Station: {
-            Id: '99I3sGUd',
-            StationName: 'Collingwood Railway',
-            Longitude: 144.993745,
-            Latitude: -37.804523,
-            CapitalZone: 19976,
-            Address: 'Gipps St / Eddy Ct, Abbotsford 3067'
+            id: '99I3sGUd',
+            stationName: 'Collingwood Railway',
+            longitude: 144.993745,
+            latitude: -37.804523,
+            capitalZone: 19976,
+            address: 'Gipps St / Eddy Ct, Abbotsford 3067'
           }
         },
         {
           StationOrder: 6,
           Station: {
-            Id: 'bat2i2Fo',
-            StationName: 'Flinders Street',
-            Longitude: 144.966967,
-            Latitude: -37.818308,
-            CapitalZone: 19854,
-            Address: 'Flinders St, Melbourne City 3000'
+            id: 'bat2i2Fo',
+            stationName: 'Flinders Street',
+            longitude: 144.966967,
+            latitude: -37.818308,
+            capitalZone: 19854,
+            address: 'Flinders St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 7,
           Station: {
-            Id: 'BzuyiDcg',
-            StationName: 'Westgarth',
-            Longitude: 144.99987,
-            Latitude: -37.78146,
-            CapitalZone: 675,
-            Address: 'Westgarth St, Northcote 3070'
+            id: 'Bzuyidcg',
+            stationName: 'Westgarth',
+            longitude: 144.99987,
+            latitude: -37.78146,
+            capitalZone: 675,
+            address: 'Westgarth St, Northcote 3070'
           }
         },
         {
           StationOrder: 8,
           Station: {
-            Id: 'dAIPCKSe',
-            StationName: 'Melbourne Central',
-            Longitude: 144.962599,
-            Latitude: -37.809936,
-            CapitalZone: 19842,
-            Address: 'La Trobe St, Melbourne City 3000'
+            id: 'dAIPCKSe',
+            stationName: 'Melbourne Central',
+            longitude: 144.962599,
+            latitude: -37.809936,
+            capitalZone: 19842,
+            address: 'La Trobe St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 9,
           Station: {
-            Id: 'eKubFRIx',
-            StationName: 'Southern Cross',
-            Longitude: 144.951409,
-            Latitude: -37.817933,
-            CapitalZone: 22180,
-            Address: 'Collins St / Spencer St, Melbourne City 3000'
+            id: 'eKubFRIx',
+            stationName: 'Southern Cross',
+            longitude: 144.951409,
+            latitude: -37.817933,
+            capitalZone: 22180,
+            address: 'Collins St / Spencer St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 10,
           Station: {
-            Id: 'EmF3cruw',
-            StationName: 'Eaglemont',
-            Longitude: 145.053946,
-            Latitude: -37.763586,
-            CapitalZone: 19934,
-            Address: 'Silverdale Rd, Eaglemont 3084'
+            id: 'EmF3cruw',
+            stationName: 'Eaglemont',
+            longitude: 145.053946,
+            latitude: -37.763586,
+            capitalZone: 19934,
+            address: 'Silverdale Rd, Eaglemont 3084'
           }
         },
         {
           StationOrder: 11,
           Station: {
-            Id: 'jjIrTvuN',
-            StationName: 'Montmorency',
-            Longitude: 145.121511,
-            Latitude: -37.715297,
-            CapitalZone: 19986,
-            Address: 'Station Rd, Montmorency 3094'
+            id: 'jjIrTvuN',
+            stationName: 'Montmorency',
+            longitude: 145.121511,
+            latitude: -37.715297,
+            capitalZone: 19986,
+            address: 'Station Rd, Montmorency 3094'
           }
         },
         {
           StationOrder: 12,
           Station: {
-            Id: 'jkSLURcZ',
-            StationName: 'Greensborough',
-            Longitude: 145.108249,
-            Latitude: -37.70395,
-            CapitalZone: 19985,
-            Address: 'Poulter Ave, Greensborough 3088'
+            id: 'jkSLURcZ',
+            stationName: 'Greensborough',
+            longitude: 145.108249,
+            latitude: -37.70395,
+            capitalZone: 19985,
+            address: 'Poulter Ave, Greensborough 3088'
           }
         },
         {
           StationOrder: 13,
           Station: {
-            Id: 'kPswirS5',
-            StationName: 'Jolimont',
-            Longitude: 144.984096,
-            Latitude: -37.81653,
-            CapitalZone: 19979,
-            Address: 'Wellington Cres, East Melbourne 3002'
+            id: 'kPswirS5',
+            stationName: 'Jolimont',
+            longitude: 144.984096,
+            latitude: -37.81653,
+            capitalZone: 19979,
+            address: 'Wellington Cres, East Melbourne 3002'
           }
         },
         {
           StationOrder: 14,
           Station: {
-            Id: 'LgtQcpF6',
-            StationName: 'West Richmond',
-            Longitude: 144.991418,
-            Latitude: -37.814945,
-            CapitalZone: 19978,
-            Address: 'Freeman St / Muir St, Richmond 3121'
+            id: 'LgtQcpF6',
+            stationName: 'West Richmond',
+            longitude: 144.991418,
+            latitude: -37.814945,
+            capitalZone: 19978,
+            address: 'Freeman St / Muir St, Richmond 3121'
           }
         },
         {
           StationOrder: 15,
           Station: {
-            Id: 'lqCrHxtQ',
-            StationName: 'Parliament ',
-            Longitude: 144.972907,
-            Latitude: -37.811055,
-            CapitalZone: 19843,
-            Address: 'Spring St, Melbourne City 3000'
+            id: 'lqCrHxtQ',
+            stationName: 'Parliament ',
+            longitude: 144.972907,
+            latitude: -37.811055,
+            capitalZone: 19843,
+            address: 'Spring St, Melbourne City 3000'
           }
         },
         {
           StationOrder: 16,
           Station: {
-            Id: 'M5u0FEHL',
-            StationName: 'Wattle Glen',
-            Longitude: 145.181619,
-            Latitude: -37.663966,
-            CapitalZone: 19989,
-            Address: 'Heidelberg-Kinglake Rd, Wattle Glen 3096'
+            id: 'M5u0FEHL',
+            stationName: 'Wattle Glen',
+            longitude: 145.181619,
+            latitude: -37.663966,
+            capitalZone: 19989,
+            address: 'Heidelberg-Kinglake Rd, Wattle Glen 3096'
           }
         },
         {
           StationOrder: 17,
           Station: {
-            Id: 'O4TlcwhG',
-            StationName: 'Dennis',
-            Longitude: 145.00824,
-            Latitude: -37.779183,
-            CapitalZone: 19929,
-            Address: 'Cain Ave, Northcote 3070'
+            id: 'O4TlcwhG',
+            stationName: 'Dennis',
+            longitude: 145.00824,
+            latitude: -37.779183,
+            capitalZone: 19929,
+            address: 'Cain Ave, Northcote 3070'
           }
         },
         {
           StationOrder: 18,
           Station: {
-            Id: 'oDUlszIo',
-            StationName: 'Clifton Hill',
-            Longitude: 144.995417,
-            Latitude: -37.788654,
-            CapitalZone: 19974,
-            Address: 'Heidelberg Rd / John St, Clifton Hill 3068'
+            id: 'oDUlszIo',
+            stationName: 'Clifton Hill',
+            longitude: 144.995417,
+            latitude: -37.788654,
+            capitalZone: 19974,
+            address: 'Heidelberg Rd / John St, Clifton Hill 3068'
           }
         },
         {
           StationOrder: 19,
           Station: {
-            Id: 'pnC6fXHY',
-            StationName: 'Macleod',
-            Longitude: 145.069147,
-            Latitude: -37.72601,
-            CapitalZone: 19983,
-            Address: 'Birdwood Ave, Macleod 3085'
+            id: 'pnC6fXHY',
+            stationName: 'Macleod',
+            longitude: 145.069147,
+            latitude: -37.72601,
+            capitalZone: 19983,
+            address: 'Birdwood Ave, Macleod 3085'
           }
         },
         {
           StationOrder: 20,
           Station: {
-            Id: 'qLIOCYtE',
-            StationName: 'North Richmond',
-            Longitude: 144.9925,
-            Latitude: -37.810396,
-            CapitalZone: 19977,
-            Address: 'Victoria St / Regent St, Richmond 3121'
+            id: 'qLIOCYtE',
+            stationName: 'North Richmond',
+            longitude: 144.9925,
+            latitude: -37.810396,
+            capitalZone: 19977,
+            address: 'Victoria St / Regent St, Richmond 3121'
           }
         },
         {
           StationOrder: 21,
           Station: {
-            Id: 'RpsBIotJ',
-            StationName: 'Darebin',
-            Longitude: 145.038476,
-            Latitude: -37.774962,
-            CapitalZone: 19932,
-            Address: 'Merton St / Heidelberg Rd, Ivanhoe 3079'
+            id: 'RpsBIotJ',
+            stationName: 'Darebin',
+            longitude: 145.038476,
+            latitude: -37.774962,
+            capitalZone: 19932,
+            address: 'Merton St / Heidelberg Rd, Ivanhoe 3079'
           }
         },
         {
           StationOrder: 22,
           Station: {
-            Id: 'rWSkT0s2',
-            StationName: 'Alphington',
-            Longitude: 145.031251,
-            Latitude: -37.778396,
-            CapitalZone: 19931,
-            Address: 'Miller St / Rowe St, Alphington 3078'
+            id: 'rWSkT0s2',
+            stationName: 'Alphington',
+            longitude: 145.031251,
+            latitude: -37.778396,
+            capitalZone: 19931,
+            address: 'Miller St / Rowe St, Alphington 3078'
           }
         },
         {
           StationOrder: 23,
           Station: {
-            Id: 'rwUKs5HK',
-            StationName: 'Watsonia',
-            Longitude: 145.083795,
-            Latitude: -37.710954,
-            CapitalZone: 19984,
-            Address: 'Greensborough Rd, Watsonia 3087'
+            id: 'rwUKs5HK',
+            stationName: 'Watsonia',
+            longitude: 145.083795,
+            latitude: -37.710954,
+            capitalZone: 19984,
+            address: 'Greensborough Rd, Watsonia 3087'
           }
         },
         {
           StationOrder: 24,
           Station: {
-            Id: 'WBcKf3HV',
-            StationName: 'Fairfield',
-            Longitude: 145.016903,
-            Latitude: -37.779174,
-            CapitalZone: 19930,
-            Address: 'Gillies St / Railway Pl, Fairfield 3078'
+            id: 'WBcKf3HV',
+            stationName: 'Fairfield',
+            longitude: 145.016903,
+            latitude: -37.779174,
+            capitalZone: 19930,
+            address: 'Gillies St / Railway Pl, Fairfield 3078'
           }
         },
         {
           StationOrder: 25,
           Station: {
-            Id: 'WQFGiBC4',
-            StationName: 'Hurstbridge',
-            Longitude: 145.192012,
-            Latitude: -37.639402,
-            CapitalZone: 19990,
-            Address: 'Heidelberg-Kinglake Rd, Hurstbridge 3099'
+            id: 'WQFGiBC4',
+            stationName: 'Hurstbridge',
+            longitude: 145.192012,
+            latitude: -37.639402,
+            capitalZone: 19990,
+            address: 'Heidelberg-Kinglake Rd, Hurstbridge 3099'
           }
         },
         {
           StationOrder: 26,
           Station: {
-            Id: 'X1tNsBCK',
-            StationName: 'Diamond Creek',
-            Longitude: 145.158509,
-            Latitude: -37.673293,
-            CapitalZone: 19988,
-            Address: 'Station St, Diamond Creek 3089'
+            id: 'X1tNsBCK',
+            stationName: 'Diamond Creek',
+            longitude: 145.158509,
+            latitude: -37.673293,
+            capitalZone: 19988,
+            address: 'Station St, Diamond Creek 3089'
           }
         },
         {
           StationOrder: 27,
           Station: {
-            Id: 'x5TjuWse',
-            StationName: 'Heidelberg',
-            Longitude: 145.06069,
-            Latitude: -37.757075,
-            CapitalZone: 19935,
-            Address: 'Studley Rd, Heidelberg 3084'
+            id: 'x5TjuWse',
+            stationName: 'Heidelberg',
+            longitude: 145.06069,
+            latitude: -37.757075,
+            capitalZone: 19935,
+            address: 'Studley Rd, Heidelberg 3084'
           }
         },
         {
           StationOrder: 28,
           Station: {
-            Id: 'z5i7HvI0',
-            StationName: 'Rosanna',
-            Longitude: 145.06614,
-            Latitude: -37.742875,
-            CapitalZone: 19936,
-            Address: 'Douglas St / Station Rd, Rosanna 3084'
+            id: 'z5i7HvI0',
+            stationName: 'Rosanna',
+            longitude: 145.06614,
+            latitude: -37.742875,
+            capitalZone: 19936,
+            address: 'Douglas St / Station Rd, Rosanna 3084'
           }
         }
       ]
@@ -2131,9 +2131,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CliftonhillSouthmorangPath',
       name: 'CliftonhillSouthmorangPath',
-      Id: 20
+      name: 'CliftonhillSouthmorangPath',
+      id: 20
     },
     paths: [
       [144.99576, -37.78653],
@@ -2218,9 +2218,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'CityloopNorthmelbournePath',
       name: 'CityloopNorthmelbournePath',
-      Id: 21
+      name: 'CityloopNorthmelbournePath',
+      id: 21
     },
     paths: [
       [144.95009, -37.81474],
@@ -2233,9 +2233,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NorthmelbourneUpfieldPath',
       name: 'NorthmelbourneUpfieldPath',
-      Id: 22
+      name: 'NorthmelbourneUpfieldPath',
+      id: 22
     },
     paths: [
       [144.93764, -37.80307],
@@ -2311,9 +2311,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NorthmelbourneNewmarketPath',
       name: 'NorthmelbourneNewmarketPath',
-      Id: 23
+      name: 'NorthmelbourneNewmarketPath',
+      id: 23
     },
     paths: [
       [144.93764, -37.80307],
@@ -2331,9 +2331,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NewmarketCragieburnPath',
       name: 'NewmarketCragieburnPath',
-      Id: 24
+      name: 'NewmarketCragieburnPath',
+      id: 24
     },
     paths: [
       [144.92868, -37.7862],
@@ -2445,9 +2445,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NewmarketFlemingtonracecousePath',
       name: 'NewmarketFlemingtonracecousePath',
-      Id: 25
+      name: 'NewmarketFlemingtonracecousePath',
+      id: 25
     },
     paths: [
       [144.92868, -37.7862],
@@ -2479,9 +2479,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NorthmelbourneFootscrayPath',
       name: 'NorthmelbourneFootscrayPath',
-      Id: 26
+      name: 'NorthmelbourneFootscrayPath',
+      id: 26
     },
     paths: [
       [144.93764, -37.80307],
@@ -2506,9 +2506,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'FootsrayWatergardensPath',
       name: 'FootsrayWatergardensPath',
-      Id: 27
+      name: 'FootsrayWatergardensPath',
+      id: 27
     },
     paths: [
       [144.90316, -37.80099],
@@ -2558,9 +2558,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'FootscrayNewportPath',
       name: 'FootscrayNewportPath',
-      Id: 28
+      name: 'FootscrayNewportPath',
+      id: 28
     },
     paths: [
       [144.90316, -37.80099],
@@ -2589,9 +2589,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NewportWilliamstownPath',
       name: 'NewportWilliamstownPath',
-      Id: 29
+      name: 'NewportWilliamstownPath',
+      id: 29
     },
     paths: [
       [144.88359, -37.84282],
@@ -2614,9 +2614,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NewportWerribeePath',
       name: 'NewportWerribeePath',
-      Id: 30
+      name: 'NewportWerribeePath',
+      id: 30
     },
     paths: [
       [144.88359, -37.84282],
@@ -2684,9 +2684,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'NewportSeaholmePath',
       name: 'NewportSeaholmePath',
-      Id: 31
+      name: 'NewportSeaholmePath',
+      id: 31
     },
     paths: [
       [144.8581, -37.84794],
@@ -2745,9 +2745,9 @@ var collections = [
   },
   {
     properties: {
-      Name: 'WatergardensSunburyPath',
       name: 'WatergardensSunburyPath',
-      Id: 32
+      name: 'WatergardensSunburyPath',
+      id: 32
     },
     paths: [
       [144.77366, -37.70087],
@@ -2775,12 +2775,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '0RTqfRsv',
         name: 'Flagstaff',
-        Id: '0RTqfRsv',
-        StationName: 'Flagstaff',
-        Longitude: 144.955653,
-        Latitude: -37.811978,
-        CapitalZone: 19841,
-        Address: 'William St / La Trobe St, Melbourne City 3000'
+        id: '0RTqfRsv',
+        stationName: 'Flagstaff',
+        longitude: 144.955653,
+        latitude: -37.811978,
+        capitalZone: 19841,
+        address: 'William St / La Trobe St, Melbourne City 3000'
       }
     },
     {
@@ -2794,12 +2794,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '27smCquG',
         name: 'Eltham',
-        Id: '27smCquG',
-        StationName: 'Eltham',
-        Longitude: 145.147827,
-        Latitude: -37.713552,
-        CapitalZone: 19987,
-        Address: 'Pryor St / Main Rd, Eltham 3095'
+        id: '27smCquG',
+        stationName: 'Eltham',
+        longitude: 145.147827,
+        latitude: -37.713552,
+        capitalZone: 19987,
+        address: 'Pryor St / Main Rd, Eltham 3095'
       }
     },
     {
@@ -2813,12 +2813,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '2mTDiQUm',
         name: 'East Richmond',
-        Id: '2mTDiQUm',
-        StationName: 'East Richmond',
-        Longitude: 144.997068,
-        Latitude: -37.826403,
-        CapitalZone: 19907,
-        Address: 'Church St / Adolph St, Richmond 3121'
+        id: '2mTDiQUm',
+        stationName: 'East Richmond',
+        longitude: 144.997068,
+        latitude: -37.826403,
+        capitalZone: 19907,
+        address: 'Church St / Adolph St, Richmond 3121'
       }
     },
     {
@@ -2832,12 +2832,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '3QTNu2t9',
         name: 'Ivanhoe',
-        Id: '3QTNu2t9',
-        StationName: 'Ivanhoe',
-        Longitude: 145.045426,
-        Latitude: -37.768898,
-        CapitalZone: 19933,
-        Address: 'Young St / Norman St, Ivanhoe 3079'
+        id: '3QTNu2t9',
+        stationName: 'Ivanhoe',
+        longitude: 145.045426,
+        latitude: -37.768898,
+        capitalZone: 19933,
+        address: 'Young St / Norman St, Ivanhoe 3079'
       }
     },
     {
@@ -2851,12 +2851,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '5dF9SqtW',
         name: 'Richmond ',
-        Id: '5dF9SqtW',
-        StationName: 'Richmond ',
-        Longitude: 144.990161,
-        Latitude: -37.824072,
-        CapitalZone: 19908,
-        Address: 'Punt Rd / Swan St, Richmond 3121'
+        id: '5dF9SqtW',
+        stationName: 'Richmond ',
+        longitude: 144.990161,
+        latitude: -37.824072,
+        capitalZone: 19908,
+        address: 'Punt Rd / Swan St, Richmond 3121'
       }
     },
     {
@@ -2870,12 +2870,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '5wugf6Ir',
         name: 'Willison',
-        Id: '5wugf6Ir',
-        StationName: 'Willison',
-        Longitude: 145.070298,
-        Latitude: -37.835712,
-        CapitalZone: 19851,
-        Address: 'Shalless Dr, Camberwell 3124'
+        id: '5wugf6Ir',
+        stationName: 'Willison',
+        longitude: 145.070298,
+        latitude: -37.835712,
+        capitalZone: 19851,
+        address: 'Shalless Dr, Camberwell 3124'
       }
     },
     {
@@ -2889,12 +2889,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '6luKSGs0',
         name: 'Victoria Park',
-        Id: '6luKSGs0',
-        StationName: 'Victoria Park',
-        Longitude: 144.994447,
-        Latitude: -37.799155,
-        CapitalZone: 19975,
-        Address: 'Johnston St / Lulie St, Abbotsford 3067'
+        id: '6luKSGs0',
+        stationName: 'Victoria Park',
+        longitude: 144.994447,
+        latitude: -37.799155,
+        capitalZone: 19975,
+        address: 'Johnston St / Lulie St, Abbotsford 3067'
       }
     },
     {
@@ -2908,12 +2908,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '99I3sGUd',
         name: 'Collingwood Railway',
-        Id: '99I3sGUd',
-        StationName: 'Collingwood Railway',
-        Longitude: 144.993745,
-        Latitude: -37.804523,
-        CapitalZone: 19976,
-        Address: 'Gipps St / Eddy Ct, Abbotsford 3067'
+        id: '99I3sGUd',
+        stationName: 'Collingwood Railway',
+        longitude: 144.993745,
+        latitude: -37.804523,
+        capitalZone: 19976,
+        address: 'Gipps St / Eddy Ct, Abbotsford 3067'
       }
     },
     {
@@ -2927,12 +2927,12 @@ var stationsCollection = {
         type: 'STATION',
         id: '9GC9IBHY',
         name: 'Holmesglen',
-        Id: '9GC9IBHY',
-        StationName: 'Holmesglen',
-        Longitude: 145.090657,
-        Latitude: -37.874401,
-        CapitalZone: 19839,
-        Address: 'Warrigal Rd, Malvern East 3145'
+        id: '9GC9IBHY',
+        stationName: 'Holmesglen',
+        longitude: 145.090657,
+        latitude: -37.874401,
+        capitalZone: 19839,
+        address: 'Warrigal Rd, Malvern East 3145'
       }
     },
     {
@@ -2946,12 +2946,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'ADHysNhK',
         name: 'Hawthorn',
-        Id: 'ADHysNhK',
-        StationName: 'Hawthorn',
-        Longitude: 145.022897,
-        Latitude: -37.821824,
-        CapitalZone: 19905,
-        Address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
+        id: 'ADHysNhK',
+        stationName: 'Hawthorn',
+        longitude: 145.022897,
+        latitude: -37.821824,
+        capitalZone: 19905,
+        address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
       }
     },
     {
@@ -2965,12 +2965,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'bat2i2Fo',
         name: 'Flinders Street',
-        Id: 'bat2i2Fo',
-        StationName: 'Flinders Street',
-        Longitude: 144.966967,
-        Latitude: -37.818308,
-        CapitalZone: 19854,
-        Address: 'Flinders St, Melbourne City 3000'
+        id: 'bat2i2Fo',
+        stationName: 'Flinders Street',
+        longitude: 144.966967,
+        latitude: -37.818308,
+        capitalZone: 19854,
+        address: 'Flinders St, Melbourne City 3000'
       }
     },
     {
@@ -2984,12 +2984,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'bBu3fRHq',
         name: 'Burwood',
-        Id: 'bBu3fRHq',
-        StationName: 'Burwood',
-        Longitude: 145.080508,
-        Latitude: -37.851561,
-        CapitalZone: 19849,
-        Address: 'Maverston St / Bardolph St, Glen Iris 3146'
+        id: 'bBu3fRHq',
+        stationName: 'Burwood',
+        longitude: 145.080508,
+        latitude: -37.851561,
+        capitalZone: 19849,
+        address: 'Maverston St / Bardolph St, Glen Iris 3146'
       }
     },
     {
@@ -3003,31 +3003,31 @@ var stationsCollection = {
         type: 'STATION',
         id: 'bNTvc6C5',
         name: 'Kooyong',
-        Id: 'bNTvc6C5',
-        StationName: 'Kooyong',
-        Longitude: 145.03355,
-        Latitude: -37.839926,
-        CapitalZone: 19910,
-        Address: 'Glenferrie Rd / Monaro Rd, Kooyong 3144'
+        id: 'bNTvc6C5',
+        stationName: 'Kooyong',
+        longitude: 145.03355,
+        latitude: -37.839926,
+        capitalZone: 19910,
+        address: 'Glenferrie Rd / Monaro Rd, Kooyong 3144'
       }
     },
     {
       type: 'Feature',
-      id: 'BzuyiDcg',
+      id: 'Bzuyidcg',
       geometry: {
         type: 'Point',
         coordinates: [144.99987, -37.78146]
       },
       properties: {
         type: 'STATION',
-        id: 'BzuyiDcg',
+        id: 'Bzuyidcg',
         name: 'Westgarth',
-        Id: 'BzuyiDcg',
-        StationName: 'Westgarth',
-        Longitude: 144.99987,
-        Latitude: -37.78146,
-        CapitalZone: 675,
-        Address: 'Westgarth St, Northcote 3070'
+        id: 'Bzuyidcg',
+        stationName: 'Westgarth',
+        longitude: 144.99987,
+        latitude: -37.78146,
+        capitalZone: 675,
+        address: 'Westgarth St, Northcote 3070'
       }
     },
     {
@@ -3041,12 +3041,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'dAIPCKSe',
         name: 'Melbourne Central',
-        Id: 'dAIPCKSe',
-        StationName: 'Melbourne Central',
-        Longitude: 144.962599,
-        Latitude: -37.809936,
-        CapitalZone: 19842,
-        Address: 'La Trobe St, Melbourne City 3000'
+        id: 'dAIPCKSe',
+        stationName: 'Melbourne Central',
+        longitude: 144.962599,
+        latitude: -37.809936,
+        capitalZone: 19842,
+        address: 'La Trobe St, Melbourne City 3000'
       }
     },
     {
@@ -3060,12 +3060,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'Dnc3ivTN',
         name: 'Ashburton',
-        Id: 'Dnc3ivTN',
-        StationName: 'Ashburton',
-        Longitude: 145.081341,
-        Latitude: -37.861968,
-        CapitalZone: 19848,
-        Address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
+        id: 'Dnc3ivTN',
+        stationName: 'Ashburton',
+        longitude: 145.081341,
+        latitude: -37.861968,
+        capitalZone: 19848,
+        address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
       }
     },
     {
@@ -3079,12 +3079,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'eJivUQhL',
         name: 'Hartwell',
-        Id: 'eJivUQhL',
-        StationName: 'Hartwell',
-        Longitude: 145.075561,
-        Latitude: -37.843984,
-        CapitalZone: 19850,
-        Address: 'Tyrone St / Georgina Pde, Camberwell 3124'
+        id: 'eJivUQhL',
+        stationName: 'Hartwell',
+        longitude: 145.075561,
+        latitude: -37.843984,
+        capitalZone: 19850,
+        address: 'Tyrone St / Georgina Pde, Camberwell 3124'
       }
     },
     {
@@ -3098,12 +3098,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'eKubFRIx',
         name: 'Southern Cross',
-        Id: 'eKubFRIx',
-        StationName: 'Southern Cross',
-        Longitude: 144.951409,
-        Latitude: -37.817933,
-        CapitalZone: 22180,
-        Address: 'Collins St / Spencer St, Melbourne City 3000'
+        id: 'eKubFRIx',
+        stationName: 'Southern Cross',
+        longitude: 144.951409,
+        latitude: -37.817933,
+        capitalZone: 22180,
+        address: 'Collins St / Spencer St, Melbourne City 3000'
       }
     },
     {
@@ -3117,12 +3117,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'EmF3cruw',
         name: 'Eaglemont',
-        Id: 'EmF3cruw',
-        StationName: 'Eaglemont',
-        Longitude: 145.053946,
-        Latitude: -37.763586,
-        CapitalZone: 19934,
-        Address: 'Silverdale Rd, Eaglemont 3084'
+        id: 'EmF3cruw',
+        stationName: 'Eaglemont',
+        longitude: 145.053946,
+        latitude: -37.763586,
+        capitalZone: 19934,
+        address: 'Silverdale Rd, Eaglemont 3084'
       }
     },
     {
@@ -3136,12 +3136,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'eytocOCR',
         name: 'Tooronga',
-        Id: 'eytocOCR',
-        StationName: 'Tooronga',
-        Longitude: 145.042601,
-        Latitude: -37.850663,
-        CapitalZone: 13663,
-        Address: 'Milton Pde / Tooronga Rd, Glen Iris 3146'
+        id: 'eytocOCR',
+        stationName: 'Tooronga',
+        longitude: 145.042601,
+        latitude: -37.850663,
+        capitalZone: 13663,
+        address: 'Milton Pde / Tooronga Rd, Glen Iris 3146'
       }
     },
     {
@@ -3155,12 +3155,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'gAiwt8C9',
         name: 'East Malvern',
-        Id: 'gAiwt8C9',
-        StationName: 'East Malvern',
-        Longitude: 145.069397,
-        Latitude: -37.87693,
-        CapitalZone: 19838,
-        Address: 'Waverley Rd, Malvern East 3145'
+        id: 'gAiwt8C9',
+        stationName: 'East Malvern',
+        longitude: 145.069397,
+        latitude: -37.87693,
+        capitalZone: 19838,
+        address: 'Waverley Rd, Malvern East 3145'
       }
     },
     {
@@ -3174,12 +3174,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'gjios8Hy',
         name: 'Burnley',
-        Id: 'gjios8Hy',
-        StationName: 'Burnley',
-        Longitude: 145.007553,
-        Latitude: -37.827558,
-        CapitalZone: 19906,
-        Address: 'Burnley St / Madden Gr, Burnley 3121'
+        id: 'gjios8Hy',
+        stationName: 'Burnley',
+        longitude: 145.007553,
+        latitude: -37.827558,
+        capitalZone: 19906,
+        address: 'Burnley St / Madden Gr, Burnley 3121'
       }
     },
     {
@@ -3193,12 +3193,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'JBubf2F4',
         name: 'Gardiner',
-        Id: 'JBubf2F4',
-        StationName: 'Gardiner',
-        Longitude: 145.05166,
-        Latitude: -37.853283,
-        CapitalZone: 19912,
-        Address: 'Burke Rd, Glen Iris 3146'
+        id: 'JBubf2F4',
+        stationName: 'Gardiner',
+        longitude: 145.05166,
+        latitude: -37.853283,
+        capitalZone: 19912,
+        address: 'Burke Rd, Glen Iris 3146'
       }
     },
     {
@@ -3212,12 +3212,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'jjIrTvuN',
         name: 'Montmorency',
-        Id: 'jjIrTvuN',
-        StationName: 'Montmorency',
-        Longitude: 145.121511,
-        Latitude: -37.715297,
-        CapitalZone: 19986,
-        Address: 'Station Rd, Montmorency 3094'
+        id: 'jjIrTvuN',
+        stationName: 'Montmorency',
+        longitude: 145.121511,
+        latitude: -37.715297,
+        capitalZone: 19986,
+        address: 'Station Rd, Montmorency 3094'
       }
     },
     {
@@ -3231,12 +3231,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'jkSLURcZ',
         name: 'Greensborough',
-        Id: 'jkSLURcZ',
-        StationName: 'Greensborough',
-        Longitude: 145.108249,
-        Latitude: -37.70395,
-        CapitalZone: 19985,
-        Address: 'Poulter Ave, Greensborough 3088'
+        id: 'jkSLURcZ',
+        stationName: 'Greensborough',
+        longitude: 145.108249,
+        latitude: -37.70395,
+        capitalZone: 19985,
+        address: 'Poulter Ave, Greensborough 3088'
       }
     },
     {
@@ -3250,12 +3250,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'jrCWs3hK',
         name: 'Alamein',
-        Id: 'jrCWs3hK',
-        StationName: 'Alamein',
-        Longitude: 145.079659,
-        Latitude: -37.868317,
-        CapitalZone: 19847,
-        Address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
+        id: 'jrCWs3hK',
+        stationName: 'Alamein',
+        longitude: 145.079659,
+        latitude: -37.868317,
+        capitalZone: 19847,
+        address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
       }
     },
     {
@@ -3269,12 +3269,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'kPswirS5',
         name: 'Jolimont',
-        Id: 'kPswirS5',
-        StationName: 'Jolimont',
-        Longitude: 144.984096,
-        Latitude: -37.81653,
-        CapitalZone: 19979,
-        Address: 'Wellington Cres, East Melbourne 3002'
+        id: 'kPswirS5',
+        stationName: 'Jolimont',
+        longitude: 144.984096,
+        latitude: -37.81653,
+        capitalZone: 19979,
+        address: 'Wellington Cres, East Melbourne 3002'
       }
     },
     {
@@ -3288,12 +3288,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'LgtQcpF6',
         name: 'West Richmond',
-        Id: 'LgtQcpF6',
-        StationName: 'West Richmond',
-        Longitude: 144.991418,
-        Latitude: -37.814945,
-        CapitalZone: 19978,
-        Address: 'Freeman St / Muir St, Richmond 3121'
+        id: 'LgtQcpF6',
+        stationName: 'West Richmond',
+        longitude: 144.991418,
+        latitude: -37.814945,
+        capitalZone: 19978,
+        address: 'Freeman St / Muir St, Richmond 3121'
       }
     },
     {
@@ -3307,12 +3307,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'lpFAcdsq',
         name: 'Jordanville',
-        Id: 'lpFAcdsq',
-        StationName: 'Jordanville',
-        Longitude: 145.112089,
-        Latitude: -37.873599,
-        CapitalZone: 19840,
-        Address: 'Hillview Ave / Windsor Ave, Mount Waverley 3149'
+        id: 'lpFAcdsq',
+        stationName: 'Jordanville',
+        longitude: 145.112089,
+        latitude: -37.873599,
+        capitalZone: 19840,
+        address: 'Hillview Ave / Windsor Ave, Mount Waverley 3149'
       }
     },
     {
@@ -3326,12 +3326,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'lqCrHxtQ',
         name: 'Parliament ',
-        Id: 'lqCrHxtQ',
-        StationName: 'Parliament ',
-        Longitude: 144.972907,
-        Latitude: -37.811055,
-        CapitalZone: 19843,
-        Address: 'Spring St, Melbourne City 3000'
+        id: 'lqCrHxtQ',
+        stationName: 'Parliament ',
+        longitude: 144.972907,
+        latitude: -37.811055,
+        capitalZone: 19843,
+        address: 'Spring St, Melbourne City 3000'
       }
     },
     {
@@ -3345,12 +3345,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'LyCKFatQ',
         name: 'Auburn',
-        Id: 'LyCKFatQ',
-        StationName: 'Auburn',
-        Longitude: 145.045197,
-        Latitude: -37.822068,
-        CapitalZone: 21238,
-        Address: 'Victoria St / Auburn Rd, Hawthorn East 3123'
+        id: 'LyCKFatQ',
+        stationName: 'Auburn',
+        longitude: 145.045197,
+        latitude: -37.822068,
+        capitalZone: 21238,
+        address: 'Victoria St / Auburn Rd, Hawthorn East 3123'
       }
     },
     {
@@ -3364,12 +3364,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'M5u0FEHL',
         name: 'Wattle Glen',
-        Id: 'M5u0FEHL',
-        StationName: 'Wattle Glen',
-        Longitude: 145.181619,
-        Latitude: -37.663966,
-        CapitalZone: 19989,
-        Address: 'Heidelberg-Kinglake Rd, Wattle Glen 3096'
+        id: 'M5u0FEHL',
+        stationName: 'Wattle Glen',
+        longitude: 145.181619,
+        latitude: -37.663966,
+        capitalZone: 19989,
+        address: 'Heidelberg-Kinglake Rd, Wattle Glen 3096'
       }
     },
     {
@@ -3383,12 +3383,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'MxT5t9fa',
         name: 'Riversdale',
-        Id: 'MxT5t9fa',
-        StationName: 'Riversdale',
-        Longitude: 145.069648,
-        Latitude: -37.831502,
-        CapitalZone: 19852,
-        Address: 'Wandin Rd, Camberwell 3124'
+        id: 'MxT5t9fa',
+        stationName: 'Riversdale',
+        longitude: 145.069648,
+        latitude: -37.831502,
+        capitalZone: 19852,
+        address: 'Wandin Rd, Camberwell 3124'
       }
     },
     {
@@ -3402,12 +3402,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'nXcACysE',
         name: 'Syndal',
-        Id: 'nXcACysE',
-        StationName: 'Syndal',
-        Longitude: 145.149776,
-        Latitude: -37.876228,
-        CapitalZone: 19874,
-        Address: 'Fiander Ave / Coleman Pde, Glen Waverley 3150'
+        id: 'nXcACysE',
+        stationName: 'Syndal',
+        longitude: 145.149776,
+        latitude: -37.876228,
+        capitalZone: 19874,
+        address: 'Fiander Ave / Coleman Pde, Glen Waverley 3150'
       }
     },
     {
@@ -3421,12 +3421,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'o0udCbc4',
         name: 'Glen Waverley',
-        Id: 'o0udCbc4',
-        StationName: 'Glen Waverley',
-        Longitude: 145.162063,
-        Latitude: -37.879502,
-        CapitalZone: 19873,
-        Address: 'Glendale St / Coleman Pde, Glen Waverley 3150'
+        id: 'o0udCbc4',
+        stationName: 'Glen Waverley',
+        longitude: 145.162063,
+        latitude: -37.879502,
+        capitalZone: 19873,
+        address: 'Glendale St / Coleman Pde, Glen Waverley 3150'
       }
     },
     {
@@ -3440,12 +3440,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'O4TlcwhG',
         name: 'Dennis',
-        Id: 'O4TlcwhG',
-        StationName: 'Dennis',
-        Longitude: 145.00824,
-        Latitude: -37.779183,
-        CapitalZone: 19929,
-        Address: 'Cain Ave, Northcote 3070'
+        id: 'O4TlcwhG',
+        stationName: 'Dennis',
+        longitude: 145.00824,
+        latitude: -37.779183,
+        capitalZone: 19929,
+        address: 'Cain Ave, Northcote 3070'
       }
     },
     {
@@ -3459,12 +3459,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'oDUlszIo',
         name: 'Clifton Hill',
-        Id: 'oDUlszIo',
-        StationName: 'Clifton Hill',
-        Longitude: 144.995417,
-        Latitude: -37.788654,
-        CapitalZone: 19974,
-        Address: 'Heidelberg Rd / John St, Clifton Hill 3068'
+        id: 'oDUlszIo',
+        stationName: 'Clifton Hill',
+        longitude: 144.995417,
+        latitude: -37.788654,
+        capitalZone: 19974,
+        address: 'Heidelberg Rd / John St, Clifton Hill 3068'
       }
     },
     {
@@ -3478,12 +3478,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'pnC6fXHY',
         name: 'Macleod',
-        Id: 'pnC6fXHY',
-        StationName: 'Macleod',
-        Longitude: 145.069147,
-        Latitude: -37.72601,
-        CapitalZone: 19983,
-        Address: 'Birdwood Ave, Macleod 3085'
+        id: 'pnC6fXHY',
+        stationName: 'Macleod',
+        longitude: 145.069147,
+        latitude: -37.72601,
+        capitalZone: 19983,
+        address: 'Birdwood Ave, Macleod 3085'
       }
     },
     {
@@ -3497,12 +3497,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'PYtlFrHX',
         name: 'Mount Waverley',
-        Id: 'PYtlFrHX',
-        StationName: 'Mount Waverley',
-        Longitude: 145.128057,
-        Latitude: -37.875251,
-        CapitalZone: 19875,
-        Address: 'Stephensons Rd / Miller Cres, Mount Waverley 3149'
+        id: 'PYtlFrHX',
+        stationName: 'Mount Waverley',
+        longitude: 145.128057,
+        latitude: -37.875251,
+        capitalZone: 19875,
+        address: 'Stephensons Rd / Miller Cres, Mount Waverley 3149'
       }
     },
     {
@@ -3516,12 +3516,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'qLIOCYtE',
         name: 'North Richmond',
-        Id: 'qLIOCYtE',
-        StationName: 'North Richmond',
-        Longitude: 144.9925,
-        Latitude: -37.810396,
-        CapitalZone: 19977,
-        Address: 'Victoria St / Regent St, Richmond 3121'
+        id: 'qLIOCYtE',
+        stationName: 'North Richmond',
+        longitude: 144.9925,
+        latitude: -37.810396,
+        capitalZone: 19977,
+        address: 'Victoria St / Regent St, Richmond 3121'
       }
     },
     {
@@ -3535,12 +3535,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'QpSXtPfY',
         name: 'Camberwell',
-        Id: 'QpSXtPfY',
-        StationName: 'Camberwell',
-        Longitude: 145.058692,
-        Latitude: -37.826564,
-        CapitalZone: 19853,
-        Address: 'Burke Rd / Cookson St, Camberwell 3124'
+        id: 'QpSXtPfY',
+        stationName: 'Camberwell',
+        longitude: 145.058692,
+        latitude: -37.826564,
+        capitalZone: 19853,
+        address: 'Burke Rd / Cookson St, Camberwell 3124'
       }
     },
     {
@@ -3554,12 +3554,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'r6T6sMSp',
         name: 'Heyington',
-        Id: 'r6T6sMSp',
-        StationName: 'Heyington',
-        Longitude: 145.022633,
-        Latitude: -37.83467,
-        CapitalZone: 19909,
-        Address: 'Gawith Ct / Heyington Pl, Toorak 3142'
+        id: 'r6T6sMSp',
+        stationName: 'Heyington',
+        longitude: 145.022633,
+        latitude: -37.83467,
+        capitalZone: 19909,
+        address: 'Gawith Ct / Heyington Pl, Toorak 3142'
       }
     },
     {
@@ -3573,12 +3573,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'RpsBIotJ',
         name: 'Darebin',
-        Id: 'RpsBIotJ',
-        StationName: 'Darebin',
-        Longitude: 145.038476,
-        Latitude: -37.774962,
-        CapitalZone: 19932,
-        Address: 'Merton St / Heidelberg Rd, Ivanhoe 3079'
+        id: 'RpsBIotJ',
+        stationName: 'Darebin',
+        longitude: 145.038476,
+        latitude: -37.774962,
+        capitalZone: 19932,
+        address: 'Merton St / Heidelberg Rd, Ivanhoe 3079'
       }
     },
     {
@@ -3592,12 +3592,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'rWSkT0s2',
         name: 'Alphington',
-        Id: 'rWSkT0s2',
-        StationName: 'Alphington',
-        Longitude: 145.031251,
-        Latitude: -37.778396,
-        CapitalZone: 19931,
-        Address: 'Miller St / Rowe St, Alphington 3078'
+        id: 'rWSkT0s2',
+        stationName: 'Alphington',
+        longitude: 145.031251,
+        latitude: -37.778396,
+        capitalZone: 19931,
+        address: 'Miller St / Rowe St, Alphington 3078'
       }
     },
     {
@@ -3611,12 +3611,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'rwUKs5HK',
         name: 'Watsonia',
-        Id: 'rwUKs5HK',
-        StationName: 'Watsonia',
-        Longitude: 145.083795,
-        Latitude: -37.710954,
-        CapitalZone: 19984,
-        Address: 'Greensborough Rd, Watsonia 3087'
+        id: 'rwUKs5HK',
+        stationName: 'Watsonia',
+        longitude: 145.083795,
+        latitude: -37.710954,
+        capitalZone: 19984,
+        address: 'Greensborough Rd, Watsonia 3087'
       }
     },
     {
@@ -3630,12 +3630,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'WBcKf3HV',
         name: 'Fairfield',
-        Id: 'WBcKf3HV',
-        StationName: 'Fairfield',
-        Longitude: 145.016903,
-        Latitude: -37.779174,
-        CapitalZone: 19930,
-        Address: 'Gillies St / Railway Pl, Fairfield 3078'
+        id: 'WBcKf3HV',
+        stationName: 'Fairfield',
+        longitude: 145.016903,
+        latitude: -37.779174,
+        capitalZone: 19930,
+        address: 'Gillies St / Railway Pl, Fairfield 3078'
       }
     },
     {
@@ -3649,12 +3649,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'WQFGiBC4',
         name: 'Hurstbridge',
-        Id: 'WQFGiBC4',
-        StationName: 'Hurstbridge',
-        Longitude: 145.192012,
-        Latitude: -37.639402,
-        CapitalZone: 19990,
-        Address: 'Heidelberg-Kinglake Rd, Hurstbridge 3099'
+        id: 'WQFGiBC4',
+        stationName: 'Hurstbridge',
+        longitude: 145.192012,
+        latitude: -37.639402,
+        capitalZone: 19990,
+        address: 'Heidelberg-Kinglake Rd, Hurstbridge 3099'
       }
     },
     {
@@ -3668,12 +3668,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'X1tNsBCK',
         name: 'Diamond Creek',
-        Id: 'X1tNsBCK',
-        StationName: 'Diamond Creek',
-        Longitude: 145.158509,
-        Latitude: -37.673293,
-        CapitalZone: 19988,
-        Address: 'Station St, Diamond Creek 3089'
+        id: 'X1tNsBCK',
+        stationName: 'Diamond Creek',
+        longitude: 145.158509,
+        latitude: -37.673293,
+        capitalZone: 19988,
+        address: 'Station St, Diamond Creek 3089'
       }
     },
     {
@@ -3687,12 +3687,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'x5TjuWse',
         name: 'Heidelberg',
-        Id: 'x5TjuWse',
-        StationName: 'Heidelberg',
-        Longitude: 145.06069,
-        Latitude: -37.757075,
-        CapitalZone: 19935,
-        Address: 'Studley Rd, Heidelberg 3084'
+        id: 'x5TjuWse',
+        stationName: 'Heidelberg',
+        longitude: 145.06069,
+        latitude: -37.757075,
+        capitalZone: 19935,
+        address: 'Studley Rd, Heidelberg 3084'
       }
     },
     {
@@ -3706,12 +3706,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'z4HofmS8',
         name: 'Glenferrie',
-        Id: 'z4HofmS8',
-        StationName: 'Glenferrie',
-        Longitude: 145.036438,
-        Latitude: -37.821466,
-        CapitalZone: 19904,
-        Address: 'Glenferrie Rd, Hawthorn 3122'
+        id: 'z4HofmS8',
+        stationName: 'Glenferrie',
+        longitude: 145.036438,
+        latitude: -37.821466,
+        capitalZone: 19904,
+        address: 'Glenferrie Rd, Hawthorn 3122'
       }
     },
     {
@@ -3725,12 +3725,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'z5i7HvI0',
         name: 'Rosanna',
-        Id: 'z5i7HvI0',
-        StationName: 'Rosanna',
-        Longitude: 145.06614,
-        Latitude: -37.742875,
-        CapitalZone: 19936,
-        Address: 'Douglas St / Station Rd, Rosanna 3084'
+        id: 'z5i7HvI0',
+        stationName: 'Rosanna',
+        longitude: 145.06614,
+        latitude: -37.742875,
+        capitalZone: 19936,
+        address: 'Douglas St / Station Rd, Rosanna 3084'
       }
     },
     {
@@ -3744,12 +3744,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'zmc3HYIl',
         name: 'Darling',
-        Id: 'zmc3HYIl',
-        StationName: 'Darling',
-        Longitude: 145.060746,
-        Latitude: -37.870029,
-        CapitalZone: 21999,
-        Address: 'Malvern Rd / Darling Rd, Malvern East 3145'
+        id: 'zmc3HYIl',
+        stationName: 'Darling',
+        longitude: 145.060746,
+        latitude: -37.870029,
+        capitalZone: 21999,
+        address: 'Malvern Rd / Darling Rd, Malvern East 3145'
       }
     },
     {
@@ -3763,12 +3763,12 @@ var stationsCollection = {
         type: 'STATION',
         id: 'ZZFPIrCd',
         name: 'Glen Iris',
-        Id: 'ZZFPIrCd',
-        StationName: 'Glen Iris',
-        Longitude: 145.058223,
-        Latitude: -37.859306,
-        CapitalZone: 19835,
-        Address: 'High St / Wills St, Glen Iris 3146'
+        id: 'ZZFPIrCd',
+        stationName: 'Glen Iris',
+        longitude: 145.058223,
+        latitude: -37.859306,
+        capitalZone: 19835,
+        address: 'High St / Wills St, Glen Iris 3146'
       }
     }
   ]
@@ -3786,45 +3786,45 @@ var trainsCollection = {
       properties: {
         type: 'TRAIN',
         id: 'wzhDHzF3',
-        Segment: {
-          Id: '4ltPixCp',
-          SegmentOrder: 1,
-          StopAtDestinationStation: true,
-          DepartureStation: {
-            Id: 'jrCWs3hK',
-            StationName: 'Alamein', // [145.06974, -37.83092],
-            Longitude: 145.06974,
-            Latitude: -37.83092,
-            CapitalZone: 19847,
-            Address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
+        segment: {
+          id: '4ltPixCp',
+          segmentOrder: 1,
+          stopAtdestinationStation: true,
+          departureStation: {
+            id: 'jrCWs3hK',
+            stationName: 'Alamein', // [145.06974, -37.83092],
+            longitude: 145.06974,
+            latitude: -37.83092,
+            capitalZone: 19847,
+            address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
           },
-          ArrivalStation: {
-            Id: 'Dnc3ivTN',
-            StationName: 'Ashburton',
-            Longitude: 145.081341,
-            Latitude: -37.861968,
-            CapitalZone: 19848,
-            Address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
+          arrivalStation: {
+            id: 'Dnc3ivTN',
+            stationName: 'Ashburton',
+            longitude: 145.081341,
+            latitude: -37.861968,
+            capitalZone: 19848,
+            address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
           },
-          Route: {
-            Id: 'yBS5iVIy',
-            Name: 'Alamein To City',
-            Line: {
-              Id: 'OjtDTgF5',
-              Name: 'Alamein Line'
+          route: {
+            id: 'yBS5iVIy',
+            name: 'Alamein To City',
+            line: {
+              id: 'OjtDTgF5',
+              name: 'Alamein Line'
             }
           }
         },
-        Id: 'wzhDHzF3',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M003',
-        Longitude: 145.079659,
-        Latitude: -37.868317,
-        UpdateAt: '2018-10-09T05:00:00'
+        id: 'wzhDHzF3',
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M003',
+        longitude: 145.079659,
+        latitude: -37.868317,
+        updateAt: '2018-10-09T05:00:00'
       }
     },
     {
@@ -3837,45 +3837,45 @@ var trainsCollection = {
       properties: {
         type: 'TRAIN',
         id: 'WEFrfoso',
-        // Segment: {
-        //   Id: 'Mpt1FDsM',
-        //   SegmentOrder: 1,
-        //   StopAtDestinationStation: true,
-        //   DepartureStation: {
-        //     Id: 'bat2i2Fo',
-        //     StationName: 'Flinders Street',
-        //     Longitude: 144.966967,
-        //     Latitude: -37.818308,
-        //     CapitalZone: 19854,
-        //     Address: 'Flinders St, Melbourne City 3000'
+        // segment: {
+        //   id: 'Mpt1FDsM',
+        //   segmentOrder: 1,
+        //   stopAtdestinationStation: true,
+        //   departureStation: {
+        //     id: 'bat2i2Fo',
+        //     stationName: 'Flinders Street',
+        //     longitude: 144.966967,
+        //     latitude: -37.818308,
+        //     capitalZone: 19854,
+        //     address: 'Flinders St, Melbourne City 3000'
         //   },
-        //   ArrivalStation: {
-        //     Id: '5dF9SqtW',
-        //     StationName: 'Richmond ',
-        //     Longitude: 144.990161,
-        //     Latitude: -37.824072,
-        //     CapitalZone: 19908,
-        //     Address: 'Punt Rd / Swan St, Richmond 3121'
+        //   arrivalStation: {
+        //     id: '5dF9SqtW',
+        //     stationName: 'Richmond ',
+        //     longitude: 144.990161,
+        //     latitude: -37.824072,
+        //     capitalZone: 19908,
+        //     address: 'Punt Rd / Swan St, Richmond 3121'
         //   },
-        //   Route: {
-        //     Id: 'xocOiXtj',
-        //     Name: 'To Alamein',
-        //     Line: {
-        //       Id: 'OjtDTgF5',
-        //       Name: 'Alamein Line'
+        //   route: {
+        //     id: 'xocOiXtj',
+        //     name: 'To Alamein',
+        //     line: {
+        //       id: 'OjtDTgF5',
+        //       name: 'Alamein Line'
         //     }
         //   }
         // },
-        Id: 'WEFrfoso',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M001',
-        Longitude: 144.966967,
-        Latitude: -37.818308,
-        UpdateAt: '2018-10-09T05:00:00'
+        id: 'WEFrfoso',
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M001',
+        longitude: 144.966967,
+        latitude: -37.818308,
+        updateAt: '2018-10-09T05:00:00'
       }
     },
     {
@@ -3888,45 +3888,44 @@ var trainsCollection = {
       properties: {
         type: 'TRAIN',
         id: '6oINinuo',
-        Segment: {
-          Id: 'ryi2S4Cl',
-          SegmentOrder: 8,
-          StopAtDestinationStation: true,
-          DepartureStation: {
-            Id: 'QpSXtPfY',
-            StationName: 'Camberwell',
-            Longitude: 145.058692,
-            Latitude: -37.826564,
-            CapitalZone: 19853,
-            Address: 'Burke Rd / Cookson St, Camberwell 3124'
+        segment: {
+          id: 'ryi2S4Cl',
+          segmentOrder: 8,
+          stopAtdestinationStation: true,
+          departureStation: {
+            id: 'QpSXtPfY',
+            stationName: 'Camberwell',
+            longitude: 145.058692,
+            latitude: -37.826564,
+            capitalZone: 19853,
+            address: 'Burke Rd / Cookson St, Camberwell 3124'
           },
-          ArrivalStation: {
-            Id: 'MxT5t9fa',
-            StationName: 'Riversdale',
-            Longitude: 145.069648,
-            Latitude: -37.831502,
-            CapitalZone: 19852,
-            Address: 'Wandin Rd, Camberwell 3124'
+          arrivalStation: {
+            id: 'MxT5t9fa',
+            stationName: 'Riversdale',
+            longitude: 145.069648,
+            latitude: -37.831502,
+            capitalZone: 19852,
+            address: 'Wandin Rd, Camberwell 3124'
           },
-          Route: {
-            Id: 'xocOiXtj',
-            Name: 'To Alamein',
-            Line: {
-              Id: 'OjtDTgF5',
-              Name: 'Alamein Line'
+          route: {
+            id: 'xocOiXtj',
+            name: 'To Alamein',
+            line: {
+              id: 'OjtDTgF5',
+              name: 'Alamein Line'
             }
           }
         },
-        Id: '6oINinuo',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M002',
-        Longitude: 145.0589,
-        Latitude: -37.82655,
-        UpdateAt: '2018-10-09T05:00:00'
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M002',
+        longitude: 145.0589,
+        latitude: -37.82655,
+        updateAt: '2018-10-09T05:00:00'
       }
     },
     {
@@ -3939,96 +3938,96 @@ var trainsCollection = {
       properties: {
         type: 'TRAIN',
         id: 'eOSgTbsG',
-        Segment: {
-          Id: 'AMHLSOcZ',
-          SegmentOrder: 16,
-          StopAtDestinationStation: true,
-          DepartureStation: {
-            Id: '0RTqfRsv',
-            StationName: 'Flagstaff',
-            Longitude: 144.955653,
-            Latitude: -37.811978,
-            CapitalZone: 19841,
-            Address: 'William St / La Trobe St, Melbourne City 3000'
+        segment: {
+          id: 'AMHLSOcZ',
+          segmentOrder: 16,
+          stopAtdestinationStation: true,
+          departureStation: {
+            id: '0RTqfRsv',
+            stationName: 'Flagstaff',
+            longitude: 144.955653,
+            latitude: -37.811978,
+            capitalZone: 19841,
+            address: 'William St / La Trobe St, Melbourne City 3000'
           },
-          ArrivalStation: {
-            Id: 'eKubFRIx',
-            StationName: 'Southern Cross',
-            Longitude: 144.951409,
-            Latitude: -37.817933,
-            CapitalZone: 22180,
-            Address: 'Collins St / Spencer St, Melbourne City 3000'
+          arrivalStation: {
+            id: 'eKubFRIx',
+            stationName: 'Southern Cross',
+            longitude: 144.951409,
+            latitude: -37.817933,
+            capitalZone: 22180,
+            address: 'Collins St / Spencer St, Melbourne City 3000'
           },
-          Route: {
-            Id: 'yBS5iVIy',
-            Name: 'Alamein To City',
-            Line: {
-              Id: 'OjtDTgF5',
-              Name: 'Alamein Line'
+          route: {
+            id: 'yBS5iVIy',
+            name: 'Alamein To City',
+            line: {
+              id: 'OjtDTgF5',
+              name: 'Alamein Line'
             }
           }
         },
-        Id: 'eOSgTbsG',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M005',
-        Longitude: 144.955653,
-        Latitude: -37.811978,
-        UpdateAt: '2018-10-09T05:00:00'
+        id: 'eOSgTbsG',
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M005',
+        longitude: 144.955653,
+        latitude: -37.811978,
+        updateAt: '2018-10-09T05:00:00'
       }
     },
     {
       type: 'Feature',
-      id: '9oIdUKHA',
+      id: '9oidUKHA',
       geometry: {
         type: 'Point',
         coordinates: [145.022897, -37.821824]
       },
       properties: {
         type: 'TRAIN',
-        id: '9oIdUKHA',
-        Segment: {
-          Id: '51u5cDUp',
-          SegmentOrder: 10,
-          StopAtDestinationStation: true,
-          DepartureStation: {
-            Id: 'ADHysNhK',
-            StationName: 'Hawthorn',
-            Longitude: 145.022897,
-            Latitude: -37.821824,
-            CapitalZone: 19905,
-            Address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
+        id: '9oidUKHA',
+        segment: {
+          id: '51u5cDUp',
+          segmentOrder: 10,
+          stopAtdestinationStation: true,
+          departureStation: {
+            id: 'ADHysNhK',
+            stationName: 'Hawthorn',
+            longitude: 145.022897,
+            latitude: -37.821824,
+            capitalZone: 19905,
+            address: 'Burwood Rd / Evansdale Rd, Hawthorn 3122'
           },
-          ArrivalStation: {
-            Id: 'gjios8Hy',
-            StationName: 'Burnley',
-            Longitude: 145.007553,
-            Latitude: -37.827558,
-            CapitalZone: 19906,
-            Address: 'Burnley St / Madden Gr, Burnley 3121'
+          arrivalStation: {
+            id: 'gjios8Hy',
+            stationName: 'Burnley',
+            longitude: 145.007553,
+            latitude: -37.827558,
+            capitalZone: 19906,
+            address: 'Burnley St / Madden Gr, Burnley 3121'
           },
-          Route: {
-            Id: 'yBS5iVIy',
-            Name: 'Alamein To City',
-            Line: {
-              Id: 'OjtDTgF5',
-              Name: 'Alamein Line'
+          route: {
+            id: 'yBS5iVIy',
+            name: 'Alamein To City',
+            line: {
+              id: 'OjtDTgF5',
+              name: 'Alamein Line'
             }
           }
         },
-        Id: '9oIdUKHA',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M004',
-        Longitude: 145.022897,
-        Latitude: -37.821824,
-        UpdateAt: '2018-10-09T05:00:00'
+        id: '9oidUKHA',
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M004',
+        longitude: 145.022897,
+        latitude: -37.821824,
+        updateAt: '2018-10-09T05:00:00'
       }
     }
   ]

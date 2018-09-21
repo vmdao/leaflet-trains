@@ -52,45 +52,44 @@
       var train = {
         type: 'TRAIN',
         id: 'wzhDHzF2',
-        Segment: {
-          Id: '4ltPixCp',
-          SegmentOrder: 1,
-          StopAtDestinationStation: true,
-          DepartureStation: {
-            Id: 'jrCWs3hK',
-            StationName: 'Alamein', // [145.06974, -37.83092],
-            Longitude: 145.06974,
-            Latitude: -37.83092,
-            CapitalZone: 19847,
-            Address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
+        segment: {
+          id: '4ltPixCp',
+          segmentOrder: 1,
+          stopAtDestinationStation: true,
+          departureStation: {
+            id: 'jrCWs3hK',
+            stationName: 'Alamein', // [145.06974, -37.83092],
+            longitude: 145.06974,
+            latitude: -37.83092,
+            capitalZone: 19847,
+            address: 'Alamein Ave / Ashburn Gr, Ashburton 3147'
           },
-          ArrivalStation: {
-            Id: 'Dnc3ivTN',
-            StationName: 'Ashburton',
-            Longitude: 145.081341,
-            Latitude: -37.861968,
-            CapitalZone: 19848,
-            Address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
+          arrivalStation: {
+            id: 'Dnc3ivTN',
+            stationName: 'Ashburton',
+            longitude: 145.081341,
+            latitude: -37.861968,
+            capitalZone: 19848,
+            address: 'Fakenham Rd / Welfare Pde, Ashburton 3147'
           },
-          Route: {
-            Id: 'yBS5iVIy',
-            Name: 'Alamein To City',
-            Line: {
-              Id: 'OjtDTgF5',
-              Name: 'Alamein Line'
+          route: {
+            id: 'yBS5iVIy',
+            name: 'Alamein To City',
+            line: {
+              id: 'OjtDTgF5',
+              name: 'Alamein Line'
             }
           }
         },
-        Id: 'wzhDHzF2',
-        Coupled: false,
-        LastReport: '2018-10-09T05:00:00',
-        DestinationStation: null,
-        LastStation: null,
-        NextStation: null,
-        TrainNo: 'M006',
-        Longitude: 145.070659,
-        Latitude: -37.865317,
-        UpdateAt: '2018-10-09T05:00:00'
+        coupled: false,
+        lastReport: '2018-10-09T05:00:00',
+        destinationStation: null,
+        lastStation: null,
+        nextStation: null,
+        trainNo: 'M006',
+        longitude: 145.070659,
+        latitude: -37.865317,
+        updateAt: '2018-10-09T05:00:00'
 
       };
       enouvoTrains.replaceTrain(train);

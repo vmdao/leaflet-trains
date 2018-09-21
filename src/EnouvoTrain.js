@@ -137,7 +137,7 @@ export class EnouvoTrains {
               type: 'LineString',
               coordinates: data.paths
             },
-            id: data.properties.Id,
+            id: data.properties.id,
             properties: data.properties
           }
         ]
@@ -149,14 +149,18 @@ export class EnouvoTrains {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
+
       layers.push(networkMap);
+
       networkMap.addTo(this._map);
+
       return {
-        Id: data.properties.Id,
+        id: data.properties.id,
         networkMap: networkMap,
-        name: data.properties.Name
+        name: data.properties.name
       };
     });
+
     this.overlaysControl.addOverlay(layerGroup(layers), 'Line');
   }
 
@@ -196,8 +200,8 @@ export class EnouvoTrains {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
-          const lineId = feature.properties.Segment.Route.Line.Id;
-          const networkMap = this.networkMaps.find(n => n.Id === lineId);
+          const lineId = feature.properties.segment.route.line.id;
+          const networkMap = this.networkMaps.find(n => n.id === lineId);
           const _feature = Object.assign(
             { networkMap: networkMap.networkMap, _map: this._map },
             feature
@@ -214,9 +218,9 @@ export class EnouvoTrains {
   }
 
   addTrain(trainData) {
-    const latlng = latLng(trainData.Latitude, trainData.Longitude);
-    const lineId = trainData.Segment.Route.Line.Id;
-    const networkMap = this.networkMaps.find(n => n.Id === lineId);
+    const latlng = latLng(trainData.latitude, trainData.longitude);
+    const lineId = trainData.segment.route.line.id;
+    const networkMap = this.networkMaps.find(n => n.id === lineId);
     const _feature = Object.assign(
       { properties: trainData },
       {
@@ -233,7 +237,7 @@ export class EnouvoTrains {
   updateTrain(trainData) {
     const trainsLayer = this.networkTrains.getLayers();
     const trainFinded = trainsLayer.find(t => {
-      return t.feature.properties.Id === trainData.Id;
+      return t.feature.properties.id === trainData.id;
     });
 
     if (trainFinded) {
@@ -280,7 +284,7 @@ export class EnouvoTrains {
 
   controlPopupAsset(assetId, switchPopup) {
     this.networkTrains.eachLayer(train => {
-      if (train.feature.properties.Id === assetId) {
+      if (train.feature.properties.id === assetId) {
         switchPopup ? train.openPopup() : train.closePopup();
       }
     });
@@ -340,9 +344,9 @@ export class EnouvoTrains {
     });
   }
 
-  unSelectedAsset(Id) {
+  unSelectedAsset(id) {
     this.networkTrains.eachLayer(layer => {
-      if (layer.feature.properties.Id === Id) {
+      if (layer.feature.properties.id === id) {
         layer.feature.selected = false;
         layer.selected = false;
         layer.feature.properties.selected = false;

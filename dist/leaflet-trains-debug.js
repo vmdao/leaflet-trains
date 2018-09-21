@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.3 - Thu Sep 20 2018 15:10:36 GMT+0700 (Indochina Time)
+/* leaflet-trains - v1.0.4 - Fri Sep 21 2018 10:07:29 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.3";
+var version = "1.0.4";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -4876,8 +4876,8 @@ var TrainIcon = leaflet.DivIcon.extend({
     const data = options.properties;
     const iconUrl = 'assets/images/ic-marker-train.svg';
     const html =
-      '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">TH-' +
-      data.TrainNo +
+      '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">' +
+      data.trainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
       iconUrl +
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
@@ -4916,16 +4916,16 @@ var TrainAsset = BaseAsset.extend({
 
   _createPopup(data) {
     const _data = {
-      trainNo: data.TrainNo,
-      trainId: data.Id,
-      coupled: data.Coupled ? 'Yes' : 'No',
+      trainNo: data.trainNo,
+      trainId: data.id,
+      coupled: data.coupled ? 'Yes' : 'No',
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destination: data.Segment.Route.Name || 'Mock_Destination',
+      destination: data.segment.route.name || 'Mock_Destination',
       lastStation:
-        data.Segment.DepartureStation.StationName || 'Mock_LastStation',
-      nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
+        data.segment.departureStation.stationName || 'Mock_LastStation',
+      nextStation: data.segment.arrivalStation.stationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
@@ -5017,8 +5017,8 @@ var TrainAsset = BaseAsset.extend({
 
   getDirection() {
     const paths = this.getLocationNetworkMap();
-    const lastStation = this.feature.properties.Segment.DepartureStation;
-    const nextStation = this.feature.properties.Segment.ArrivalStation;
+    const lastStation = this.feature.properties.segment.departureStation;
+    const nextStation = this.feature.properties.segment.arrivalStation;
 
     const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
     const indexLastSation = stations.findIndex(
@@ -5059,11 +5059,11 @@ var TrainAsset = BaseAsset.extend({
   },
 
   getAngleWithNextStation() {
-    const ArrivalStation = this.feature.properties.Segment.ArrivalStation;
-    const LongitudeNextStation = ArrivalStation.Longitude;
-    const LatitudeNextStation = ArrivalStation.Latitude;
+    const arrivalStation = this.feature.properties.segment.arrivalStation;
+    const longitudeNextStation = arrivalStation.longitude;
+    const latitudeNextStation = arrivalStation.latitude;
 
-    const nextStation = leaflet.latLng(LatitudeNextStation, LongitudeNextStation);
+    const nextStation = leaflet.latLng(latitudeNextStation, longitudeNextStation);
 
     const locationTrain = this.getLatLng();
 
@@ -5371,7 +5371,7 @@ class EnouvoTrains {
               type: 'LineString',
               coordinates: data.paths
             },
-            id: data.properties.Id,
+            id: data.properties.id,
             properties: data.properties
           }
         ]
@@ -5383,14 +5383,18 @@ class EnouvoTrains {
         },
         onEachFeature: this._addEventListener.bind(that)
       });
+
       layers.push(networkMap);
+
       networkMap.addTo(this._map);
+
       return {
-        Id: data.properties.Id,
+        id: data.properties.id,
         networkMap: networkMap,
-        name: data.properties.Name
+        name: data.properties.name
       };
     });
+
     this.overlaysControl.addOverlay(leaflet.layerGroup(layers), 'Line');
   }
 
@@ -5430,8 +5434,8 @@ class EnouvoTrains {
       onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
-          const lineId = feature.properties.Segment.Route.Line.Id;
-          const networkMap = this.networkMaps.find(n => n.Id === lineId);
+          const lineId = feature.properties.segment.route.line.id;
+          const networkMap = this.networkMaps.find(n => n.id === lineId);
           const _feature = Object.assign(
             { networkMap: networkMap.networkMap, _map: this._map },
             feature
@@ -5448,9 +5452,9 @@ class EnouvoTrains {
   }
 
   addTrain(trainData) {
-    const latlng = leaflet.latLng(trainData.Latitude, trainData.Longitude);
-    const lineId = trainData.Segment.Route.Line.Id;
-    const networkMap = this.networkMaps.find(n => n.Id === lineId);
+    const latlng = leaflet.latLng(trainData.latitude, trainData.longitude);
+    const lineId = trainData.segment.route.line.id;
+    const networkMap = this.networkMaps.find(n => n.id === lineId);
     const _feature = Object.assign(
       { properties: trainData },
       {
@@ -5467,7 +5471,7 @@ class EnouvoTrains {
   updateTrain(trainData) {
     const trainsLayer = this.networkTrains.getLayers();
     const trainFinded = trainsLayer.find(t => {
-      return t.feature.properties.Id === trainData.Id;
+      return t.feature.properties.id === trainData.id;
     });
 
     if (trainFinded) {
@@ -5514,7 +5518,7 @@ class EnouvoTrains {
 
   controlPopupAsset(assetId, switchPopup) {
     this.networkTrains.eachLayer(train => {
-      if (train.feature.properties.Id === assetId) {
+      if (train.feature.properties.id === assetId) {
         switchPopup ? train.openPopup() : train.closePopup();
       }
     });
@@ -5574,9 +5578,9 @@ class EnouvoTrains {
     });
   }
 
-  unSelectedAsset(Id) {
+  unSelectedAsset(id) {
     this.networkTrains.eachLayer(layer => {
-      if (layer.feature.properties.Id === Id) {
+      if (layer.feature.properties.id === id) {
         layer.feature.selected = false;
         layer.selected = false;
         layer.feature.properties.selected = false;

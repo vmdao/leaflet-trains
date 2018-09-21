@@ -6,8 +6,8 @@ export var TrainIcon = DivIcon.extend({
     const data = options.properties;
     const iconUrl = 'assets/images/ic-marker-train.svg';
     const html =
-      '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">TH-' +
-      data.TrainNo +
+      '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">' +
+      data.trainNo +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
       iconUrl +
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +

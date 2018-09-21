@@ -24,16 +24,16 @@ export var TrainAsset = BaseAsset.extend({
 
   _createPopup(data) {
     const _data = {
-      trainNo: data.TrainNo,
-      trainId: data.Id,
-      coupled: data.Coupled ? 'Yes' : 'No',
+      trainNo: data.trainNo,
+      trainId: data.id,
+      coupled: data.coupled ? 'Yes' : 'No',
       lastReport: convertToTimeHuman(
         data.LastReport || '2018-09-10T05:01:45.702Z'
       ),
-      destination: data.Segment.Route.Name || 'Mock_Destination',
+      destination: data.segment.route.name || 'Mock_Destination',
       lastStation:
-        data.Segment.DepartureStation.StationName || 'Mock_LastStation',
-      nextStation: data.Segment.ArrivalStation.StationName || 'Mock_NextStation'
+        data.segment.departureStation.stationName || 'Mock_LastStation',
+      nextStation: data.segment.arrivalStation.stationName || 'Mock_NextStation'
     };
 
     var fieldsMatch = [
@@ -125,8 +125,8 @@ export var TrainAsset = BaseAsset.extend({
 
   getDirection() {
     const paths = this.getLocationNetworkMap();
-    const lastStation = this.feature.properties.Segment.DepartureStation;
-    const nextStation = this.feature.properties.Segment.ArrivalStation;
+    const lastStation = this.feature.properties.segment.departureStation;
+    const nextStation = this.feature.properties.segment.arrivalStation;
 
     const stations = this.networkMap.getLayers()[0].feature.properties.Stations;
     const indexLastSation = stations.findIndex(
@@ -167,11 +167,11 @@ export var TrainAsset = BaseAsset.extend({
   },
 
   getAngleWithNextStation() {
-    const ArrivalStation = this.feature.properties.Segment.ArrivalStation;
-    const LongitudeNextStation = ArrivalStation.Longitude;
-    const LatitudeNextStation = ArrivalStation.Latitude;
+    const arrivalStation = this.feature.properties.segment.arrivalStation;
+    const longitudeNextStation = arrivalStation.longitude;
+    const latitudeNextStation = arrivalStation.latitude;
 
-    const nextStation = latLng(LatitudeNextStation, LongitudeNextStation);
+    const nextStation = latLng(latitudeNextStation, longitudeNextStation);
 
     const locationTrain = this.getLatLng();
 
