@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.4 - Fri Sep 21 2018 10:07:29 GMT+0700 (+07)
+/* leaflet-trains - v1.0.7 - Fri Sep 21 2018 10:15:34 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.4";
+var version = "1.0.7";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
