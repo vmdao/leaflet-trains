@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.9 - Fri Sep 21 2018 17:49:06 GMT+0700 (+07)
+/* leaflet-trains - v1.0.11 - Fri Sep 21 2018 18:16:53 GMT+0700 (+07)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.9";
+var version = "1.0.11";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -5346,19 +5346,19 @@ class EnouvoTrains {
     ).addTo(this._map);
   }
 
-  _addEventListener(feature, layer) {
-    if (feature && feature.geometry.type === 'LineString') {
-      var label =
-        feature.geometry.type === 'LineString'
-          ? 'Line: ' + feature.properties.name
-          : 'Train: ' + feature.properties.name;
-      layer.bindTooltip(label);
-    }
+  _addEventListenerMap(feature, layer) {
+    var label =
+      feature.geometry.type === 'LineString'
+        ? 'Line: ' + feature.properties.name
+        : 'Train: ' + feature.properties.name;
+    layer.bindTooltip(label);
+  }
 
+  _addEventListener(feature, layer) {
     layer.on('click', event => {
       var message = {
         originEvent: event,
-        data: feature
+        data: feature.properties.properties
       };
       this.observer.emitEvent('click', [message]);
     });
@@ -5405,7 +5405,7 @@ class EnouvoTrains {
         style: function() {
           return { weight: 7 };
         },
-        onEachFeature: this._addEventListener.bind(that)
+        onEachFeature: this._addEventListenerMap.bind(that)
       });
 
       layers.push(networkMap);
@@ -5430,11 +5430,9 @@ class EnouvoTrains {
   }
 
   setNetworkStations(networkStationsData) {
-    var that = this;
     this.networkStationsData = createStationGeoJson(networkStationsData);
 
     this.networkStations = new leaflet.GeoJSON(this.networkStationsData, {
-      onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         var properties = feature.properties.properties;
 

@@ -89,19 +89,19 @@ export class EnouvoTrains {
     ).addTo(this._map);
   }
 
-  _addEventListener(feature, layer) {
-    if (feature && feature.geometry.type === 'LineString') {
-      var label =
-        feature.geometry.type === 'LineString'
-          ? 'Line: ' + feature.properties.name
-          : 'Train: ' + feature.properties.name;
-      layer.bindTooltip(label);
-    }
+  _addEventListenerMap(feature, layer) {
+    var label =
+      feature.geometry.type === 'LineString'
+        ? 'Line: ' + feature.properties.name
+        : 'Train: ' + feature.properties.name;
+    layer.bindTooltip(label);
+  }
 
+  _addEventListener(feature, layer) {
     layer.on('click', event => {
       var message = {
         originEvent: event,
-        data: feature
+        data: feature.properties.properties
       };
       this.observer.emitEvent('click', [message]);
     });
@@ -148,7 +148,7 @@ export class EnouvoTrains {
         style: function() {
           return { weight: 7 };
         },
-        onEachFeature: this._addEventListener.bind(that)
+        onEachFeature: this._addEventListenerMap.bind(that)
       });
 
       layers.push(networkMap);
@@ -177,7 +177,6 @@ export class EnouvoTrains {
     this.networkStationsData = createStationGeoJson(networkStationsData);
 
     this.networkStations = new GeoJSON(this.networkStationsData, {
-      onEachFeature: this._addEventListener.bind(that),
       pointToLayer: (feature, latlng) => {
         var properties = feature.properties.properties;
 
