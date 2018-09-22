@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.11 - Fri Sep 21 2018 18:16:53 GMT+0700 (+07)
+/* leaflet-trains - v1.0.12 - Sat Sep 22 2018 11:15:11 GMT+0700 (Indochina Time)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.11";
+var version = "1.0.12";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -4866,13 +4866,13 @@ var stationIcon = function(options, properties) {
 };
 
 var StationAsset = BaseAsset.extend({
-  initialize: function(options, properties) {
+  initialize: function (options, properties) {
     BaseAsset.prototype.initialize.call(this, options, properties);
-
+    var data = options.data;
     this.assetCanMove = false;
     this.assetCanSelect = false;
     this.assetSelected = false;
-    this._createIcon(properties);
+    this._createIcon(data);
   },
 
   _createIcon(properties) {
@@ -4892,7 +4892,7 @@ var TrainIcon = leaflet.DivIcon.extend({
     var iconUrl = 'assets/images/ic-marker-train.svg';
     var html =
       '<div class="leaflet-trains-train-asset"><div class="leaflet-trains-train-asset-name">' +
-      data.trainNo +
+      data.name +
       '</div><img class="leaflet-trains-train-asset-img" src="' +
       iconUrl +
       '"></div><div class="leaflet-trains-train-asset-or" style="transform: rotate(' +
@@ -4915,9 +4915,10 @@ var trainIcon = function(options, properties) {
 };
 
 var TrainAsset = BaseAsset.extend({
-  initialize: function(options, properties) {
+  initialize: function (options, properties) {
     BaseAsset.prototype.initialize.call(this, options, properties);
     var popup = options.popup;
+    var data = options.data;
     this.networkMap = options.networkMap || null;
 
     this.assetCanMove = true;
@@ -4925,7 +4926,7 @@ var TrainAsset = BaseAsset.extend({
     this.assetSelected = false;
 
     this._createPopupEventSameTooltip(popup, properties);
-    this._createIcon(properties);
+    this._createIcon(data);
   },
 
   _createPopupEventSameTooltip(popup, properties) {

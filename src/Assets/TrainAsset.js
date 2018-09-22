@@ -8,9 +8,10 @@ import { BaseAsset } from './BaseAsset';
 import { trainIcon } from '../Layers/TrainIcon';
 
 export var TrainAsset = BaseAsset.extend({
-  initialize: function(options, properties) {
+  initialize: function (options, properties) {
     BaseAsset.prototype.initialize.call(this, options, properties);
     var popup = options.popup;
+    var data = options.data;
     this.networkMap = options.networkMap || null;
 
     this.assetCanMove = true;
@@ -18,7 +19,7 @@ export var TrainAsset = BaseAsset.extend({
     this.assetSelected = false;
 
     this._createPopupEventSameTooltip(popup, properties);
-    this._createIcon(properties);
+    this._createIcon(data);
   },
 
   _createPopupEventSameTooltip(popup, properties) {
