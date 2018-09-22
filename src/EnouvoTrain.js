@@ -331,7 +331,7 @@ export class EnouvoTrains {
       return;
     }
 
-    const trainUpdated = this.updateTrain(trainData);
+    var trainUpdated = this.updateTrain(trainData);
 
     if (!trainUpdated) {
       this.addTrain(trainData);
