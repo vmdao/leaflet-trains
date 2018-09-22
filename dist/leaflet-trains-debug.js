@@ -1,4 +1,4 @@
-/* leaflet-trains - v1.0.12 - Sat Sep 22 2018 11:15:11 GMT+0700 (Indochina Time)
+/* leaflet-trains - v1.0.14 - Sat Sep 22 2018 16:43:33 GMT+0700 (Indochina Time)
  * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
  * Apache-2.0 */
 (function (global, factory) {
@@ -7,7 +7,7 @@
 	(factory((global.L = global.L || {}, global.L.enouvo = {}),global.L));
 }(this, (function (exports,leaflet) { 'use strict';
 
-var version = "1.0.12";
+var version = "1.0.14";
 
 var cors = ((window.XMLHttpRequest && 'withCredentials' in new window.XMLHttpRequest()));
 var pointerEvents = document.documentElement.style.pointerEvents === '';
@@ -4735,7 +4735,7 @@ proto._getEvents = function _getEvents() {
 };
 
 var BaseAsset = leaflet.Marker.extend({
-  initialize: function(options, properties) {
+  initialize: function (options, properties) {
     leaflet.Marker.prototype.initialize.call(this, options.latlng);
     this._map = options._map;
     var data = options.data;
@@ -4748,12 +4748,9 @@ var BaseAsset = leaflet.Marker.extend({
 
     this._initData(data, properties);
     this._createObserver();
-
-    // this._createPopup();
-    // this._addEventListener(this);
   },
 
-  _initData(data, properties) {
+  _initData: function (data, properties) {
     this.assetProperties = properties;
     this.assetId = data.id;
     this.assetType = data.type;
@@ -4761,31 +4758,19 @@ var BaseAsset = leaflet.Marker.extend({
     this.assetLongitude = data.longitude;
   },
 
-  _createPopup() {
-    this.bindPopup(this.feature.properties.name);
-  },
-
-  _createObserver() {
+  _createObserver: function () {
     this.assetObserver = new EventEmitter();
 
-    const events = {
-      // click: message => {
-      //     console.log('click');
-      //     // this.open
-      // },
-      // hover: message => {
-      //     // console.log('hover')
-      // },
-      toggle: message => {
-        this.assetSelected = !this.assetSelected;
-        this.feature.assetSelected = this.assetSelected;
+    var events = {
+      toggle: () => {
+        this.toggleSelect();
       },
 
-      selected: message => {
+      selected: () => {
         this.assetSelected = true;
       },
 
-      unSelected: message => {
+      unSelected: () => {
         this.assetSelected = false;
       }
     };
@@ -4793,47 +4778,44 @@ var BaseAsset = leaflet.Marker.extend({
     this.assetObserver.addListeners(events);
   },
 
-  _addEventListener(layer) {
+  _addEventListener: function (layer) {
     layer.on('click', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('click', [message]);
+      this.assetObserver.emitEvent('click', [message]);
     });
 
     layer.on('mouseover', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('hover', message);
+      this.assetObserver.emitEvent('hover', message);
     });
 
     layer.on('mouseout', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('hover', message);
+      this.assetObserver.emitEvent('hover', message);
     });
   },
 
-  // onSeleted() {
-  //   this.assetSelected = true;
-  // },
-
-  // unSeleted() {
-  //   this.assetSelected = false;
-  // },
-
-  isSeleted() {
+  isSeleted: function () {
     return this.assetSelected;
   },
 
-  action(type) {
-    this.assetObserver.emitEvent(type);
+  action: function (message) {
+    this.assetObserver.emitEvent(message.action, [message.data]);
+  },
+
+  toggleSelect: function () {
+    this.assetSelected = !this.assetSelected;
   }
+
 });
 
 function baseAsset(options, properties) {
@@ -4925,20 +4907,31 @@ var TrainAsset = BaseAsset.extend({
     this.assetCanSelect = true;
     this.assetSelected = false;
 
-    this._createPopupEventSameTooltip(popup, properties);
     this._createIcon(data);
+    this._createPopupEventSameTooltip(popup, properties);
   },
 
-  _createPopupEventSameTooltip(popup, properties) {
-    this._createPopup(popup, properties);
-    this.on('mouseover', () => {
-      this.changeStyleWhenHover('#c6c6c6');
-      this.openPopup();
-    });
-    this.on('mouseout', () => {
-      this.changeStyleWhenHover('');
-      this.closePopup();
-    });
+  _initData(data, properties) {
+    this.assetProperties = properties;
+    this.assetId = data.id;
+    this.assetType = data.type;
+    this.assetLatitude = data.latitude;
+    this.assetLongitude = data.longitude;
+    this.assetName = data.name;
+    this.assetLastStationId = data.lastStation.id;
+    this.assetLastStationName = data.lastStation.name;
+    this.assetLastStationLatitude = data.lastStation.latitude;
+    this.assetLastStationLongitude = data.lastStation.longitude;
+
+    this.assetNextStationId = data.nextStation.id;
+    this.assetNextStationName = data.nextStation.name;
+    this.assetNextStationLatitude = data.nextStation.latitude;
+    this.assetNextStationLongitude = data.nextStation.longitude;
+
+    this.assetRouteId = data.route.rountId;
+    this.assetRouteName = data.route.routeName;
+    this.assetRouteLineId = data.route.lineId;
+    this.assetRouteLineName = data.route.lineName;
   },
 
   _createPopup(popup) {
@@ -4960,17 +4953,29 @@ var TrainAsset = BaseAsset.extend({
       }
     ];
 
-    var html = this.getHtmlTemplatePopup(fieldsMatch);
+    var html = this._getHtmlTemplatePopup(fieldsMatch);
     this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
   },
 
   _createIcon(properties) {
-    var angle = this.getAngleWithNextStation();
+    var angle = this._getAngleWithNextStation();
     var icon = trainIcon({ angle: angle }, properties);
     this.setIcon(icon);
   },
 
-  changeStyleWhenHover(color) {
+  _createPopupEventSameTooltip(popup, properties) {
+    this._createPopup(popup, properties);
+    this.on('mouseover', () => {
+      this._changeStyleWhenHover('#c6c6c6');
+      this.openPopup();
+    });
+    this.on('mouseout', () => {
+      this._changeStyleWhenHover('');
+      this.closePopup();
+    });
+  },
+
+  _changeStyleWhenHover(color) {
     var assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
     );
@@ -4990,38 +4995,7 @@ var TrainAsset = BaseAsset.extend({
     }
   },
 
-  _initData(data, properties) {
-    this.assetProperties = properties;
-
-    this.assetName = data.name;
-    this.assetLastStationId = data.lastStation.id;
-    this.assetLastStationName = data.lastStation.name;
-    this.assetLastStationLatitude = data.lastStation.latitude;
-    this.assetLastStationLongitude = data.lastStation.longitude;
-
-    this.assetNextStationId = data.nextStation.id;
-    this.assetNextStationName = data.nextStation.name;
-    this.assetNextStationLatitude = data.nextStation.latitude;
-    this.assetNextStationLongitude = data.nextStation.longitude;
-
-    this.assetRouteId = data.route.rountId;
-    this.assetRouteName = data.route.routeName;
-    this.assetRouteLineId = data.route.lineId;
-    this.assetRouteLineName = data.route.lineName;
-  },
-
-  updateData(data, properties) {
-    this.initData(data, properties);
-    this.updatePosition([this.assetLatitude, this.assetLongitude]);
-    this._createIcon(properties);
-  },
-
-  updatePosition(latlng) {
-    var newLatLng = leaflet.latLng(latlng);
-    this.setLatLng(newLatLng);
-  },
-
-  getHtmlTemplatePopup(fieldsMatch) {
+  _getHtmlTemplatePopup(fieldsMatch) {
     var htmlData = fieldsMatch.reduce((current, next) => {
       current +=
         '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
@@ -5041,8 +5015,8 @@ var TrainAsset = BaseAsset.extend({
     return htmlTemplate;
   },
 
-  getDirection() {
-    var paths = this.getLocationNetworkMap();
+  _getDirection() {
+    var paths = this._getLocationNetworkMap();
     var lastStation = this.feature.properties.segment.departureStation;
     var nextStation = this.feature.properties.segment.arrivalStation;
 
@@ -5060,11 +5034,11 @@ var TrainAsset = BaseAsset.extend({
     return paths;
   },
 
-  getAngle() {
-    var paths = this.getDirection();
+  _getAngle() {
+    var paths = this._getDirection();
     var locationTrain = this.getLatLng();
-    var locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
-    var locationNextTrain = this.getPointNearNextTrain(
+    var locationNearTrain = this._getLocationNearTrain(paths, locationTrain);
+    var locationNextTrain = this._getPointNearNextTrain(
       paths,
       locationNearTrain.index,
       locationTrain
@@ -5084,7 +5058,7 @@ var TrainAsset = BaseAsset.extend({
     return angle;
   },
 
-  getAngleWithNextStation() {
+  _getAngleWithNextStation() {
     var longitudeNextStation = this.assetNextStationLongitude;
     var latitudeNextStation = this.assetNextStationLatitude;
 
@@ -5101,7 +5075,7 @@ var TrainAsset = BaseAsset.extend({
     return angle;
   },
 
-  getLocationNetworkMap() {
+  _getLocationNetworkMap() {
     var layers = this.networkMap.getLayers();
     return layers.reduce((current, next) => {
       var loc = next.getLatLngs();
@@ -5110,7 +5084,7 @@ var TrainAsset = BaseAsset.extend({
     }, []);
   },
 
-  getLocationNearTrain(paths, locationTrain) {
+  _getLocationNearTrain(paths, locationTrain) {
     return paths.reduce(
       (current, next, index) => {
         var distance = next.distanceTo(locationTrain);
@@ -5131,8 +5105,19 @@ var TrainAsset = BaseAsset.extend({
     );
   },
 
-  getPointNearNextTrain(paths, nearIndex, locationTrain) {
+  _getPointNearNextTrain(paths, nearIndex, locationTrain) {
     return paths[nearIndex + 1] || locationTrain;
+  },
+
+  updateData(data, properties) {
+    this._initData(data, properties);
+    this.updatePosition([this.assetLatitude, this.assetLongitude]);
+    this._createIcon(data);
+  },
+
+  updatePosition(latlng) {
+    var newLatLng = leaflet.latLng(latlng);
+    this.setLatLng(newLatLng);
   }
 });
 
@@ -5281,24 +5266,17 @@ class EnouvoTrains {
   _createObserver() {
     this.observer = new EventEmitter();
     var events = {
-      click: message => {
-        this.poolListener.filter(l => l.event === 'click').forEach(listener => {
-          if (typeof listener.action === 'function') {
-            listener.action(message);
-          }
-        });
-      },
-      hover: message => {
-        this.poolListener.filter(l => l.event === 'hover').forEach(listener => {
+      toggleSelectTrain: message => {
+        this.poolListener.filter(l => l.event === 'toggleSelectTrain').forEach(listener => {
           if (typeof listener.action === 'function') {
             listener.action(message);
           }
         });
       },
 
-      selectedTrains: message => {
+      areaSelectTrains: message => {
         this.poolListener
-          .filter(l => l.event === 'selectedTrains')
+          .filter(l => l.event === 'areaSelectTrains')
           .forEach(listener => {
             if (typeof listener.action === 'function') {
               let layers = [];
@@ -5310,8 +5288,17 @@ class EnouvoTrains {
               listener.action(message);
             }
           });
+      },
+
+      hoverTrain: message => {
+        this.poolListener.filter(l => l.event === 'hoverTrain').forEach(listener => {
+          if (typeof listener.action === 'function') {
+            listener.action(message);
+          }
+        });
       }
     };
+
     this.observer.addListeners(events);
   }
 
@@ -5319,16 +5306,24 @@ class EnouvoTrains {
     this._map = new leaflet.Map(el, options);
     this._map._container.className =
       this._map._container.className + ' leaflet-trains';
+
     this._map.zoomControl.setPosition('bottomleft');
+
     this._createLayer();
     this._createOverlayControl();
+
     this._map.on('areaSelect', event => {
-      var assets = this.selectedAssetsWithBounds(event.areaSelectBounds);
-      const message = {
+      var bounds = event.areaSelectBounds;
+
+      var assets = this._selectedAssetsWithBounds(bounds);
+
+      var message = {
+        data: assets,
+        action: 'selected',
         originEvent: event.event,
-        data: assets
       };
-      this.observer.emitEvent('selectedTrains', [message]);
+
+      this.observer.emitEvent('areaSelectTrains', [message]);
     });
   }
 
@@ -5355,30 +5350,45 @@ class EnouvoTrains {
     layer.bindTooltip(label);
   }
 
-  _addEventListener(feature, layer) {
+  _onEachFeatureTrain(feature, layer) {
+    const properties = feature.properties.properties;
+    this._addEventListenerTrain(layer, properties);
+  }
+
+  _addEventListenerTrain(layer, properties) {
+
     layer.on('click', event => {
+      var layerTarget = event.target;
+      var assetId = layerTarget.assetId;
+
+      this.toggleAsset(assetId);
+
       var message = {
         originEvent: event,
-        data: feature.properties.properties
+        action: layerTarget.isSeleted() ? 'selected' : 'unselected',
+        data: properties
       };
-      this.observer.emitEvent('click', [message]);
+      this.observer.emitEvent('toggleSelectTrain', [message]);
     });
 
     layer.on('mouseover', event => {
       var message = {
         originEvent: event,
-        data: feature
+        action: 'hover',
+        data: properties
       };
-      this.observer.emitEvent('hover', message);
+      this.observer.emitEvent('hoverTrain', [message]);
     });
 
     layer.on('mouseout', event => {
       var message = {
         originEvent: event,
-        data: feature
+        action: 'unhover',
+        data: properties
       };
-      this.observer.emitEvent('hover', message);
+      this.observer.emitEvent('hoverTrain', [message]);
     });
+
   }
 
   setNetworkMaps(networkMapsData) {
@@ -5403,7 +5413,7 @@ class EnouvoTrains {
       };
 
       const networkMap = new leaflet.GeoJSON(template, {
-        style: function() {
+        style: function () {
           return { weight: 7 };
         },
         onEachFeature: this._addEventListenerMap.bind(that)
@@ -5469,7 +5479,7 @@ class EnouvoTrains {
     this.networkTrainsData = createTrainGeoJson(networkTrainsData);
 
     this.networkTrains = new leaflet.GeoJSON(this.networkTrainsData, {
-      onEachFeature: this._addEventListener.bind(that),
+      onEachFeature: this._onEachFeatureTrain.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
           var data = feature.properties.data;
@@ -5541,6 +5551,7 @@ class EnouvoTrains {
     var trainLayer = trainAsset(options, properties);
     trainLayer.addTo(this._map);
     this.networkTrains.addLayer(trainLayer);
+    this._addEventListenerTrain(trainLayer, properties);
   }
 
   updateTrain(trainData) {
@@ -5588,74 +5599,73 @@ class EnouvoTrains {
     this._map.setView(latLng, zoom, options);
   }
 
-  controlPopupAsset(assetId, switchPopup) {
-    this.networkTrains.eachLayer(train => {
-      if (train.feature.properties.id === assetId) {
-        switchPopup ? train.openPopup() : train.closePopup();
-      }
-    });
-  }
-
-  toggleAsset(assetId) {
-    this.networkTrains.eachLayer(layer => {
-      if (layer.feature.id === assetId) {
-        layer.action && layer.action('toggle');
-      }
-    });
-  }
-
-  selectedAsset(assetId) {
-    this.networkTrains.eachLayer(layer => {
-      if (layer.feature.id === assetId) {
-        layer.feature.selected = true;
-        layer.action && layer.action('selected');
-      }
-    });
-  }
-
-  selectedAssets(assets) {
-    this.networkTrains.eachLayer(l => {
-      var layer = assets.find(assetId => {
-        if (assetId !== l.feature.id) {
-          return false;
-        }
-        return l;
-      });
-
-      if (layer) {
-        layer.feature.selected = true;
-      }
-    });
-  }
-
-  selectedAssetsWithBounds(bounds) {
+  _selectedAssetsWithBounds(bounds) {
     var layers = this.networkTrains.getLayers();
     var layersSelected = layers
       .filter(l => {
         return bounds.contains(l.getLatLng());
       })
       .map(l => {
-        l.feature.selected = true;
         l.action && l.action('selected');
-        return l.feature;
+        return l.assetProperties;
       });
     return layersSelected;
   }
 
-  selectedAssetsAll() {
-    this.networkTrains.eachLayer(l => {
-      if (l) {
-        l.feature.selected = true;
+  controlPopupAsset(assetId, switchPopup) {
+    this.networkTrains.eachLayer(layer => {
+      if (layer.assetId === assetId) {
+        switchPopup ? layer.openPopup() : layer.closePopup();
       }
     });
   }
 
-  unSelectedAsset(id) {
+  toggleAsset(assetId) {
+    if (!assetId) {
+      throw new Error('assetId unvalid')
+    }
+    var layers = this.networkTrains.getLayers();
+
+    var layer = layers.find(l => {
+      return l.assetId === assetId
+    });
+
+    layer.action && layer.action({ action: 'toggle' });
+  }
+
+  selectedAsset(assetId) {
+    var layers = this.networkTrains.getLayers();
+    var layer = layers.find(l => {
+      return l.assetId === assetId
+    });
+    layer.action && layer.action({ action: 'selected' });
+  }
+
+  selectedAssets(assets) {
+    this.networkTrains.eachLayer(l => {
+      var layer = assets.find(assetId => {
+        if (assetId !== l.assetId) {
+          return false;
+        }
+        return l;
+      });
+
+      if (layer) {
+        layer.action && layer.action({ action: 'selected' });
+      }
+    });
+  }
+
+  selectedAssetsAll() {
     this.networkTrains.eachLayer(layer => {
-      if (layer.feature.properties.id === id) {
-        layer.feature.selected = false;
-        layer.selected = false;
-        layer.feature.properties.selected = false;
+      layer.action && layer.action({ action: 'selected' });
+    });
+  }
+
+  unSelectedAsset(assetId) {
+    this.networkTrains.eachLayer(layer => {
+      if (layer.assetId === assetId) {
+        layer.action && layer.action({ action: 'unSelected' });
       }
     });
   }
@@ -5663,30 +5673,24 @@ class EnouvoTrains {
   unSelectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
       var layer = assets.find(assetId => {
-        if (assetId !== l.feature.id) {
+        if (assetId !== l.assetId) {
           return false;
         }
         return l;
       });
 
-      if (layer) {
-        layer.feature.selected = false;
-      }
+      layer.action && layer.action({ action: 'unSelected' });
     });
   }
 
   unSelectedAssetsAll() {
     this.networkTrains.eachLayer(layer => {
-      if (layer) {
-        layer.feature.selected = false;
-        layer.selected = false;
-        layer.feature.properties.selected = false;
-      }
+      layer.action && layer.action({ action: 'unSelected' });
     });
   }
 }
 
-var createStationGeoJson = function(stations) {
+var createStationGeoJson = function (stations) {
   return stations.reduce(
     (current, next) => {
       var data = next.data;
@@ -5707,7 +5711,7 @@ var createStationGeoJson = function(stations) {
   );
 };
 
-var createTrainGeoJson = function(trains) {
+var createTrainGeoJson = function (trains) {
   return trains.reduce(
     (current, next) => {
       var data = next.data;

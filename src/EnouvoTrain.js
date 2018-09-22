@@ -23,24 +23,17 @@ export class EnouvoTrains {
   _createObserver() {
     this.observer = new EventEmitter();
     var events = {
-      click: message => {
-        this.poolListener.filter(l => l.event === 'click').forEach(listener => {
-          if (typeof listener.action === 'function') {
-            listener.action(message);
-          }
-        });
-      },
-      hover: message => {
-        this.poolListener.filter(l => l.event === 'hover').forEach(listener => {
+      toggleSelectTrain: message => {
+        this.poolListener.filter(l => l.event === 'toggleSelectTrain').forEach(listener => {
           if (typeof listener.action === 'function') {
             listener.action(message);
           }
         });
       },
 
-      selectedTrains: message => {
+      areaSelectTrains: message => {
         this.poolListener
-          .filter(l => l.event === 'selectedTrains')
+          .filter(l => l.event === 'areaSelectTrains')
           .forEach(listener => {
             if (typeof listener.action === 'function') {
               let layers = [];
@@ -52,8 +45,17 @@ export class EnouvoTrains {
               listener.action(message);
             }
           });
+      },
+
+      hoverTrain: message => {
+        this.poolListener.filter(l => l.event === 'hoverTrain').forEach(listener => {
+          if (typeof listener.action === 'function') {
+            listener.action(message);
+          }
+        });
       }
     };
+
     this.observer.addListeners(events);
   }
 
@@ -61,16 +63,24 @@ export class EnouvoTrains {
     this._map = new Map(el, options);
     this._map._container.className =
       this._map._container.className + ' leaflet-trains';
+
     this._map.zoomControl.setPosition('bottomleft');
+
     this._createLayer();
     this._createOverlayControl();
+
     this._map.on('areaSelect', event => {
-      var assets = this.selectedAssetsWithBounds(event.areaSelectBounds);
-      const message = {
+      var bounds = event.areaSelectBounds;
+
+      var assets = this._selectedAssetsWithBounds(bounds);
+
+      var message = {
+        data: assets,
+        action: 'selected',
         originEvent: event.event,
-        data: assets
       };
-      this.observer.emitEvent('selectedTrains', [message]);
+
+      this.observer.emitEvent('areaSelectTrains', [message]);
     });
   }
 
@@ -97,30 +107,45 @@ export class EnouvoTrains {
     layer.bindTooltip(label);
   }
 
-  _addEventListener(feature, layer) {
+  _onEachFeatureTrain(feature, layer) {
+    const properties = feature.properties.properties;
+    this._addEventListenerTrain(layer, properties);
+  }
+
+  _addEventListenerTrain(layer, properties) {
+
     layer.on('click', event => {
+      var layerTarget = event.target;
+      var assetId = layerTarget.assetId;
+
+      this.toggleAsset(assetId);
+
       var message = {
         originEvent: event,
-        data: feature.properties.properties
+        action: layerTarget.isSeleted() ? 'selected' : 'unselected',
+        data: properties
       };
-      this.observer.emitEvent('click', [message]);
+      this.observer.emitEvent('toggleSelectTrain', [message]);
     });
 
     layer.on('mouseover', event => {
       var message = {
         originEvent: event,
-        data: feature
+        action: 'hover',
+        data: properties
       };
-      this.observer.emitEvent('hover', message);
+      this.observer.emitEvent('hoverTrain', [message]);
     });
 
     layer.on('mouseout', event => {
       var message = {
         originEvent: event,
-        data: feature
+        action: 'unhover',
+        data: properties
       };
-      this.observer.emitEvent('hover', message);
+      this.observer.emitEvent('hoverTrain', [message]);
     });
+
   }
 
   setNetworkMaps(networkMapsData) {
@@ -145,7 +170,7 @@ export class EnouvoTrains {
       };
 
       const networkMap = new GeoJSON(template, {
-        style: function() {
+        style: function () {
           return { weight: 7 };
         },
         onEachFeature: this._addEventListenerMap.bind(that)
@@ -212,7 +237,7 @@ export class EnouvoTrains {
     this.networkTrainsData = createTrainGeoJson(networkTrainsData);
 
     this.networkTrains = new GeoJSON(this.networkTrainsData, {
-      onEachFeature: this._addEventListener.bind(that),
+      onEachFeature: this._onEachFeatureTrain.bind(that),
       pointToLayer: (feature, latlng) => {
         try {
           var data = feature.properties.data;
@@ -284,6 +309,7 @@ export class EnouvoTrains {
     var trainLayer = trainAsset(options, properties);
     trainLayer.addTo(this._map);
     this.networkTrains.addLayer(trainLayer);
+    this._addEventListenerTrain(trainLayer, properties);
   }
 
   updateTrain(trainData) {
@@ -331,74 +357,73 @@ export class EnouvoTrains {
     this._map.setView(latLng, zoom, options);
   }
 
-  controlPopupAsset(assetId, switchPopup) {
-    this.networkTrains.eachLayer(train => {
-      if (train.feature.properties.id === assetId) {
-        switchPopup ? train.openPopup() : train.closePopup();
-      }
-    });
-  }
-
-  toggleAsset(assetId) {
-    this.networkTrains.eachLayer(layer => {
-      if (layer.feature.id === assetId) {
-        layer.action && layer.action('toggle');
-      }
-    });
-  }
-
-  selectedAsset(assetId) {
-    this.networkTrains.eachLayer(layer => {
-      if (layer.feature.id === assetId) {
-        layer.feature.selected = true;
-        layer.action && layer.action('selected');
-      }
-    });
-  }
-
-  selectedAssets(assets) {
-    this.networkTrains.eachLayer(l => {
-      var layer = assets.find(assetId => {
-        if (assetId !== l.feature.id) {
-          return false;
-        }
-        return l;
-      });
-
-      if (layer) {
-        layer.feature.selected = true;
-      }
-    });
-  }
-
-  selectedAssetsWithBounds(bounds) {
+  _selectedAssetsWithBounds(bounds) {
     var layers = this.networkTrains.getLayers();
     var layersSelected = layers
       .filter(l => {
         return bounds.contains(l.getLatLng());
       })
       .map(l => {
-        l.feature.selected = true;
         l.action && l.action('selected');
-        return l.feature;
+        return l.assetProperties;
       });
     return layersSelected;
   }
 
-  selectedAssetsAll() {
-    this.networkTrains.eachLayer(l => {
-      if (l) {
-        l.feature.selected = true;
+  controlPopupAsset(assetId, switchPopup) {
+    this.networkTrains.eachLayer(layer => {
+      if (layer.assetId === assetId) {
+        switchPopup ? layer.openPopup() : layer.closePopup();
       }
     });
   }
 
-  unSelectedAsset(id) {
+  toggleAsset(assetId) {
+    if (!assetId) {
+      throw new Error('assetId unvalid')
+    }
+    var layers = this.networkTrains.getLayers();
+
+    var layer = layers.find(l => {
+      return l.assetId === assetId
+    });
+
+    layer.action && layer.action({ action: 'toggle' });
+  }
+
+  selectedAsset(assetId) {
+    var layers = this.networkTrains.getLayers();
+    var layer = layers.find(l => {
+      return l.assetId === assetId
+    })
+    layer.action && layer.action({ action: 'selected' });
+  }
+
+  selectedAssets(assets) {
+    this.networkTrains.eachLayer(l => {
+      var layer = assets.find(assetId => {
+        if (assetId !== l.assetId) {
+          return false;
+        }
+        return l;
+      });
+
+      if (layer) {
+        layer.action && layer.action({ action: 'selected' });
+      }
+    });
+  }
+
+  selectedAssetsAll() {
     this.networkTrains.eachLayer(layer => {
-      if (layer.feature.properties.id === id) {
-        layer.feature.selected = false;
-        layer.selected = false;
-        layer.feature.properties.selected = false;
+      layer.action && layer.action({ action: 'selected' });
+    });
+  }
+
+  unSelectedAsset(assetId) {
+    this.networkTrains.eachLayer(layer => {
+      if (layer.assetId === assetId) {
+        layer.action && layer.action({ action: 'unSelected' });
       }
     });
   }
@@ -406,30 +431,24 @@ export class EnouvoTrains {
   unSelectedAssets(assets) {
     this.networkTrains.eachLayer(l => {
       var layer = assets.find(assetId => {
-        if (assetId !== l.feature.id) {
+        if (assetId !== l.assetId) {
           return false;
         }
         return l;
       });
 
-      if (layer) {
-        layer.feature.selected = false;
-      }
+      layer.action && layer.action({ action: 'unSelected' });
     });
   }
 
   unSelectedAssetsAll() {
     this.networkTrains.eachLayer(layer => {
-      if (layer) {
-        layer.feature.selected = false;
-        layer.selected = false;
-        layer.feature.properties.selected = false;
-      }
+      layer.action && layer.action({ action: 'unSelected' });
     });
   }
 }
 
-var createStationGeoJson = function(stations) {
+var createStationGeoJson = function (stations) {
   return stations.reduce(
     (current, next) => {
       var data = next.data;
@@ -450,7 +469,7 @@ var createStationGeoJson = function(stations) {
   );
 };
 
-var createTrainGeoJson = function(trains) {
+var createTrainGeoJson = function (trains) {
   return trains.reduce(
     (current, next) => {
       var data = next.data;

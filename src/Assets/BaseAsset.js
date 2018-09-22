@@ -2,7 +2,7 @@ import { Marker } from 'leaflet';
 import { EventEmitter } from '../EventEmitter';
 
 export var BaseAsset = Marker.extend({
-  initialize: function(options, properties) {
+  initialize: function (options, properties) {
     Marker.prototype.initialize.call(this, options.latlng);
     this._map = options._map;
     var data = options.data;
@@ -15,12 +15,9 @@ export var BaseAsset = Marker.extend({
 
     this._initData(data, properties);
     this._createObserver();
-
-    // this._createPopup();
-    // this._addEventListener(this);
   },
 
-  _initData(data, properties) {
+  _initData: function (data, properties) {
     this.assetProperties = properties;
     this.assetId = data.id;
     this.assetType = data.type;
@@ -28,31 +25,19 @@ export var BaseAsset = Marker.extend({
     this.assetLongitude = data.longitude;
   },
 
-  _createPopup() {
-    this.bindPopup(this.feature.properties.name);
-  },
-
-  _createObserver() {
+  _createObserver: function () {
     this.assetObserver = new EventEmitter();
 
-    const events = {
-      // click: message => {
-      //     console.log('click');
-      //     // this.open
-      // },
-      // hover: message => {
-      //     // console.log('hover')
-      // },
-      toggle: message => {
-        this.assetSelected = !this.assetSelected;
-        this.feature.assetSelected = this.assetSelected;
+    var events = {
+      toggle: () => {
+        this.toggleSelect();
       },
 
-      selected: message => {
+      selected: () => {
         this.assetSelected = true;
       },
 
-      unSelected: message => {
+      unSelected: () => {
         this.assetSelected = false;
       }
     };
@@ -60,47 +45,44 @@ export var BaseAsset = Marker.extend({
     this.assetObserver.addListeners(events);
   },
 
-  _addEventListener(layer) {
+  _addEventListener: function (layer) {
     layer.on('click', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('click', [message]);
+      this.assetObserver.emitEvent('click', [message]);
     });
 
     layer.on('mouseover', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('hover', message);
+      this.assetObserver.emitEvent('hover', message);
     });
 
     layer.on('mouseout', event => {
-      const message = {
+      var message = {
         originEvent: event,
         data: this.feature
       };
-      this.observer.emitEvent('hover', message);
+      this.assetObserver.emitEvent('hover', message);
     });
   },
 
-  // onSeleted() {
-  //   this.assetSelected = true;
-  // },
-
-  // unSeleted() {
-  //   this.assetSelected = false;
-  // },
-
-  isSeleted() {
+  isSeleted: function () {
     return this.assetSelected;
   },
 
-  action(type) {
-    this.assetObserver.emitEvent(type);
+  action: function (message) {
+    this.assetObserver.emitEvent(message.action, [message.data]);
+  },
+
+  toggleSelect: function () {
+    this.assetSelected = !this.assetSelected;
   }
+
 });
 
 export function baseAsset(options, properties) {

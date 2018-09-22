@@ -157,20 +157,22 @@
       enouvoTrains.replaceTrain(trainData);
     }
 
-    var onListenerSelected = function (event) {
-      fleetTrains.push(event.data.properties);
+    var onToggleSelectTrain = function (event) {
+      if (event.action === 'selected') {
+        fleetTrains.push(event.data);
+      }
       renderTrains(fleetTrains)
     }
 
-    var selectedTrains = function (event) {
-      var trains = event.data.map(t => t.properties);
+    var onAreaSelectTrains = function (event) {
+      var trains = event.data;
       fleetTrains = fleetTrains.concat(trains);
       renderTrains(fleetTrains)
     }
 
     var renderTrains = function (trains) {
-      var html = trains.reduce((current, next) => {
-        var li = '<li class="item" data-id="' + next.id + '">' + next.trainNo + '</li>';
+      var html = trains.reduce((current, train) => {
+        var li = '<li class="item" data-id="' + train.id + '">' + train.trainNo + '</li>';
         current += li;
         return current;
       }, '')
@@ -199,12 +201,12 @@
     enouvoTrains.setView([-37.81224, 144.97412], 15);
     enouvoTrains.setNetworkMaps(collections);
     enouvoTrains.addListeners([{
-        event: 'click',
-        action: onListenerSelected
+        event: 'toggleSelectTrain',
+        action: onToggleSelectTrain
       },
       {
-        event: 'selectedTrains',
-        action: selectedTrains
+        event: 'areaSelectTrains',
+        action: onAreaSelectTrains
       }
     ]);
     enouvoTrains.setNetworkStations(stationsCollectionData);

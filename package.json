@@ -1,7 +1,7 @@
 {
   "name": "leaflet-trains",
   "description": "Leaflet trains",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "author": "dan.vu",
   "browser": "dist/leaflet-trains-debug.js",
   "dependencies": {

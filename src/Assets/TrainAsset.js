@@ -1,9 +1,9 @@
-import { Util, latLng } from 'leaflet';
+import { latLng } from 'leaflet';
 import {
-  convertToTimeHuman,
   getDirectionPoints,
   computeSegmentHeading
 } from '../Util';
+
 import { BaseAsset } from './BaseAsset';
 import { trainIcon } from '../Layers/TrainIcon';
 
@@ -18,20 +18,31 @@ export var TrainAsset = BaseAsset.extend({
     this.assetCanSelect = true;
     this.assetSelected = false;
 
-    this._createPopupEventSameTooltip(popup, properties);
     this._createIcon(data);
+    this._createPopupEventSameTooltip(popup, properties);
   },
 
-  _createPopupEventSameTooltip(popup, properties) {
-    this._createPopup(popup, properties);
-    this.on('mouseover', () => {
-      this.changeStyleWhenHover('#c6c6c6');
-      this.openPopup();
-    });
-    this.on('mouseout', () => {
-      this.changeStyleWhenHover('');
-      this.closePopup();
-    });
+  _initData(data, properties) {
+    this.assetProperties = properties;
+    this.assetId = data.id;
+    this.assetType = data.type;
+    this.assetLatitude = data.latitude;
+    this.assetLongitude = data.longitude;
+    this.assetName = data.name;
+    this.assetLastStationId = data.lastStation.id;
+    this.assetLastStationName = data.lastStation.name;
+    this.assetLastStationLatitude = data.lastStation.latitude;
+    this.assetLastStationLongitude = data.lastStation.longitude;
+
+    this.assetNextStationId = data.nextStation.id;
+    this.assetNextStationName = data.nextStation.name;
+    this.assetNextStationLatitude = data.nextStation.latitude;
+    this.assetNextStationLongitude = data.nextStation.longitude;
+
+    this.assetRouteId = data.route.rountId;
+    this.assetRouteName = data.route.routeName;
+    this.assetRouteLineId = data.route.lineId;
+    this.assetRouteLineName = data.route.lineName;
   },
 
   _createPopup(popup) {
@@ -53,17 +64,29 @@ export var TrainAsset = BaseAsset.extend({
       }
     ];
 
-    var html = this.getHtmlTemplatePopup(fieldsMatch);
+    var html = this._getHtmlTemplatePopup(fieldsMatch);
     this.bindPopup(html, { minWidth: 270, className: 'leaflet-trains-popup' });
   },
 
   _createIcon(properties) {
-    var angle = this.getAngleWithNextStation();
+    var angle = this._getAngleWithNextStation();
     var icon = trainIcon({ angle: angle }, properties);
     this.setIcon(icon);
   },
 
-  changeStyleWhenHover(color) {
+  _createPopupEventSameTooltip(popup, properties) {
+    this._createPopup(popup, properties);
+    this.on('mouseover', () => {
+      this._changeStyleWhenHover('#c6c6c6');
+      this.openPopup();
+    });
+    this.on('mouseout', () => {
+      this._changeStyleWhenHover('');
+      this.closePopup();
+    });
+  },
+
+  _changeStyleWhenHover(color) {
     var assets = this._icon.getElementsByClassName(
       'leaflet-trains-train-asset'
     );
@@ -83,38 +106,7 @@ export var TrainAsset = BaseAsset.extend({
     }
   },
 
-  _initData(data, properties) {
-    this.assetProperties = properties;
-
-    this.assetName = data.name;
-    this.assetLastStationId = data.lastStation.id;
-    this.assetLastStationName = data.lastStation.name;
-    this.assetLastStationLatitude = data.lastStation.latitude;
-    this.assetLastStationLongitude = data.lastStation.longitude;
-
-    this.assetNextStationId = data.nextStation.id;
-    this.assetNextStationName = data.nextStation.name;
-    this.assetNextStationLatitude = data.nextStation.latitude;
-    this.assetNextStationLongitude = data.nextStation.longitude;
-
-    this.assetRouteId = data.route.rountId;
-    this.assetRouteName = data.route.routeName;
-    this.assetRouteLineId = data.route.lineId;
-    this.assetRouteLineName = data.route.lineName;
-  },
-
-  updateData(data, properties) {
-    this.initData(data, properties);
-    this.updatePosition([this.assetLatitude, this.assetLongitude]);
-    this._createIcon(properties);
-  },
-
-  updatePosition(latlng) {
-    var newLatLng = latLng(latlng);
-    this.setLatLng(newLatLng);
-  },
-
-  getHtmlTemplatePopup(fieldsMatch) {
+  _getHtmlTemplatePopup(fieldsMatch) {
     var htmlData = fieldsMatch.reduce((current, next) => {
       current +=
         '<li class="leaflet-trains-popup-list-item"><div class="leaflet-trains-popup-list-item-name">' +
@@ -134,8 +126,8 @@ export var TrainAsset = BaseAsset.extend({
     return htmlTemplate;
   },
 
-  getDirection() {
-    var paths = this.getLocationNetworkMap();
+  _getDirection() {
+    var paths = this._getLocationNetworkMap();
     var lastStation = this.feature.properties.segment.departureStation;
     var nextStation = this.feature.properties.segment.arrivalStation;
 
@@ -153,11 +145,11 @@ export var TrainAsset = BaseAsset.extend({
     return paths;
   },
 
-  getAngle() {
-    var paths = this.getDirection();
+  _getAngle() {
+    var paths = this._getDirection();
     var locationTrain = this.getLatLng();
-    var locationNearTrain = this.getLocationNearTrain(paths, locationTrain);
-    var locationNextTrain = this.getPointNearNextTrain(
+    var locationNearTrain = this._getLocationNearTrain(paths, locationTrain);
+    var locationNextTrain = this._getPointNearNextTrain(
       paths,
       locationNearTrain.index,
       locationTrain
@@ -177,7 +169,7 @@ export var TrainAsset = BaseAsset.extend({
     return angle;
   },
 
-  getAngleWithNextStation() {
+  _getAngleWithNextStation() {
     var longitudeNextStation = this.assetNextStationLongitude;
     var latitudeNextStation = this.assetNextStationLatitude;
 
@@ -194,7 +186,7 @@ export var TrainAsset = BaseAsset.extend({
     return angle;
   },
 
-  getLocationNetworkMap() {
+  _getLocationNetworkMap() {
     var layers = this.networkMap.getLayers();
     return layers.reduce((current, next) => {
       var loc = next.getLatLngs();
@@ -203,7 +195,7 @@ export var TrainAsset = BaseAsset.extend({
     }, []);
   },
 
-  getLocationNearTrain(paths, locationTrain) {
+  _getLocationNearTrain(paths, locationTrain) {
     return paths.reduce(
       (current, next, index) => {
         var distance = next.distanceTo(locationTrain);
@@ -224,8 +216,19 @@ export var TrainAsset = BaseAsset.extend({
     );
   },
 
-  getPointNearNextTrain(paths, nearIndex, locationTrain) {
+  _getPointNearNextTrain(paths, nearIndex, locationTrain) {
     return paths[nearIndex + 1] || locationTrain;
+  },
+
+  updateData(data, properties) {
+    this._initData(data, properties);
+    this.updatePosition([this.assetLatitude, this.assetLongitude]);
+    this._createIcon(data);
+  },
+
+  updatePosition(latlng) {
+    var newLatLng = latLng(latlng);
+    this.setLatLng(newLatLng);
   }
 });
 
